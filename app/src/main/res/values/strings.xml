@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">spoon</string>
+    <string name="title_home">Home</string>
+    <string name="title_bookings">Bookings</string>
+    <string name="title_restaurants">Restaurants</string>
+    <string name="title_meals">Meals</string>
+
+    <string name="settings">Settings</string>
+
+    <string name="long_Text">
+        This is a fragment for the restaurants page
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
