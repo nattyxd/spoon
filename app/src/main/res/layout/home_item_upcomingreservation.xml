@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/item_image"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:background="@color/white"/>-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:id="@+id/item_reservation_notification"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="@string/en_home_upcomingreservation_title"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:id="@+id/item_reservation_notification_subtitle"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+            android:text="@string/en_home_upcomingreservation_notification"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:id="@+id/item_reservation_notification_view_reservation"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+            android:text="@string/en_home_upcomingreservation_viewreservation"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

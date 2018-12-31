@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.bookings.BookingsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.BottomNavigationViewHelper;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.HomeFragment;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 

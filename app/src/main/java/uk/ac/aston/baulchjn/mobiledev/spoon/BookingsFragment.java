@@ -1,4 +1,4 @@
-package uk.ac.aston.baulchjn.mobiledev.spoon;
+package uk.ac.aston.baulchjn.mobiledev.spoon.bookings;
 
 
 import android.os.Bundle;
