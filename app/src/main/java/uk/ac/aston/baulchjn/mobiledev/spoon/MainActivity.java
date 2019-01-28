@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import uk.ac.aston.baulchjn.mobiledev.spoon.bookings.BookingsFragment;
+import uk.ac.aston.baulchjn.mobiledev.spoon.BookingsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.BottomNavigationViewHelper;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.HomeFragment;
 
