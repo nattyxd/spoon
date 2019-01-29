@@ -12,14 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import uk.ac.aston.baulchjn.mobiledev.spoon.BookingsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.BottomNavigationViewHelper;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.HomeFragment;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.deprecated_HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    final Fragment homeFragment = new HomeFragment();
+    final Fragment homeFragment = new deprecated_HomeFragment();
     final Fragment bookingsFragment = new BookingsFragment();
     final Fragment restaurantsFragment = new RestaurantsFragment();
     final Fragment mealsFragment = new MealsFragment();

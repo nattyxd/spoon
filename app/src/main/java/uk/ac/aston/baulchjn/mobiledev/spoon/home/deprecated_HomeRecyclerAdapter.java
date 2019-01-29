@@ -11,26 +11,25 @@ import android.widget.TextView;
 import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.R;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.HomeItem;
 
 
-public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
+public class deprecated_HomeRecyclerAdapter extends RecyclerView.Adapter<deprecated_HomeRecyclerAdapter.ViewHolder> {
     public List<HomeItem> home_list;
 
-    public HomeRecyclerAdapter(List<HomeItem> list) {
+    public deprecated_HomeRecyclerAdapter(List<HomeItem> list) {
         this.home_list = list;
     }
 
     @NonNull
     @Override
-    public HomeRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public deprecated_HomeRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull deprecated_HomeRecyclerAdapter.ViewHolder holder, int position) {
         int id = home_list.get(position).getId();
         String desc = home_list.get(position).getDesc();
 

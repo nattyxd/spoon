@@ -41,6 +41,13 @@
             android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
             android:text="@string/en_home_upcomingreservation_notification"/>
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Reservation"
+            android:visibility="visible"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,14 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeFragment">
+    tools:context=".home.deprecated_HomeFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/home_rv">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="603dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
 
-</FrameLayout>
+        <!--<ImageView-->
+        <!--android:id="@+id/item_image"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:background="@color/white"/>-->
+
+        <TextView
+            android:id="@+id/item_reservation_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:text="@string/en_home_upcomingreservation_title"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/item_reservation_notification_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:text="@string/en_home_upcomingreservation_notification"
+            android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="@string/en_home_upcomingreservation_viewreservation"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+        <!--<ImageView-->
+        <!--android:id="@+id/item_image"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:background="@color/white"/>-->
+
+        <TextView
+            android:id="@+id/dfsdffwefw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:text="@string/en_home_findrestaurantsquickly"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/TopRow"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true">
+            <Button
+                android:id="@+id/NearMeNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_restaurant_white_24dp"
+                android:text="@string/en_home_findrestaurantsquickly_proximity">
+            </Button>
+            <Button
+                android:id="@+id/StaffPicks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_restaurant_white_24dp"
+                android:text="@string/en_home_findrestaurantsquickly_staff">
+            </Button>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/BottomRow"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true">
+            <Button
+                android:id="@+id/Cheap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/en_home_findrestaurantsquickly_localised_cheap"
+                android:textSize="48dp">
+            </Button>
+            <Button
+                android:id="@+id/Moderate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/en_home_findrestaurantsquickly_localised_moderate"
+                android:textSize="48dp">
+            </Button>
+            <Button
+                android:id="@+id/Expensive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/en_home_findrestaurantsquickly_localised_expensive"
+                android:textSize="48dp">
+            </Button>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

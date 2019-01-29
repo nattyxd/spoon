@@ -16,6 +16,16 @@
     <string name="en_home_upcomingreservation_notification">Reservation at %1$s at %2$s.</string>
     <string name="en_home_upcomingreservation_viewreservation">View Reservation >></string>
 
+    <string name="en_home_findrestaurantsquickly">Find Restaurants Quickly!</string>
+    <string name="en_home_findrestaurantsquickly_proximity">Near Me Now</string>
+    <string name="en_home_findrestaurantsquickly_staff">Staff Picks</string>
+
+    <string name="en_home_findrestaurantsquickly_localised_cheap">£</string>
+    <string name="en_home_findrestaurantsquickly_localised_moderate">££</string>
+    <string name="en_home_findrestaurantsquickly_localised_expensive">££</string>
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
