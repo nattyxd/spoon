@@ -138,9 +138,61 @@
             </Button>
 
         </LinearLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/recentRestaurantLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/linearLayout"
+        android:layout_marginTop="390dp"
+        android:layout_marginBottom="603dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="15dp">
+
+        <!--<ImageView-->
+        <!--android:id="@+id/item_image"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:background="@color/white"/>-->
+
+        <TextView
+            android:id="@+id/home_recent_restaurant_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:text="@string/en_home_recentrestaurant_title"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/item_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:text="@string/en_home_recentrestaurant_restaurant_title"
+            android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/item_text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:text="@string/en_home_upcomingreservation_viewreservation"
+            android:visibility="visible" />
 
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

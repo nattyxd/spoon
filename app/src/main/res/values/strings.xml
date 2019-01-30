@@ -24,6 +24,10 @@
     <string name="en_home_findrestaurantsquickly_localised_moderate">££</string>
     <string name="en_home_findrestaurantsquickly_localised_expensive">££</string>
 
+    <string name="en_home_recentrestaurant_title">My Most Recent Visit</string>
+    <string name="en_home_recentrestaurant_restaurant_title">You visited %1$s.</string>
+
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
