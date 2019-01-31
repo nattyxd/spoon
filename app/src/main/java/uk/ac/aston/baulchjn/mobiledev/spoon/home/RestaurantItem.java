@@ -1,14 +1,14 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
-public class HomeItem {
+public class RestaurantItem {
     public String desc;
     public int id;
 
-    public HomeItem(){
+    public RestaurantItem(){
 
     }
 
-    public HomeItem(String desc, int id) {
+    public RestaurantItem(String desc, int id) {
         this.desc = desc;
         this.id = id;
     }

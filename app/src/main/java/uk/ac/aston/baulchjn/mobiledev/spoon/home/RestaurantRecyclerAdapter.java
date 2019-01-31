@@ -13,23 +13,23 @@ import java.util.List;
 import uk.ac.aston.baulchjn.mobiledev.spoon.R;
 
 
-public class deprecated_HomeRecyclerAdapter extends RecyclerView.Adapter<deprecated_HomeRecyclerAdapter.ViewHolder> {
-    public List<HomeItem> home_list;
+public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRecyclerAdapter.ViewHolder> {
+    public List<RestaurantItem> home_list;
 
-    public deprecated_HomeRecyclerAdapter(List<HomeItem> list) {
+    public RestaurantRecyclerAdapter(List<RestaurantItem> list) {
         this.home_list = list;
     }
 
     @NonNull
     @Override
-    public deprecated_HomeRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RestaurantRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull deprecated_HomeRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RestaurantRecyclerAdapter.ViewHolder holder, int position) {
         int id = home_list.get(position).getId();
         String desc = home_list.get(position).getDesc();
 
