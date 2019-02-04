@@ -46,7 +46,7 @@ public class RestaurantsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_restaurants, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.home_rv);
+        recyclerView = (RecyclerView) view.findViewById(R.id.restaurants_rv);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
