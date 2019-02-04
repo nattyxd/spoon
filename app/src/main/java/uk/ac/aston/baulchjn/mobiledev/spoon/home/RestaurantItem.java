@@ -1,8 +1,11 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
-public class RestaurantItem {
+import java.io.Serializable;
+
+public class RestaurantItem implements Serializable {
     public String desc;
     public int id;
+    // restaurantName/Address/Type/Phone/Rating/ImageURL/bool visited
 
     public RestaurantItem(){
 
@@ -11,6 +14,9 @@ public class RestaurantItem {
     public RestaurantItem(String desc, int id) {
         this.desc = desc;
         this.id = id;
+
+        // TODO: declare all the shit in the constructor
+
     }
 
     public String getDesc() {
@@ -28,4 +34,6 @@ public class RestaurantItem {
     public void setId(int id) {
         this.id = id;
     }
+
+    // TODO: GETTERS AND SETTERS FOR ALL THE EXTRA SHIT
 }

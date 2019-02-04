@@ -41,7 +41,11 @@ public class RestaurantsFragment extends Fragment {
         rv_list.add(new RestaurantItem("Marketing Information", R.drawable.ic_event_white_24dp));
         rv_list.add(new RestaurantItem("Find Restaurants Quickly", R.drawable.ic_event_white_24dp));
         rv_list.add(new RestaurantItem("My Restaurant Visits", R.drawable.ic_restaurant_white_24dp));
-        rv_list.add(new RestaurantItem("My Favourite Restaurants", R.drawable.ic_settings));
+        rv_list.add(new RestaurantItem("Lol", R.drawable.ic_settings));
+        rv_list.add(new RestaurantItem("Test", R.drawable.ic_settings));
+        rv_list.add(new RestaurantItem("Random", R.drawable.ic_settings));
+        rv_list.add(new RestaurantItem("Ting", R.drawable.ic_settings));
+
 
 
         RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(rv_list);

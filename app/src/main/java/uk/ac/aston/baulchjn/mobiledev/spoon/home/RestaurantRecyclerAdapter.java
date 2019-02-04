@@ -14,10 +14,10 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.R;
 
 
 public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRecyclerAdapter.ViewHolder> {
-    public List<RestaurantItem> home_list;
+    public List<RestaurantItem> restaurantList;
 
     public RestaurantRecyclerAdapter(List<RestaurantItem> list) {
-        this.home_list = list;
+        this.restaurantList = list;
     }
 
     @NonNull
@@ -30,8 +30,8 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantRecyclerAdapter.ViewHolder holder, int position) {
-        int id = home_list.get(position).getId();
-        String desc = home_list.get(position).getDesc();
+        int id = restaurantList.get(position).getId();
+        String desc = restaurantList.get(position).getDesc();
 
         holder.desc.setText(desc);
         holder.image.setImageResource(id);
@@ -41,7 +41,7 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
 
     @Override
     public int getItemCount() {
-        return home_list.size();
+        return restaurantList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
