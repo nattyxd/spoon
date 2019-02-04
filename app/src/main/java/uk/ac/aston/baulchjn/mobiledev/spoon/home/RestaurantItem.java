@@ -3,19 +3,18 @@ package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 import java.io.Serializable;
 
 public class RestaurantItem implements Serializable {
-    public String desc;
-    public int id;
+    private String name;
+    private String desc;
+    private String vicinity;
+    private String restaurantType;
+    private String telephoneNo;
+    private String starRating;
+    private String imageURL;
+    private boolean visited;
+
     // restaurantName/Address/Type/Phone/Rating/ImageURL/bool visited
 
     public RestaurantItem(){
-
-    }
-
-    public RestaurantItem(String desc, int id) {
-        this.desc = desc;
-        this.id = id;
-
-        // TODO: declare all the shit in the constructor
 
     }
 
@@ -27,13 +26,60 @@ public class RestaurantItem implements Serializable {
         this.desc = desc;
     }
 
-    public int getId() {
-        return id;
+
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    // TODO: GETTERS AND SETTERS FOR ALL THE EXTRA SHIT
+    public String getVicinity() {
+        return vicinity;
+    }
+
+    public void setVicinity(String vicinity) {
+        this.vicinity = vicinity;
+    }
+
+    public String getRestaurantType() {
+        return restaurantType;
+    }
+
+    public void setRestaurantType(String restaurantType) {
+        this.restaurantType = restaurantType;
+    }
+
+    public String getTelephoneNo() {
+        return telephoneNo;
+    }
+
+    public void setTelephoneNo(String telephoneNo) {
+        this.telephoneNo = telephoneNo;
+    }
+
+    public String getStarRating() {
+        return starRating;
+    }
+
+    public void setStarRating(String starRating) {
+        this.starRating = starRating;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
 }

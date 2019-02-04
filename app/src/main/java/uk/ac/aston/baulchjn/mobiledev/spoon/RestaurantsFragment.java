@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.R;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantRecyclerAdapter;
 
@@ -21,11 +23,23 @@ public class RestaurantsFragment extends Fragment {
 
     private List<RestaurantItem> rv_list;
     private RecyclerView recyclerView;
+    public RestaurantsFragment.RestaurantsFragmentInteraction listener;
 
     public RestaurantsFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //initialise the list of restaurant items.
+        List<RestaurantItem> restaurantItems = RestaurantContent.restaurantItems;
+        if (getArguments() != null) {
+            Log.i("RR", "restaurantsFragmentMade");
+
+        }
+        RestaurantContent.jsonRequest(getActivity().getApplicationContext());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,15 +52,6 @@ public class RestaurantsFragment extends Fragment {
 
         rv_list = new ArrayList<>();
         // TODO: Add the home_item_upcomingreservation object to the list here.
-        rv_list.add(new RestaurantItem("Marketing Information", R.drawable.ic_event_white_24dp));
-        rv_list.add(new RestaurantItem("Find Restaurants Quickly", R.drawable.ic_event_white_24dp));
-        rv_list.add(new RestaurantItem("My Restaurant Visits", R.drawable.ic_restaurant_white_24dp));
-        rv_list.add(new RestaurantItem("Lol", R.drawable.ic_settings));
-        rv_list.add(new RestaurantItem("Test", R.drawable.ic_settings));
-        rv_list.add(new RestaurantItem("Random", R.drawable.ic_settings));
-        rv_list.add(new RestaurantItem("Ting", R.drawable.ic_settings));
-
-
 
         RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(rv_list);
 
@@ -55,6 +60,10 @@ public class RestaurantsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return view;
+    }
+
+    public interface RestaurantsFragmentInteraction{
+        void restaurantFragmentInteraction(RestaurantItem restaurantItem);
     }
 
 }
