@@ -61,7 +61,7 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
         private ImageView image;
         public ViewHolder(View itemView) {
             super(itemView);
-            desc = mView.findViewById(R.id.item_desc);
+            desc = this.itemView.findViewById(R.id.item_desc);
         }
     }
 }

@@ -51,8 +51,6 @@ public class RestaurantsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        rv_list = new ArrayList<>();
-
         RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(rv_list);
 
         recyclerView.setAdapter(mAdapter);
