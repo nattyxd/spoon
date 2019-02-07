@@ -22,7 +22,7 @@ import java.util.List;
 
 public class RestaurantContent {
     // Get Data from JSON File
-    public static final String URL_JSON = "XD";
+    public static final String URL_JSON = "https://places.cit.api.here.com/places/v1/discover/search?at=52.4870897%2C-1.8902916&q=american+restaurant&Accept-Language=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8&app_id=auI3sSIwYT1YkAkKkm9f&app_code=UblO-Dyzdg-QCADIYvRWEw#";
     private JsonArrayRequest ArrayRequest;
     private RequestQueue requestQueue;
     public static List<RestaurantItem> restaurantItems = new ArrayList<>();
@@ -41,29 +41,28 @@ public class RestaurantContent {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("results");
-                            System.out.println("I am trying to find you " + jsonArray.toString());
+                            JSONArray jsonArray = response.getJSONObject("results").getJSONArray("items");
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 RestaurantItem restaurantItem = new RestaurantItem();
-
-                                restaurantItem.setName(jsonArray.getJSONObject(i).getString("name"));
-                                restaurantItem.setDesc(jsonArray.getJSONObject(i).getString("description"));
-                                restaurantItem.setVicinity(jsonArray.getJSONObject(i).getString("vicinity"));
-                                restaurantItem.setRestaurantType(jsonArray.getJSONObject(i).getString("types"));
-                                restaurantItem.setImageURL(jsonArray.getJSONObject(i).getString("image_url"));
-                                restaurantItem.setStarRating(jsonArray.getJSONObject(i).getString("rating"));
-//                                 restaurantItem.setRestaurantVisited(jsonArray.getJSONObject(i).getBoolean("restaurantVisited"));
                                 restaurantItems.add(restaurantItem);
+//                                restaurantItem.setName("Test");
+//                                restaurantItem.setDesc("Test");
+                                restaurantItem.setName(jsonArray.getJSONObject(i).getString("title"));
+                                restaurantItem.setDesc(jsonArray.getJSONObject(i).getString("title"));
+                                restaurantItem.setVicinity(jsonArray.getJSONObject(i).getString("vicinity"));
+//                                restaurantItem.setRestaurantType(jsonArray.getJSONObject(i).getString("types"));
+//                                restaurantItem.setImageURL(jsonArray.getJSONObject(i).getString("image_url"));
+//                                restaurantItem.setStarRating(jsonArray.getJSONObject(i).getString("rating"));
+//                                 restaurantItem.setRestaurantVisited(jsonArray.getJSONObject(i).getBoolean("restaurantVisited"));
 //                                ITEM_MAP.put("restaurant", createRestaurantItem(0));
-                                System.out.println("Got restaurant: " + restaurantItem.getName());
+                                Log.i("RestaurantContent", "Got restaurant: " + restaurantItem.getName() + "");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        //ListBookingFragmentInteraction(restaurantItems);
-                        //setupCyclerView(restaurantItems);
+//                        ListBookingFragmentInteraction(restaurantItems);
 
 
                         //  Toast.makeText(RestaurantContent.this, "Size of Listen " + String.valueOf(restaurantItem.size()), Toast.LENGTH_SHORT).show();

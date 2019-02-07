@@ -33,12 +33,13 @@ public class RestaurantsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //initialise the list of restaurant items.
-        List<RestaurantItem> restaurantItems = RestaurantContent.restaurantItems;
         if (getArguments() != null) {
             Log.i("RR", "restaurantsFragmentMade");
 
         }
         RestaurantContent.jsonRequest(getActivity().getApplicationContext());
+        rv_list = RestaurantContent.restaurantItems;
+
     }
 
     @Override
@@ -51,7 +52,6 @@ public class RestaurantsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         rv_list = new ArrayList<>();
-        // TODO: Add the home_item_upcomingreservation object to the list here.
 
         RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(rv_list);
 
