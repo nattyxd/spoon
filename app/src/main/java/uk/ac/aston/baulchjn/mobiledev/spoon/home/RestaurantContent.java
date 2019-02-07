@@ -51,6 +51,11 @@ public class RestaurantContent {
                                 restaurantItem.setName(jsonArray.getJSONObject(i).getString("title"));
                                 restaurantItem.setDesc(jsonArray.getJSONObject(i).getString("title"));
                                 restaurantItem.setVicinity(jsonArray.getJSONObject(i).getString("vicinity"));
+
+                                JSONArray tags = jsonArray.getJSONObject(i).getJSONArray("tags");
+                                for(int j = 0; j < tags.length(); j++){
+                                    restaurantItem.addTag(tags.getJSONObject(j).getString("title"));
+                                }
 //                                restaurantItem.setRestaurantType(jsonArray.getJSONObject(i).getString("types"));
 //                                restaurantItem.setImageURL(jsonArray.getJSONObject(i).getString("image_url"));
 //                                restaurantItem.setStarRating(jsonArray.getJSONObject(i).getString("rating"));

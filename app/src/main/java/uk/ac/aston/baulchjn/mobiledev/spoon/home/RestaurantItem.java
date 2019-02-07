@@ -1,6 +1,7 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class RestaurantItem implements Serializable {
     private String name;
@@ -10,12 +11,13 @@ public class RestaurantItem implements Serializable {
     private String telephoneNo;
     private String starRating;
     private String imageURL;
+    private ArrayList<String> tags;
     private boolean visited;
 
     // restaurantName/Address/Type/Phone/Rating/ImageURL/bool visited
 
     public RestaurantItem(){
-
+        this.tags = new ArrayList<>();
     }
 
     public String getDesc() {
@@ -33,6 +35,14 @@ public class RestaurantItem implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addTag(String tag){
+        this.tags.add(tag);
+    }
+
+    public ArrayList<String> getTags(){
+        return this.tags;
     }
 
     public String getVicinity() {
