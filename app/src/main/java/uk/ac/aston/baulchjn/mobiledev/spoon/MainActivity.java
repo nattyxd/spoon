@@ -4,27 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.BottomNavigationViewHelper;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.deprecated_HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-
-    final Fragment homeFragment = new deprecated_HomeFragment();
-    final Fragment bookingsFragment = new BookingsFragment();
-    final Fragment restaurantsFragment = new RestaurantsFragment();
-    final Fragment mealsFragment = new MealsFragment();
-    final FragmentManager fm = getSupportFragmentManager();
-    Fragment active = homeFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,19 +21,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         BottomNavigationViewHelper.disableShiftMode(navigation);
 
-        fm.beginTransaction().add(R.id.main_container, mealsFragment, "4").hide(mealsFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, restaurantsFragment, "3").hide(restaurantsFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, bookingsFragment, "2").hide(bookingsFragment).commit();
-        fm.beginTransaction().add(R.id.main_container, homeFragment, "1").commit();
-
+        FragmentStateContainer.getInstance().setFragmentManager(getSupportFragmentManager());
+        FragmentStateContainer.getInstance().initialise();
     }
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,35 +36,31 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    fm.beginTransaction().hide(active).show(homeFragment).commit();
-                    active = homeFragment;
+                    FragmentStateContainer.getInstance().switchFragmentState(0);
                     return true;
 
                 case R.id.navigation_bookings:
-                    fm.beginTransaction().hide(active).show(bookingsFragment).commit();
-                    active = bookingsFragment;
+                    FragmentStateContainer.getInstance().switchFragmentState(1);
                     return true;
 
                 case R.id.navigation_restaurants:
-                    fm.beginTransaction().hide(active).show(restaurantsFragment).commit();
-                    active = restaurantsFragment;
+                    FragmentStateContainer.getInstance().switchFragmentState(2);
                     return true;
 
                 case R.id.navigation_meals:
-                    fm.beginTransaction().hide(active).show(mealsFragment).commit();
-                    active = mealsFragment;
+                    FragmentStateContainer.getInstance().switchFragmentState(3);
                     return true;
             }
             return false;
         }
     };
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -94,6 +72,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

@@ -39,7 +39,6 @@ public class RestaurantsFragment extends Fragment {
         }
         RestaurantContent.jsonRequest(getActivity().getApplicationContext());
         rv_list = RestaurantContent.restaurantItems;
-
     }
 
     @Override
