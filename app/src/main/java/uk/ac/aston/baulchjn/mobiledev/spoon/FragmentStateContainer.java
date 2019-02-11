@@ -2,8 +2,12 @@ package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.deprecated_HomeFragment;
 
@@ -14,14 +18,18 @@ public class FragmentStateContainer {
     final Fragment bookingsFragment = new BookingsFragment();
     final Fragment restaurantsFragment = new RestaurantsFragment();
     final Fragment mealsFragment = new MealsFragment();
+    final Fragment restaurantDetailedFragment = new RestaurantDetailedFragment();
     FragmentManager fm = null;
+    private static Activity activity = null;
     Fragment active = homeFragment;
+    public Bundle activeBundle;
 
     private FragmentStateContainer() {
         //
     }
 
     public void initialise() {
+        fm.beginTransaction().add(R.id.main_container, restaurantDetailedFragment, "5").hide(restaurantDetailedFragment).commit();
         fm.beginTransaction().add(R.id.main_container, mealsFragment, "4").hide(mealsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, restaurantsFragment, "3").hide(restaurantsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, bookingsFragment, "2").hide(bookingsFragment).commit();
@@ -31,15 +39,29 @@ public class FragmentStateContainer {
         fragments.add(bookingsFragment);
         fragments.add(restaurantsFragment);
         fragments.add(mealsFragment);
+        fragments.add(restaurantDetailedFragment);
     }
 
-    public void switchFragmentState(int index) {
+    public void switchFragmentState(int index, Bundle bundle) {
         fm.beginTransaction().hide(active).show(fragments.get(index)).commit();
+        activeBundle = bundle;
         active = fragments.get(index);
+        active.onResume();
+
+        Log.i("spoonlogcat", "testing");
+
     }
 
     public void setFragmentManager(FragmentManager manager) {
         fm = manager;
+    }
+
+    public static void setActivity(Activity activity){
+        FragmentStateContainer.activity = activity;
+    }
+
+    public static Activity getActivity(){
+        return FragmentStateContainer.activity;
     }
 
     public static FragmentStateContainer getInstance() {

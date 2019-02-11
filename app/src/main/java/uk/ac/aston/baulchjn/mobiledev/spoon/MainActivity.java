@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentStateContainer.getInstance().setFragmentManager(getSupportFragmentManager());
         FragmentStateContainer.getInstance().initialise();
+        FragmentStateContainer.setActivity(this);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -36,19 +37,19 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    FragmentStateContainer.getInstance().switchFragmentState(0);
+                    FragmentStateContainer.getInstance().switchFragmentState(0, null);
                     return true;
 
                 case R.id.navigation_bookings:
-                    FragmentStateContainer.getInstance().switchFragmentState(1);
+                    FragmentStateContainer.getInstance().switchFragmentState(1, null);
                     return true;
 
                 case R.id.navigation_restaurants:
-                    FragmentStateContainer.getInstance().switchFragmentState(2);
+                    FragmentStateContainer.getInstance().switchFragmentState(2, null);
                     return true;
 
                 case R.id.navigation_meals:
-                    FragmentStateContainer.getInstance().switchFragmentState(3);
+                    FragmentStateContainer.getInstance().switchFragmentState(3, null);
                     return true;
             }
             return false;

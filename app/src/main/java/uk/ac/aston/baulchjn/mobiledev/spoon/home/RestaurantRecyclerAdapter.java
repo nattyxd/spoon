@@ -16,18 +16,18 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.RestaurantsFragment;
 
 public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRecyclerAdapter.ViewHolder> {
     public List<RestaurantItem> restaurantList;
-    public RestaurantsFragment.RestaurantsFragmentInteraction listener;
+    //public RestaurantsFragment.RestaurantsFragmentInteraction listener;
+    private final RestaurantClickListener clickListener;
 
-
-    public RestaurantRecyclerAdapter(List<RestaurantItem> list) {
+    public RestaurantRecyclerAdapter(List<RestaurantItem> list, RestaurantClickListener listener) {
         this.restaurantList = list;
+        this.clickListener = listener;
     }
 
     @NonNull
     @Override
     public RestaurantRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -35,18 +35,20 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.restaurantItem = restaurantList.get(position);
         holder.desc.setText(restaurantList.get(position).getDesc());
+        holder.bind(restaurantList.get(position), clickListener);
+
         //  holder.rrate.setText(restaurantItems.get(position).getRestaurantRating());
         // smooth image loading
         //Glide.with(mListener).load(mData.get(position).getImage_url()).into(RestaurantThumbnail);
         //holder.RestaurantThumbnail.setImageResource(image_url);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(null!= listener){
                     listener.restaurantFragmentInteraction(holder.restaurantItem);
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -59,9 +61,18 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
         private View mView;
         private TextView desc;
         private ImageView image;
+
         public ViewHolder(View itemView) {
             super(itemView);
             desc = this.itemView.findViewById(R.id.item_desc);
+        }
+
+        public void bind(final RestaurantItem item, final RestaurantClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
         }
     }
 }

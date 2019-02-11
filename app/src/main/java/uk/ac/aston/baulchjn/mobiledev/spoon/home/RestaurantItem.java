@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 public class RestaurantItem implements Serializable {
     private String name;
-    private String desc;
+    private String desc; // Not populated
     private String vicinity;
-    private String restaurantType;
-    private String telephoneNo;
-    private String starRating;
-    private String imageURL;
+    private String restaurantType; // Not populated
+    private String telephoneNo; // Not populated
+    private String starRating; // Not populated
+    private String imageURL; // Not populated
     private ArrayList<String> tags;
     private boolean visited;
 
