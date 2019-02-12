@@ -31,7 +31,7 @@ public class FragmentStateContainer {
     }
 
     public void initialise() {
-//        fm.beginTransaction().add(R.id.main_container, bookRestaurantFragment, "6").hide(bookRestaurantFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, bookRestaurantFragment, "6").hide(bookRestaurantFragment).commit();
         fm.beginTransaction().add(R.id.main_container, restaurantDetailedFragment, "5").hide(restaurantDetailedFragment).commit();
         fm.beginTransaction().add(R.id.main_container, mealsFragment, "4").hide(mealsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, restaurantsFragment, "3").hide(restaurantsFragment).commit();
@@ -43,6 +43,7 @@ public class FragmentStateContainer {
         fragments.add(restaurantsFragment);
         fragments.add(mealsFragment);
         fragments.add(restaurantDetailedFragment);
+        fragments.add(bookRestaurantFragment);
     }
 
     public void switchFragmentState(int index, Bundle bundle) {
@@ -60,8 +61,7 @@ public class FragmentStateContainer {
     }
 
     public void bookRestaurant(RestaurantItem restaurant){
-        fm.beginTransaction().hide(active).show(fragments.get(6)).commit();
-        active.onResume();
+        switchFragmentState(5, null);
     }
 
     public void setFragmentManager(FragmentManager manager) {

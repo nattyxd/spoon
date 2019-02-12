@@ -84,8 +84,9 @@ public class RestaurantDetailedFragment extends Fragment {
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FragmentStateContainer.getInstance().bookRestaurant(restaurant);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("restaurant", restaurant);
+                FragmentStateContainer.getInstance().switchFragmentState(5, bundle);
             }
         });
 
