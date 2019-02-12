@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
+
 
 /**
  *
@@ -25,11 +27,13 @@ public class RestaurantDetailedFragment extends Fragment {
     private static final String ARG_NAME = "name";
     private static final String ARG_VICINITY = "vicinity";
     private static final String ARG_TAGS = "tags";
+    private static final String ARG_RESTAURANT = "restaurant";
 
     // TODO: Rename and change types of parameters
     private String name;
     private String vicinity;
     private ArrayList<String> tags;
+    private RestaurantItem restaurant;
 
     public RestaurantDetailedFragment() {
         // Required empty public constructor
@@ -47,6 +51,7 @@ public class RestaurantDetailedFragment extends Fragment {
             nameView.setText(bundle.getString("name"));
             vicinityView.setText(bundle.getString("vicinity"));
             tagsView.setText(bundle.getStringArrayList("tags").toString());
+            restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
         }
     }
 
@@ -57,6 +62,7 @@ public class RestaurantDetailedFragment extends Fragment {
             name = getArguments().getString(ARG_NAME);
             vicinity = getArguments().getString(ARG_VICINITY);
             tags = getArguments().getStringArrayList(ARG_TAGS);
+            restaurant = (RestaurantItem) getArguments().getSerializable("restaurant");
         }
     }
 
@@ -79,9 +85,7 @@ public class RestaurantDetailedFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                Intent int1= new Intent(MainActivity.this,xxactivity.class);
-//                startActivity(int1);
-                Log.i("spoonlogcat", "we need to launch the make booking fragment now");
+                FragmentStateContainer.getInstance().bookRestaurant(restaurant);
             }
         });
 

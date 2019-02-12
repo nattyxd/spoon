@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.deprecated_HomeFragment;
 
 public class FragmentStateContainer {
@@ -19,6 +20,7 @@ public class FragmentStateContainer {
     final Fragment restaurantsFragment = new RestaurantsFragment();
     final Fragment mealsFragment = new MealsFragment();
     final Fragment restaurantDetailedFragment = new RestaurantDetailedFragment();
+    final Fragment bookRestaurantFragment = new BookRestaurantFragment();
     FragmentManager fm = null;
     private static Activity activity = null;
     Fragment active = homeFragment;
@@ -29,6 +31,7 @@ public class FragmentStateContainer {
     }
 
     public void initialise() {
+//        fm.beginTransaction().add(R.id.main_container, bookRestaurantFragment, "6").hide(bookRestaurantFragment).commit();
         fm.beginTransaction().add(R.id.main_container, restaurantDetailedFragment, "5").hide(restaurantDetailedFragment).commit();
         fm.beginTransaction().add(R.id.main_container, mealsFragment, "4").hide(mealsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, restaurantsFragment, "3").hide(restaurantsFragment).commit();
@@ -50,6 +53,15 @@ public class FragmentStateContainer {
 
         Log.i("spoonlogcat", "testing");
 
+    }
+
+    public void launchRestaurantDetailed(RestaurantItem restaurant){
+//        FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
+    }
+
+    public void bookRestaurant(RestaurantItem restaurant){
+        fm.beginTransaction().hide(active).show(fragments.get(6)).commit();
+        active.onResume();
     }
 
     public void setFragmentManager(FragmentManager manager) {

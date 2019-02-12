@@ -53,6 +53,10 @@ public class RestaurantsFragment extends Fragment {
                 bundle.putString("name", item.getName());
                 bundle.putString("vicinity", item.getVicinity());
                 bundle.putStringArrayList("tags", item.getTags());
+                bundle.putSerializable("restaurant", item);
+
+
+                // launch the RestaurantDetailedFragment with the correct restaurant
                 FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
             }
         });
