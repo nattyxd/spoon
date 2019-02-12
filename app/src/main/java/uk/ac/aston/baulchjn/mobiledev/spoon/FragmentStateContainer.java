@@ -56,13 +56,6 @@ public class FragmentStateContainer {
 
     }
 
-    public void launchRestaurantDetailed(RestaurantItem restaurant){
-//        FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
-    }
-
-    public void bookRestaurant(RestaurantItem restaurant){
-        switchFragmentState(5, null);
-    }
 
     public void setFragmentManager(FragmentManager manager) {
         fm = manager;
