@@ -71,14 +71,14 @@ public class RestaurantDetailedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_detailed, container, false);
-        TextView nameView = view.findViewById(R.id.restaurant_name);
-        TextView vicinityView = view.findViewById(R.id.restaurant_vicinity);
-        TextView tagsView = view.findViewById(R.id.restaurant_tags);
-
-        nameView.setText(name);
-        vicinityView.setText(vicinity);
-        tagsView.setText(tags != null ? tags.toString() : "");
-
+//        TextView nameView = view.findViewById(R.id.restaurant_name);
+//        TextView vicinityView = view.findViewById(R.id.restaurant_vicinity);
+//        TextView tagsView = view.findViewById(R.id.restaurant_tags);
+//
+//        nameView.setText(name);
+//        vicinityView.setText(vicinity);
+//        tagsView.setText(tags != null ? tags.toString() : "");
+//
         Button bookBtn = view.findViewById(R.id.book_btn);
 
         bookBtn.setOnClickListener(new View.OnClickListener() {
