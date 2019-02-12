@@ -29,6 +29,7 @@
 
     <!-- Restaurant Booking Strings -->
     <string name="en_bookrestaurant_title">Book a Restaurant</string>
+    <string name="en_bookrestaurants_wrongrestaurant">Wrong restaurant? Go to "Restaurants" to select a new one.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
