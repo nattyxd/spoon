@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">spoon</string>
+    <string name="restaurant_db_name">RESTAURANT_DB</string>
     <string name="title_home">Home</string>
     <string name="title_bookings">Bookings</string>
     <string name="title_restaurants">Restaurants</string>
@@ -29,6 +30,7 @@
 
     <!-- Restaurant Booking Strings -->
     <string name="en_bookrestaurant_title">Book a Restaurant</string>
+    <string name="en_bookrestaurant_youarebooking">You are booking: "%1$s"</string>
     <string name="en_bookrestaurants_wrongrestaurant">Wrong restaurant? Go to "Restaurants" to select a new one.</string>
 
 

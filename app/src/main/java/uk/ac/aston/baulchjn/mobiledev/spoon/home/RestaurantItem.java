@@ -1,9 +1,27 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.Room.*;
+import android.arch.persistence.room.Update;
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.RestaurantDatabase;
+
+@Entity
 public class RestaurantItem implements Serializable {
+    @NonNull
+    @PrimaryKey
+    private String hereID;
     private String name;
     private String desc; // Not populated
     private String vicinity;
@@ -11,14 +29,24 @@ public class RestaurantItem implements Serializable {
     private String telephoneNo; // Not populated
     private String starRating; // Not populated
     private String imageURL; // Not populated
-    private ArrayList<String> tags;
+    private String tag1;
+    private String tag2;
+    private String tag3;
     private boolean visited;
+
+
+
+
 
     // restaurantName/Address/Type/Phone/Rating/ImageURL/bool visited
 
     public RestaurantItem(){
-        this.tags = new ArrayList<>();
+//        this.tags = new ArrayList<>();
     }
+
+    public String getHereID() { return hereID;}
+
+    public void setHereID(String hereID){ this.hereID = hereID; }
 
     public String getDesc() {
         return desc;
@@ -37,13 +65,17 @@ public class RestaurantItem implements Serializable {
         this.name = name;
     }
 
-    public void addTag(String tag){
-        this.tags.add(tag);
-    }
+    public void setTag1(String tag1) { this.tag1 = tag1; }
 
-    public ArrayList<String> getTags(){
-        return this.tags;
-    }
+    public void setTag2(String tag2) { this.tag2 = tag2; }
+
+    public void setTag3(String tag3) { this.tag3 = tag3; }
+
+    public String getTag1() { return tag1; }
+
+    public String getTag2 () { return tag2; }
+
+    public String getTag3 () { return tag3; }
 
     public String getVicinity() {
         return vicinity;

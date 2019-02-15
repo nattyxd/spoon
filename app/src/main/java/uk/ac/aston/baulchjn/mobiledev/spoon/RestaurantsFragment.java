@@ -30,13 +30,10 @@ public class RestaurantsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //initialise the list of restaurant items.
-        if (getArguments() != null) {
-            Log.i("RR", "restaurantsFragmentMade");
-        }
 
-        RestaurantContent.jsonRequest(getActivity().getApplicationContext());
-        rv_list = RestaurantContent.restaurantItems;
+        rv_list = new ArrayList<>();
+
+
     }
 
     @Override
@@ -46,13 +43,15 @@ public class RestaurantsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.restaurants_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(rv_list, new RestaurantClickListener() {
+        RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(RestaurantContent.restaurantItems, new RestaurantClickListener() {
             @Override
             public void onItemClick(RestaurantItem item) {
                 Bundle bundle = new Bundle();
                 bundle.putString("name", item.getName());
                 bundle.putString("vicinity", item.getVicinity());
-                bundle.putStringArrayList("tags", item.getTags());
+                bundle.putString("tag1", item.getTag1());
+                bundle.putString("tag2", item.getTag2());
+                bundle.putString("tag3", item.getTag3());
                 bundle.putSerializable("restaurant", item);
 
 
@@ -63,6 +62,9 @@ public class RestaurantsFragment extends Fragment {
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        RestaurantContent.jsonRequest(getActivity().getApplicationContext(), mAdapter);
+        //rv_list = RestaurantContent.restaurantItems;
         return view;
     }
 }

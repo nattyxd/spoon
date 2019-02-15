@@ -26,13 +26,17 @@ public class RestaurantDetailedFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_NAME = "name";
     private static final String ARG_VICINITY = "vicinity";
-    private static final String ARG_TAGS = "tags";
+    private static final String ARG_TAG1 = "tag1";
+    private static final String ARG_TAG2 = "tag2";
+    private static final String ARG_TAG3 = "tag3";
     private static final String ARG_RESTAURANT = "restaurant";
 
     // TODO: Rename and change types of parameters
     private String name;
     private String vicinity;
-    private ArrayList<String> tags;
+    private String tag1;
+    private String tag2;
+    private String tag3;
     private RestaurantItem restaurant;
 
     public RestaurantDetailedFragment() {
@@ -50,7 +54,9 @@ public class RestaurantDetailedFragment extends Fragment {
         if (bundle != null) {
             nameView.setText(bundle.getString("name"));
             vicinityView.setText(bundle.getString("vicinity"));
-            tagsView.setText(bundle.getStringArrayList("tags").toString());
+
+            // Logic to set tags
+            tagsView.setText("This needs updating.. but for now just have the first tag: " + bundle.getString("tag1"));
             restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
         }
     }
@@ -61,7 +67,9 @@ public class RestaurantDetailedFragment extends Fragment {
         if (getArguments() != null) {
             name = getArguments().getString(ARG_NAME);
             vicinity = getArguments().getString(ARG_VICINITY);
-            tags = getArguments().getStringArrayList(ARG_TAGS);
+            tag1 = getArguments().getString(ARG_TAG1);
+            tag2 = getArguments().getString(ARG_TAG2);
+            tag3 = getArguments().getString(ARG_TAG3);
             restaurant = (RestaurantItem) getArguments().getSerializable("restaurant");
         }
     }
@@ -73,11 +81,11 @@ public class RestaurantDetailedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant_detailed, container, false);
 //        TextView nameView = view.findViewById(R.id.restaurant_name);
 //        TextView vicinityView = view.findViewById(R.id.restaurant_vicinity);
-//        TextView tagsView = view.findViewById(R.id.restaurant_tags);
+        TextView tagsView = view.findViewById(R.id.restaurant_tags);
 //
 //        nameView.setText(name);
 //        vicinityView.setText(vicinity);
-//        tagsView.setText(tags != null ? tags.toString() : "");
+        tagsView.setText("Replace this with tag1,tag2,tag3, etc");
 //
         Button bookBtn = view.findViewById(R.id.book_btn);
 

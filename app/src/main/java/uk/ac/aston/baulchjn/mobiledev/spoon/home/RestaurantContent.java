@@ -32,7 +32,7 @@ public class RestaurantContent {
      * Json call for real data
      */
 
-    public static void jsonRequest(Context context) {
+    public static void jsonRequest(Context context, final RestaurantRecyclerAdapter adapter) {
         RequestQueue requestQueue = (RequestQueue) Volley.newRequestQueue(context);
         JsonObjectRequest arrayRequest = new JsonObjectRequest(Request.Method.GET, URL_JSON, null,
                 new Response.Listener<JSONObject>() {
@@ -48,13 +48,21 @@ public class RestaurantContent {
                                 restaurantItems.add(restaurantItem);
 //                                restaurantItem.setName("Test");
 //                                restaurantItem.setDesc("Test");
+                                restaurantItem.setHereID(jsonArray.getJSONObject(i).getString("id"));
                                 restaurantItem.setName(jsonArray.getJSONObject(i).getString("title"));
                                 restaurantItem.setDesc(jsonArray.getJSONObject(i).getString("title"));
                                 restaurantItem.setVicinity(jsonArray.getJSONObject(i).getString("vicinity"));
 
                                 JSONArray tags = jsonArray.getJSONObject(i).getJSONArray("tags");
                                 for(int j = 0; j < tags.length(); j++){
-                                    restaurantItem.addTag(tags.getJSONObject(j).getString("title"));
+                                    switch(j) {
+                                        case 0: restaurantItem.setTag1(tags.getJSONObject(j).getString("title"));
+                                            break;
+                                        case 1: restaurantItem.setTag2(tags.getJSONObject(j).getString("title"));
+                                            break;
+                                        case 2: restaurantItem.setTag3(tags.getJSONObject(j).getString("title"));
+                                            break;
+                                    }
                                 }
 //                                restaurantItem.setRestaurantType(jsonArray.getJSONObject(i).getString("types"));
 //                                restaurantItem.setImageURL(jsonArray.getJSONObject(i).getString("image_url"));
@@ -63,6 +71,7 @@ public class RestaurantContent {
 //                                ITEM_MAP.put("restaurant", createRestaurantItem(0));
                                 Log.i("RestaurantContent", "Got restaurant: " + restaurantItem.getName() + "");
                             }
+                            adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
