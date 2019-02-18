@@ -55,4 +55,73 @@
         app:layout_constraintTop_toBottomOf="@+id/youAreBooking"
         tools:text="@string/en_bookrestaurants_wrongrestaurant" />
 
+    <EditText
+        android:id="@+id/bookRestaurantDateEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/bookRestaurantTimeEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookRestaurantDateEditText" />
+
+    <EditText
+        android:id="@+id/bookRestaurantNumPeopleEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookRestaurantTimeEditText" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Date:"
+        app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantDateEditText"
+        app:layout_constraintEnd_toStartOf="@+id/bookRestaurantDateEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookRestaurantDateEditText" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Time:"
+        app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantTimeEditText"
+        app:layout_constraintEnd_toStartOf="@+id/bookRestaurantTimeEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookRestaurantTimeEditText" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Number of People:"
+        app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantNumPeopleEditText"
+        app:layout_constraintEnd_toStartOf="@+id/bookRestaurantNumPeopleEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookRestaurantNumPeopleEditText" />
+
 </android.support.constraint.ConstraintLayout>
