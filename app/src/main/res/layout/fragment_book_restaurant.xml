@@ -59,6 +59,8 @@
         android:id="@+id/bookRestaurantDateEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:focusable="false"
+        android:longClickable="false"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
@@ -78,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/bookRestaurantDateEditText" />
 
     <EditText
-        android:id="@+id/bookRestaurantNumPeopleEditText"
+        android:id="@+id/editText6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -119,9 +121,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="Number of People:"
-        app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantNumPeopleEditText"
-        app:layout_constraintEnd_toStartOf="@+id/bookRestaurantNumPeopleEditText"
+        app:layout_constraintBottom_toBottomOf="@+id/editText6"
+        app:layout_constraintEnd_toStartOf="@+id/editText6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bookRestaurantNumPeopleEditText" />
+        app:layout_constraintTop_toTopOf="@+id/editText6" />
 
 </android.support.constraint.ConstraintLayout>
