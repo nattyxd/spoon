@@ -1,6 +1,7 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -98,8 +100,7 @@ public class BookRestaurantFragment extends Fragment {
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -126,6 +127,27 @@ public class BookRestaurantFragment extends Fragment {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        final EditText timeEditor = view.findViewById(R.id.bookRestaurantTimeEditText);
+        final TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+
+                        timeEditor.setText(hourOfDay + ":" + minute);
+                    }
+                }, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), true);
+
+        timeEditor.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                timePickerDialog.show();
+            }
+        });
+
 
 
 
