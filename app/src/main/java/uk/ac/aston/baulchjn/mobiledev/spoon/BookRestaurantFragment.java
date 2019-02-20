@@ -135,8 +135,14 @@ public class BookRestaurantFragment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                        String formattedMinute;
+                        if(Integer.toString(minute).length() == 1){
+                            formattedMinute = "0" + minute;
+                        } else {
+                            formattedMinute = Integer.toString(minute);
+                        }
 
-                        timeEditor.setText(hourOfDay + ":" + minute);
+                        timeEditor.setText(hourOfDay + ":" + formattedMinute);
                     }
                 }, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), true);
 
