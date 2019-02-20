@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
 
@@ -41,9 +42,15 @@ public class BookRestaurantFragment extends Fragment {
     private ArrayList<String> tags;
     private RestaurantItem restaurant;
 
-// TODO BROKEN
+    // Fragment Controls
+    private EditText timeEditor;
+    private EditText dateEditor;
+    private EditText numAttendeesEditor;
+
+    // TODO BROKEN
     private final String DATABASE_NAME = "RESTAURANT_DB";
-//    private final String DATABASE_NAME = getContext().getResources().getString(R.string.restaurant_db_name);
+    //    private final String DATABASE_NAME = getContext().getResources().getString(R.string.restaurant_db_name);
+    private BookingDatabase bookingDatabase;
     private RestaurantDatabase restaurantDatabase;
 
 
@@ -64,14 +71,7 @@ public class BookRestaurantFragment extends Fragment {
 
             TextView youAreBooking = view.findViewById(R.id.youAreBooking);
             youAreBooking.setText(getString(R.string.en_bookrestaurant_youarebooking, restaurant.getName()));
-
-
-        } else {
-            // TODO: Throw exception, but breaks it at the moment
-//            throw new IllegalStateException("Ok sick yeah you wanna book a restaurant but didn't give me one...");
         }
-
-
     }
 
     @Override
@@ -96,7 +96,9 @@ public class BookRestaurantFragment extends Fragment {
 
         final Calendar myCalendar = Calendar.getInstance();
 
-        final EditText edittext= view.findViewById(R.id.bookRestaurantDateEditText);
+        numAttendeesEditor = view.findViewById(R.id.bookRestaurantNumAttendeesEditor);
+
+        dateEditor = view.findViewById(R.id.bookRestaurantDateEditText);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -108,16 +110,16 @@ public class BookRestaurantFragment extends Fragment {
                 updateLabel();
             }
 
-            private void updateLabel(){
+            private void updateLabel() {
                 String myFormat = "dd/MM/yy"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
 
-                edittext.setText(sdf.format(myCalendar.getTime()));
+                dateEditor.setText(sdf.format(myCalendar.getTime()));
             }
 
         };
 
-        edittext.setOnClickListener(new View.OnClickListener() {
+        dateEditor.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -128,7 +130,7 @@ public class BookRestaurantFragment extends Fragment {
             }
         });
 
-        final EditText timeEditor = view.findViewById(R.id.bookRestaurantTimeEditText);
+        timeEditor = view.findViewById(R.id.bookRestaurantTimeEditText);
         final TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
                 new TimePickerDialog.OnTimeSetListener() {
 
@@ -136,7 +138,7 @@ public class BookRestaurantFragment extends Fragment {
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         String formattedMinute;
-                        if(Integer.toString(minute).length() == 1){
+                        if (Integer.toString(minute).length() == 1) {
                             formattedMinute = "0" + minute;
                         } else {
                             formattedMinute = Integer.toString(minute);
@@ -155,38 +157,63 @@ public class BookRestaurantFragment extends Fragment {
         });
 
 
-
-
 //        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                RestaurantItem restaurantItem = new RestaurantItem();
-//                restaurantItem.setDesc("Description");
-//                restaurantItem.setName("Restaurant Nameeeeee");
-//                restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurantItem);
-//            }
-//        }) .start();
+////            @Override
+////            public void run() {
+////                RestaurantItem restaurantItem = new RestaurantItem();
+////                restaurantItem.setDesc("Description");
+////                restaurantItem.setName("Restaurant Nameeeeee");
+////                restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurantItem);
+////            }
+////        }) .start();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 RestaurantItem restaurantItem = restaurantDatabase.daoAccess().fetchOneRestaurantbyName("Restaurant Name");
                 System.out.println("the restaurant you asked for is..." + restaurantItem);
             }
-        }) .start();
-
-//        TextView vicinityView = view.findViewById(R.id.restaurant_vicinity);
-//        TextView tagsView = view.findViewById(R.id.restaurant_tags);
-//
-//        nameView.setText(name);
-//        vicinityView.setText(vicinity);
-//        tagsView.setText(tags != null ? tags.toString() : "");
-//
+        }).start();
         Button bookBtn = view.findViewById(R.id.createBookingBtn);
 
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Ready to make the restaurant booking now");
+                // Take a big breath. We're going to make a booking..
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Form validation
+                        if(dateEditor.getText().toString() == null || !dateEditor.getText().toString().isEmpty()){
+                            Toast.makeText(getContext(), "Please ensure you select a date.", Toast.LENGTH_LONG);
+                            return;
+                        }
+
+                        if(timeEditor.getText().toString() == null || !timeEditor.getText().toString().isEmpty()){
+                            Toast.makeText(getContext(), "Please ensure you select a time.", Toast.LENGTH_LONG);
+                            return;
+                        }
+
+                        if(numAttendeesEditor.getText().toString() == null || !numAttendeesEditor.getText().toString().isEmpty()){
+                            Toast.makeText(getContext(), "Please ensure you select a number of attendees.", Toast.LENGTH_LONG);
+                            System.out.println("Exit thread gracefully");
+
+                            return;
+                        }
+
+                        System.out.println(numAttendeesEditor.getText().toString() == null || !numAttendeesEditor.getText().toString().isEmpty());
+                        System.out.println("The number of attendees is equal to: ");
+                        System.out.println(numAttendeesEditor.getText().toString());
+
+                        BookingItem booking = new BookingItem();
+                        booking.setRestaurantID(restaurant.getHereID());
+                        booking.setDateOfBooking(dateEditor.getText().toString());
+                        booking.setTimeOfBooking(timeEditor.getText().toString());
+                        booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
+                        bookingDatabase.daoAccess().insertSingleBookingItem(booking);
+
+                        restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurant);
+                    }
+                }).start();
             }
         });
 
