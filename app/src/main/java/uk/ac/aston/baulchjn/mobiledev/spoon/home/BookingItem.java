@@ -22,11 +22,11 @@ public class BookingItem implements Serializable {
     }
 
     @NonNull
-    public String getBookingID() {
+    public Integer getBookingID() {
         return bookingID;
     }
 
-    public void setBookingID(@NonNull String bookingID) {
+    public void setBookingID(@NonNull Integer bookingID) {
         this.bookingID = bookingID;
     }
 

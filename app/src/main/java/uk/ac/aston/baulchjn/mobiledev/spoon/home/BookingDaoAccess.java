@@ -12,13 +12,13 @@ import java.util.List;
 public interface BookingDaoAccess {
 
     @Insert
-    void insertSingleBookingItem(BookingItem restaurantItem);
+    void insertSingleBookingItem(BookingItem bookingItem);
     @Insert
     void insertMultipleBookingItems (List<BookingItem> bookingItemList);
-    @Query("SELECT * FROM BookingItem WHERE name = :name")
-    RestaurantItem fetchOneBookingbyName(String name);
-    @Query("SELECT * FROM BookingItem WHERE bookingID = :ID")
-    RestaurantItem fetchOneBookingbyID(String ID);
+    @Query("SELECT * FROM BookingItem WHERE bookingID = :bookingID")
+    BookingItem fetchOneBookingbyName(String bookingID);
+    @Query("SELECT * FROM BookingItem WHERE bookingID = :bookingID")
+    BookingItem fetchOneBookingbyID(String bookingID);
 
 
     @Update
