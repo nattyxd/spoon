@@ -5,9 +5,12 @@ import android.app.TimePickerDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,6 +87,11 @@ public class BookRestaurantFragment extends Fragment {
 
         restaurantDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
                 RestaurantDatabase.class, DATABASE_NAME)
+                .fallbackToDestructiveMigration()
+                .build();
+
+        bookingDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
+                BookingDatabase.class, DATABASE_NAME)
                 .fallbackToDestructiveMigration()
                 .build();
     }
@@ -175,6 +183,8 @@ public class BookRestaurantFragment extends Fragment {
         }).start();
         Button bookBtn = view.findViewById(R.id.createBookingBtn);
 
+
+
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,25 +192,26 @@ public class BookRestaurantFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         // Form validation
-                        if(dateEditor.getText().toString() == null || !dateEditor.getText().toString().isEmpty()){
-                            Toast.makeText(getContext(), "Please ensure you select a date.", Toast.LENGTH_LONG);
+                        if (dateEditor.getText().toString() == null || dateEditor.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please ensure you select a date.", Toast.LENGTH_LONG).show();
                             return;
                         }
 
-                        if(timeEditor.getText().toString() == null || !timeEditor.getText().toString().isEmpty()){
-                            Toast.makeText(getContext(), "Please ensure you select a time.", Toast.LENGTH_LONG);
+                        if (timeEditor.getText().toString() == null || timeEditor.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please ensure you select a time.", Toast.LENGTH_LONG).show();
                             return;
                         }
 
-                        if(numAttendeesEditor.getText().toString() == null || !numAttendeesEditor.getText().toString().isEmpty()){
-                            Toast.makeText(getContext(), "Please ensure you select a number of attendees.", Toast.LENGTH_LONG);
+                        if (numAttendeesEditor.getText().toString() == null || numAttendeesEditor.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please ensure you select a number of attendees.", Toast.LENGTH_LONG).show();
                             System.out.println("Exit thread gracefully");
 
                             return;
                         }
 
-                        System.out.println(numAttendeesEditor.getText().toString() == null || !numAttendeesEditor.getText().toString().isEmpty());
+                        System.out.println(numAttendeesEditor.getText().toString() == null || numAttendeesEditor.getText().toString().isEmpty());
                         System.out.println("The number of attendees is equal to: ");
                         System.out.println(numAttendeesEditor.getText().toString());
 
@@ -211,7 +222,11 @@ public class BookRestaurantFragment extends Fragment {
                         booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
                         bookingDatabase.daoAccess().insertSingleBookingItem(booking);
 
-                        restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurant);
+                        try{
+                            restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurant);
+                        } catch(SQLiteConstraintException e){
+                            // the restaurant already exists
+                        }
                     }
                 }).start();
             }
