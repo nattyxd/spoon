@@ -1,42 +1,70 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingClickListener;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingRecyclerAdapter;
+
 public class BookingsFragment extends Fragment {
-    public TextView countTv;
-    public Button countBtn;
+    private List<BookingItem> rv_list;
+    private RecyclerView recyclerView;
 
     public BookingsFragment() {
         // Required empty public constructor
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        rv_list = new ArrayList<>();
+
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bookings, container, false);
-        countTv = view.findViewById(R.id.count_tv);
-        countTv.setText("0");
-        countBtn = view.findViewById(R.id.count_btn);
-        countBtn.setOnClickListener(new View.OnClickListener() {
+        recyclerView = view.findViewById(R.id.bookings_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        BookingRecyclerAdapter mAdapter = new BookingRecyclerAdapter(BookingContent.bookingItems, new BookingClickListener() {
             @Override
-            public void onClick(View v) {
-                increaseCount();
+            public void onItemClick(BookingItem item) {
+                Bundle bundle = new Bundle();
+                bundle.putString("date", item.getDateOfBooking());
+                bundle.putString("time", item.getTimeOfBooking());
+                bundle.putInt("numAttendees", item.getNumPeopleAttending());
+
+                // TODO: put the other things associated with the booking in here later
+                bundle.putSerializable("booking", item);
+
+
+                // TODO: launch the RestaurantDetailedFragment with the correct restaurant
+                FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
             }
         });
-        return view;
-    }
 
-    private void increaseCount() {
-        int current = Integer.parseInt((String) countTv.getText());
-        countTv.setText(String.valueOf(current+1));
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        BookingContent.populateBookings();
+//        BookingContent.jsonRequest(getActivity().getApplicationContext(), mAdapter); // prob need to replace with like BookingContent.getContent
+        //rv_list = RestaurantContent.restaurantItems;
+        return view;
     }
 }
