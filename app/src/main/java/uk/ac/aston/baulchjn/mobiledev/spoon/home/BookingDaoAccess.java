@@ -19,7 +19,8 @@ public interface BookingDaoAccess {
     BookingItem fetchOneBookingbyName(String bookingID);
     @Query("SELECT * FROM BookingItem WHERE bookingID = :bookingID")
     BookingItem fetchOneBookingbyID(String bookingID);
-
+    @Query("SELECT * FROM BookingItem")
+    List<BookingItem> fetchAllBookings();
 
     @Update
     void updateBooking(BookingItem bookingItem);

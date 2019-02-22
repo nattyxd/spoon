@@ -16,9 +16,13 @@ public class BookingContent {
     public static List<BookingItem> bookingItems = new ArrayList<>();
     private static BookingDatabase bookingDatabase;
     private static Context context;
+    private static BookingRecyclerAdapter bookingRecyclerAdapter;
 
-    public static void populateBookings(Context applicationContext) {
+    private final static String DATABASE_NAME = "RESTAURANT_DB";
+
+    public static void populateBookings(Context applicationContext, BookingRecyclerAdapter adapter) {
         context = applicationContext;
+        bookingRecyclerAdapter = adapter;
 
         bookingDatabase = Room.databaseBuilder(context,
                 BookingDatabase.class, DATABASE_NAME)
@@ -34,21 +38,15 @@ public class BookingContent {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                BookingItem booking = new BookingItem();
-                booking.setRestaurantID(booking.getHereID());
-                booking.setDateOfBooking(dateEditor.getText().toString());
-                booking.setTimeOfBooking(timeEditor.getText().toString());
-                booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
-                bookingDatabase.daoAccess().insertSingleBookingItem(booking);
 
                 try{
-                    restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurant);
+                    bookingItems = bookingDatabase.daoAccess().fetchAllBookings();
+                    // TODO: Synchronisation issue here, we notify before query complete
+                    bookingRecyclerAdapter.notifyDataSetChanged();
                 } catch(SQLiteConstraintException e){
                     // the restaurant already exists
                 }
             }
         }).start();
-        BookingItem bookingItem = new BookingItem();
-        bookingItems.add(bookingItem);
     }
 }

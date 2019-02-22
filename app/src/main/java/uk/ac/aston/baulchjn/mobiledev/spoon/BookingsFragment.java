@@ -62,7 +62,7 @@ public class BookingsFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        BookingContent.populateBookings();
+        BookingContent.populateBookings(getContext(), mAdapter);
 //        BookingContent.jsonRequest(getActivity().getApplicationContext(), mAdapter); // prob need to replace with like BookingContent.getContent
         //rv_list = RestaurantContent.restaurantItems;
         return view;
