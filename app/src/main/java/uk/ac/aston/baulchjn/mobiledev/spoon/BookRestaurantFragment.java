@@ -2,7 +2,9 @@ package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
@@ -85,13 +87,40 @@ public class BookRestaurantFragment extends Fragment {
 
         }
 
+        // DB Migrations
+        final Migration FROM_1_TO_2 = new Migration(1, 2) {
+            @Override
+            public void migrate(final SupportSQLiteDatabase database) {
+                //
+            }
+        };
+
+        final Migration MIGRATION_2_1 = new Migration(2, 1) {
+            @Override
+            public void migrate(final SupportSQLiteDatabase database) {
+                //
+            }
+        };
+
+        final Migration MIGRATION_1_2 = new Migration(1, 2) {
+            @Override
+            public void migrate(SupportSQLiteDatabase database) {
+                //
+            }
+        };
+
+
         restaurantDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
                 RestaurantDatabase.class, DATABASE_NAME)
+//                .addMigrations(MIGRATION_1_2)
+//                .addMigrations(MIGRATION_2_1)
                 .fallbackToDestructiveMigration()
                 .build();
 
         bookingDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
                 BookingDatabase.class, DATABASE_NAME)
+//                .addMigrations(MIGRATION_1_2)
+//                .addMigrations(MIGRATION_2_1)
                 .fallbackToDestructiveMigration()
                 .build();
     }
@@ -220,7 +249,8 @@ public class BookRestaurantFragment extends Fragment {
                         booking.setDateOfBooking(dateEditor.getText().toString());
                         booking.setTimeOfBooking(timeEditor.getText().toString());
                         booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
-                        bookingDatabase.daoAccess().insertSingleBookingItem(booking);
+                        long l = bookingDatabase.daoAccess().insertSingleBookingItem(booking);
+                        Log.i("spoonlogcat", "L is: " + l);
 
                         try{
                             restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurant);

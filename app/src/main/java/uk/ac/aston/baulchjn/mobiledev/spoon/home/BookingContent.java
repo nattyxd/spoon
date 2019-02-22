@@ -1,7 +1,9 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 
@@ -24,8 +26,24 @@ public class BookingContent {
         context = applicationContext;
         bookingRecyclerAdapter = adapter;
 
+        final Migration FROM_2_TO_1 = new Migration(2, 1) {
+            @Override
+            public void migrate(final SupportSQLiteDatabase database) {
+                //
+            }
+        };
+        final Migration MIGRATION_1_2 = new Migration(1, 2) {
+            @Override
+            public void migrate(SupportSQLiteDatabase database) {
+                //
+            }
+        };
+
         bookingDatabase = Room.databaseBuilder(context,
                 BookingDatabase.class, DATABASE_NAME)
+
+//                .addMigrations(MIGRATION_1_2)
+//                .addMigrations(FROM_2_TO_1)
                 .fallbackToDestructiveMigration()
                 .build();
 
@@ -41,6 +59,7 @@ public class BookingContent {
 
                 try{
                     bookingItems = bookingDatabase.daoAccess().fetchAllBookings();
+                    System.out.println("bookingItems has: " + bookingItems.size() + " items inside of it.");
                     // TODO: Synchronisation issue here, we notify before query complete
                     bookingRecyclerAdapter.notifyDataSetChanged();
                 } catch(SQLiteConstraintException e){

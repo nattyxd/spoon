@@ -12,7 +12,7 @@ import java.util.List;
 public interface BookingDaoAccess {
 
     @Insert
-    void insertSingleBookingItem(BookingItem bookingItem);
+    long insertSingleBookingItem(BookingItem bookingItem);
     @Insert
     void insertMultipleBookingItems (List<BookingItem> bookingItemList);
     @Query("SELECT * FROM BookingItem WHERE bookingID = :bookingID")
