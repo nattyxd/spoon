@@ -57,7 +57,7 @@ public class BookRestaurantFragment extends Fragment {
     //    private final String DATABASE_NAME = getContext().getResources().getString(R.string.restaurant_db_name);
     private BookingDatabase bookingDatabase;
     private RestaurantDatabase restaurantDatabase;
-
+    private DatabaseHelper dbHelper;
 
     private View view;
 
@@ -86,6 +86,8 @@ public class BookRestaurantFragment extends Fragment {
             restaurant = (RestaurantItem) getArguments().getSerializable(ARG_RESTAURANT);
 
         }
+
+        dbHelper = new DatabaseHelper(getContext());
 
         // DB Migrations
         final Migration FROM_1_TO_2 = new Migration(1, 2) {
@@ -249,14 +251,24 @@ public class BookRestaurantFragment extends Fragment {
                         booking.setDateOfBooking(dateEditor.getText().toString());
                         booking.setTimeOfBooking(timeEditor.getText().toString());
                         booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
-                        long l = bookingDatabase.daoAccess().insertSingleBookingItem(booking);
+                        long result = dbHelper.addBooking(booking);
+                        Log.i("spoonlogcat", "L is: " + result);
+
+                        try {
+                            dbHelper.addRestaurant(restaurant);
+                        }
+                        catch (SQLiteConstraintException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        /*long l = bookingDatabase.daoAccess().insertSingleBookingItem(booking);
                         Log.i("spoonlogcat", "L is: " + l);
 
                         try{
                             restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurant);
                         } catch(SQLiteConstraintException e){
                             // the restaurant already exists
-                        }
+                        }*/
                     }
                 }).start();
             }
@@ -265,6 +277,4 @@ public class BookRestaurantFragment extends Fragment {
 
         return view;
     }
-
-
 }

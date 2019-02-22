@@ -8,6 +8,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.BookingDatabase;
+import uk.ac.aston.baulchjn.mobiledev.spoon.DatabaseHelper;
+
 import android.os.Looper;
 import android.widget.Toast;
 
@@ -19,12 +21,14 @@ public class BookingContent {
     private static BookingDatabase bookingDatabase;
     private static Context context;
     private static BookingRecyclerAdapter bookingRecyclerAdapter;
+    private static DatabaseHelper dbHelper;
 
     private final static String DATABASE_NAME = "RESTAURANT_DB";
 
     public static void populateBookings(Context applicationContext, BookingRecyclerAdapter adapter) {
         context = applicationContext;
         bookingRecyclerAdapter = adapter;
+        dbHelper = new DatabaseHelper(context);
 
         final Migration FROM_2_TO_1 = new Migration(2, 1) {
             @Override
@@ -58,10 +62,12 @@ public class BookingContent {
             public void run() {
 
                 try{
-                    bookingItems = bookingDatabase.daoAccess().fetchAllBookings();
+                    //bookingItems = bookingDatabase.daoAccess().fetchAllBookings();
+                    //bookingItems = dbHelper.getAllBookingsAsList();
                     System.out.println("bookingItems has: " + bookingItems.size() + " items inside of it.");
                     // TODO: Synchronisation issue here, we notify before query complete
-                    bookingRecyclerAdapter.notifyDataSetChanged();
+                    bookingRecyclerAdapter.bookingList = dbHelper.getAllBookingsAsList();
+                    //bookingRecyclerAdapter.notifyDataSetChanged();
                 } catch(SQLiteConstraintException e){
                     // the restaurant already exists
                 }
