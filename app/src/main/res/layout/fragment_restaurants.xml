@@ -31,12 +31,6 @@
         app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/restaurants_rv"
-        tools:context="RestaurantsFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantNewSearchAreaButton"></android.support.v7.widget.RecyclerView>
 
     <Button
         android:id="@+id/restaurantNewSearchAreaButton"
@@ -79,10 +73,15 @@
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/restaurant_TabLayout"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="340dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
@@ -94,5 +93,11 @@
             android:layout_height="wrap_content"
             android:text="Map of Results" />
     </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/restaurant_ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.constraint.ConstraintLayout>
