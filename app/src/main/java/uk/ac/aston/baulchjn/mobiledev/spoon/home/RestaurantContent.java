@@ -19,6 +19,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
+
+import uk.ac.aston.baulchjn.mobiledev.spoon.RestaurantsFragment;
 
 public class RestaurantContent {
     // Get Data from JSON File
@@ -32,7 +36,7 @@ public class RestaurantContent {
      * Json call for real data
      */
 
-    public static void jsonRequest(Context context, final RestaurantRecyclerAdapter adapter) {
+    public static void jsonRequest(Context context, final RestaurantRecyclerAdapter adapter, final Callable<Void> onComplete) {
         RequestQueue requestQueue = (RequestQueue) Volley.newRequestQueue(context);
         JsonObjectRequest arrayRequest = new JsonObjectRequest(Request.Method.GET, URL_JSON, null,
                 new Response.Listener<JSONObject>() {
@@ -72,6 +76,12 @@ public class RestaurantContent {
                                 Log.i("RestaurantContent", "Got restaurant: " + restaurantItem.getName() + "");
                             }
                             adapter.notifyDataSetChanged();
+                            try{
+                                onComplete.call();
+                            } catch (Exception ex){
+                                ex.printStackTrace();
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

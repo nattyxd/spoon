@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
@@ -21,11 +23,22 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantRecyclerAdapter;
 
 public class RestaurantsFragment extends Fragment {
     private List<RestaurantItem> rv_list;
+    private View view;
     private RecyclerView recyclerView;
 
     public RestaurantsFragment() {
         // Required empty public constructor
     }
+
+    private Callable<Void> onJSONTaskCompleted = new Callable<Void>() {
+        @Override
+        public Void call() {
+            // TextView formattedNumResultsTextView = view.findViewById()
+            Log.i("spoonlogcat:", "Woo the oncomplete fired");
+            return null;
+        }
+    };
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,9 +52,10 @@ public class RestaurantsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_restaurants, container, false);
+        view = inflater.inflate(R.layout.fragment_restaurants, container, false);
         recyclerView = view.findViewById(R.id.restaurants_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(RestaurantContent.restaurantItems, new RestaurantClickListener() {
             @Override
@@ -63,7 +77,8 @@ public class RestaurantsFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        RestaurantContent.jsonRequest(getActivity().getApplicationContext(), mAdapter);
+        RestaurantContent.jsonRequest(getActivity().getApplicationContext(), mAdapter, onJSONTaskCompleted);
+
         //rv_list = RestaurantContent.restaurantItems;
         return view;
     }
