@@ -60,6 +60,7 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_restaurants_recycler_view, container, false);
+        ( (RestaurantsFragment) getParentFragment() ).recyclerFragmentWasInflated();
         return view;
     }
 
@@ -80,7 +81,6 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
 //            throw new RuntimeException(context.toString()
 //                    + " must implement OnFragmentInteractionListener");
         }
-        ( (RestaurantsFragment) getParentFragment() ).recyclerFragmentWasInflated();
     }
 
     @Override
