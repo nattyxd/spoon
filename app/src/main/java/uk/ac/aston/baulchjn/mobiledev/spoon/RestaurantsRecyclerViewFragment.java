@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View view;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,7 +59,8 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurants_recycler_view, container, false);
+        view = inflater.inflate(R.layout.fragment_restaurants_recycler_view, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -71,9 +76,11 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            Log.i("spoonlogcat: ", "WARNING: mListener not implented yet! This will stop touch events working");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
+        ( (RestaurantsFragment) getParentFragment() ).recyclerFragmentWasInflated();
     }
 
     @Override
@@ -95,5 +102,9 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public RecyclerView getRecyclerView(){
+        return (RecyclerView) view.findViewById(R.id.restaurants_rv);
     }
 }

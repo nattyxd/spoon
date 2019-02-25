@@ -2,7 +2,9 @@ package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +28,9 @@ public class RestaurantsFragment extends Fragment {
     private List<RestaurantItem> rv_list;
     private View view;
     private RecyclerView recyclerView;
+    private ViewPager viewPager;
+
+    private RestaurantsRecyclerViewFragment restaurantsRecyclerViewFragment;
 
     public RestaurantsFragment() {
         // Required empty public constructor
@@ -53,9 +59,58 @@ public class RestaurantsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_restaurants, container, false);
-        recyclerView = view.findViewById(R.id.restaurants_rv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        viewPager = view.findViewById(R.id.restaurant_ViewPager);
+        setupViewPager(viewPager);
 
+        TabLayout tabs = (TabLayout) view.findViewById(R.id.restaurant_TabLayout);
+        tabs.setupWithViewPager(viewPager);
+
+////        recyclerView = view.findViewById(R.id.restaurants_rv);
+////        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        Log.i("spoonlogcat: ", "The Fragment is equal to..." + restaurantsRecyclerViewFragment);
+////        recyclerView = restaurantsRecyclerViewFragment.getRecyclerView();
+////        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//        RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(RestaurantContent.restaurantItems, new RestaurantClickListener() {
+//            @Override
+//            public void onItemClick(RestaurantItem item) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("name", item.getName());
+//                bundle.putString("vicinity", item.getVicinity());
+//                bundle.putString("tag1", item.getTag1());
+//                bundle.putString("tag2", item.getTag2());
+//                bundle.putString("tag3", item.getTag3());
+//                bundle.putSerializable("restaurant", item);
+//
+//
+//                // launch the RestaurantDetailedFragment with the correct restaurant
+//                FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
+//            }
+//        });
+//
+////        recyclerView.setAdapter(mAdapter);
+////        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//
+//        RestaurantContent.jsonRequest(getActivity().getApplicationContext(), mAdapter, onJSONTaskCompleted);
+
+        //rv_list = RestaurantContent.restaurantItems;
+        return view;
+    }
+
+    private void setupViewPager(ViewPager viewPager){
+        restaurantsRecyclerViewFragment = new RestaurantsRecyclerViewFragment();
+
+        CustomFragmentPagerAdapter adapter = new CustomFragmentPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(restaurantsRecyclerViewFragment, "List View");
+        viewPager.setAdapter(adapter);
+    }
+
+    public void recyclerFragmentWasInflated(){
+//        recyclerView = view.findViewById(R.id.restaurants_rv);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Log.i("spoonlogcat: ", "recyclerFragmentWasInflated invoked");
+        recyclerView = restaurantsRecyclerViewFragment.getRecyclerView();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(RestaurantContent.restaurantItems, new RestaurantClickListener() {
             @Override
@@ -79,7 +134,6 @@ public class RestaurantsFragment extends Fragment {
 
         RestaurantContent.jsonRequest(getActivity().getApplicationContext(), mAdapter, onJSONTaskCompleted);
 
-        //rv_list = RestaurantContent.restaurantItems;
-        return view;
     }
+
 }
