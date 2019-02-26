@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RestaurantsRecyclerViewFragment">
+    tools:context=".RestaurantsRecyclerViewFragment"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/restaurants_rv"
-        tools:context="RestaurantsFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context="RestaurantsFragment"></android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
+
+
+
+
+
