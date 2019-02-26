@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/HERE-sdk/HERE-sdk.iml" filepath="$PROJECT_DIR$/HERE-sdk/HERE-sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HERE-sdk-javadoc/HERE-sdk-javadoc.iml" filepath="$PROJECT_DIR$/HERE-sdk-javadoc/HERE-sdk-javadoc.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/spoon.iml" filepath="$PROJECT_DIR$/spoon.iml" />
     </modules>
