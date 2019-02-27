@@ -61,6 +61,7 @@ public class BookingsFragment extends Fragment {
             }
         });
 
+        mAdapter.setView(view);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new BookingsSwipeToDeleteCallback(mAdapter));

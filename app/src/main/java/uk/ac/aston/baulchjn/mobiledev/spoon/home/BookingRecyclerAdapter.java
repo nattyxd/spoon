@@ -2,6 +2,7 @@ package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,15 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
     private final BookingClickListener clickListener;
     private BookingItem mRecentlyDeletedItem;
     private int mRecentlyDeletedItemPosition;
+    private View view;
 
     public BookingRecyclerAdapter(List<BookingItem> list, BookingClickListener listener) {
         this.bookingList = list;
         this.clickListener = listener;
+    }
+
+    public void setView(View view){
+        this.view = view;
     }
 
     @Override
@@ -61,11 +67,15 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
     }
 
     private void showUndoSnackbar() {
-//        View view = mActivity.findViewById(R.id.coordinator_layout);
-//        Snackbar snackbar = Snackbar.make(view, R.string.snack_bar_text,
-//                Snackbar.LENGTH_LONG);
-//        snackbar.setAction(R.string.snack_bar_undo, v -> undoDelete());
-//        snackbar.show();
+        Snackbar snackbar = Snackbar.make(view, "temp text",
+                Snackbar.LENGTH_LONG);
+        snackbar.setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BookingRecyclerAdapter.this.undoDelete();
+            }
+        });
+        snackbar.show();
     }
 
     private void undoDelete() {
