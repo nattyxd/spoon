@@ -1,1 +1,1 @@
-include ':app', ':HERE-sdk', ':HERE-sdk-javadoc'
+include ':app', ':HERE-sdk'

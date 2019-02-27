@@ -52,7 +52,7 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     // HERE API and other aar files in libs directory
     implementation fileTree(include: ['*.aar'], dir: 'libs')
-    implementation 'com.here.account:here-aaa-sdk:0.4.16'
+//    implementation 'com.here.account:here-aaa-sdk:0.4.16'
     implementation project(':HERE-sdk')
 
     // https://github.com/googlesamples/easypermissions - For developers using the Android Support Library

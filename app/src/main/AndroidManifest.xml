@@ -34,6 +34,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="Settings" />
+        <service
+            android:name="com.here.android.mpa.service.MapService"
+            android:label="{YOUR_LABEL_NAME}"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="{YOUR_INTENT_NAME}">
+                </action>
+            </intent-filter>
+        </service>
     </application>
-
 </manifest>
