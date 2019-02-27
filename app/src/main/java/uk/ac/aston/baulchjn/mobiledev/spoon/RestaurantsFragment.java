@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +29,7 @@ public class RestaurantsFragment extends Fragment {
     private ViewPager viewPager;
 
     private RestaurantsRecyclerViewFragment restaurantsRecyclerViewFragment;
+    private RestaurantsMapViewFragment restaurantMapViewFragment;
 
     public RestaurantsFragment() {
         // Required empty public constructor
@@ -99,9 +98,12 @@ public class RestaurantsFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager){
         restaurantsRecyclerViewFragment = new RestaurantsRecyclerViewFragment();
+        restaurantMapViewFragment = new RestaurantsMapViewFragment();
 
         CustomFragmentPagerAdapter adapter = new CustomFragmentPagerAdapter(getChildFragmentManager());
         adapter.addFragment(restaurantsRecyclerViewFragment, "List View");
+        adapter.addFragment(restaurantMapViewFragment, "Map View");
+
         viewPager.setAdapter(adapter);
     }
 

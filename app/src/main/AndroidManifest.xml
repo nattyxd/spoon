@@ -34,12 +34,18 @@
         <activity
             android:name=".SettingsActivity"
             android:label="Settings" />
+        <meta-data android:name="com.here.android.maps.appid"
+            android:value="JpjXzNSwe8TjZY2ovHE9"/>
+        <meta-data android:name="com.here.android.maps.apptoken"
+            android:value="ulVjAK-pg-kSslIl39lXxw"/>
+        <meta-data android:name="com.here.android.maps.license.key"
+            android:value="EF3dK87bEBJJ0KmX7JwpxGPls8DWdaJQFyQe8qa7H5Dpd9FJBe0VZs5PMZmkbnk+2bJBBJEGat7HOlVc7mKneZzLQybL8hdmjnN6J1KKmUfXcawtCKzojq0ie8lL7jQGMbLecbLv1wMWH9H3XaDl7I+5PZTroQYMFXRd2fa+GXUH0H3oACDhcihV8zKOJ5GbL/OPIwz1yla+/lGSin6Bf6fzjlrLphcgZ5w63noveKkqPBtQLr637kNopNfT04vRwR26DqRYC2xfsMglFUKlflorZLPaPXAKqFjy+cHPl0qrYf3SVV3tg9tqYLuM2XEoP3W9P4wEFVlZMREpNUVb6j5T6T6FnPXM6NE8C/QfPcB01qI0evV8vvtyEny0PwNcrDC9rcLUPH6LIOqNU2WV2JoZXDZ1Pj1gcHNI1qEb7vWau2mgIA3UhHBYbvPaGt1fk7AunEfjdCyM6PrmLW1sQgoiZERPrmpfw+WchnD3g9dWUxSLY9t9N10tHjIYj8ne3CjgUtkKHJw1zmMxhvK9/5vHmSyF8Socx3LX6J6sBjzafhAwL/7gI0PQRpSkoHZWcqtrpevmASpJLPH5GpdRtclhb2iUGU/0u3nMfSxY8DTsvAPseHcfvSjO351c5DSFXf10z3xxt3c94hz3jNgccdW4m70+fguHUi+a4I2O21I="/>
         <service
             android:name="com.here.android.mpa.service.MapService"
-            android:label="{YOUR_LABEL_NAME}"
+            android:label="HereApiMapService"
             android:exported="false">
             <intent-filter>
-                <action android:name="{YOUR_INTENT_NAME}">
+                <action android:name="android.intent.action.MAIN">
                 </action>
             </intent-filter>
         </service>

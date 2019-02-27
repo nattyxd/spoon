@@ -11,17 +11,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
+import java.io.File;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.BottomNavigationViewHelper;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.deprecated_HomeFragment;
 
-import static uk.ac.aston.baulchjn.mobiledev.spoon.FragmentStateContainer.getActivity;
+import com.here.android.mpa.common.GeoCoordinate;
+import com.here.android.mpa.common.OnEngineInitListener;
+import com.here.android.mpa.mapping.Map;
+import com.here.android.mpa.mapping.SupportMapFragment;
+
 
 public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+
+    // map fragment embedded in this activity
+    private SupportMapFragment mapFragment = null;
+
+    // map embedded in the map fragment
+    private Map map = null;
 
     private static final int PERMISSION_REQUEST_CODE = 12345;
 
@@ -52,6 +63,34 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         requestRequiredPermissions();
 
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapfragment);
+
+        // Set up disk cache path for the map service for this application
+        // It is recommended to use a path under your application folder for storing the disk cache
+        boolean success = com.here.android.mpa.common.MapSettings.setIsolatedDiskCacheRootPath(
+                getApplicationContext().getExternalFilesDir(null) + File.separator + ".here-maps",
+                "{YOUR_INTENT_NAME}"); /* ATTENTION! Do not forget to update {YOUR_INTENT_NAME} */
+
+        if (!success) {
+            Toast.makeText(getApplicationContext(), "Unable to set isolated disk cache path.", Toast.LENGTH_LONG);
+        } else {
+            mapFragment.init(new OnEngineInitListener() {
+                @Override
+                public void onEngineInitializationCompleted(OnEngineInitListener.Error error) {
+                    if (error == OnEngineInitListener.Error.NONE) {
+                        // retrieve a reference of the map from the map fragment
+                        map = mapFragment.getMap();
+                        // Set the map center to the Vancouver region (no animation)
+                        map.setCenter(new GeoCoordinate(49.196261, -123.004773, 0.0),
+                                Map.Animation.NONE);
+                        // Set the zoom level to the average between min and max
+                        map.setZoomLevel((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2);
+                    } else {
+                        System.out.println("ERROR: Cannot initialize Map Fragment");
+                    }
+                }
+            });
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
