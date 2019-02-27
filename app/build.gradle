@@ -54,4 +54,7 @@ dependencies {
     implementation fileTree(include: ['*.aar'], dir: 'libs')
     implementation 'com.here.account:here-aaa-sdk:0.4.16'
     implementation project(':HERE-sdk')
+
+    // https://github.com/googlesamples/easypermissions - For developers using the Android Support Library
+    implementation 'pub.devrel:easypermissions:1.3.0'
 }
