@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -69,9 +70,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         // It is recommended to use a path under your application folder for storing the disk cache
         boolean success = com.here.android.mpa.common.MapSettings.setIsolatedDiskCacheRootPath(
                 getApplicationContext().getExternalFilesDir(null) + File.separator + ".here-maps",
-                "{YOUR_INTENT_NAME}"); /* ATTENTION! Do not forget to update {YOUR_INTENT_NAME} */
+                "android.intent.action.MAIN"); /* ATTENTION! Do not forget to update {YOUR_INTENT_NAME} */
 
         if (!success) {
+            Log.i("spoonlogcat: ", "Unable to set isolated disk cache path.");
             Toast.makeText(getApplicationContext(), "Unable to set isolated disk cache path.", Toast.LENGTH_LONG);
         } else {
             mapFragment.init(new OnEngineInitListener() {

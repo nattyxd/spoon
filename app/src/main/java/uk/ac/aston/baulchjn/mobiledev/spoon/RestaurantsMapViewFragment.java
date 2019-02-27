@@ -48,8 +48,11 @@ public class RestaurantsMapViewFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_restaurants_map_view, container, false);
 
             mapView = (MapView) view.findViewById(R.id.restaurants_MapView);
-            ApplicationContext appCtx = new ApplicationContext(getContext());
-            MapEngine.getInstance().init(appCtx, engineInitHandler);
+//            ApplicationContext appCtx = new ApplicationContext(getContext());
+
+            map = new Map();
+            mapView.setMap(map);
+//            MapEngine.getInstance().init(appCtx, engineInitHandler);
         } catch (InflateException e) {
             /* map is already there, just return view as it is */
         }
@@ -62,36 +65,35 @@ public class RestaurantsMapViewFragment extends Fragment {
         // Required empty constructor
     }
 
-    private OnEngineInitListener engineInitHandler = new OnEngineInitListener() {
-        @Override
-        public void onEngineInitializationCompleted(Error error) {
-            if (error == Error.NONE) {
-                map = new Map();
-                mapView.setMap(map);
-                // more map initial settings
-            } else {
-                Log.e("spoonlogcat: ", "ERROR: Cannot initialize MapEngine " + error);
-                Log.e("spoonlogcat: ", error.getDetails());
-                Log.e("spoonlogcat: ", error.getStackTrace());
-            }
-        }
-    };
+//    private OnEngineInitListener engineInitHandler = new OnEngineInitListener() {
+//        @Override
+//        public void onEngineInitializationCompleted(Error error) {
+//            if (error == Error.NONE) {
+//
+//                // more map initial settings
+//            } else {
+//                Log.e("spoonlogcat: ", "ERROR: Cannot initialize MapEngine " + error);
+//                Log.e("spoonlogcat: ", error.getDetails());
+//                Log.e("spoonlogcat: ", error.getStackTrace());
+//            }
+//        }
+//    };
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        MapEngine.getInstance().onResume();
-        if (mapView != null) {
-            mapView.onResume();
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        MapEngine.getInstance().onResume();
+//        if (mapView != null) {
+//            mapView.onResume();
+//        }
+//    }
 
-    @Override
-    public void onPause() {
-        if (mapView != null) {
-            mapView.onPause();
-        }
-        MapEngine.getInstance().onPause();
-        super.onPause();
-    }
+//    @Override
+//    public void onPause() {
+//        if (mapView != null) {
+//            mapView.onPause();
+//        }
+//        MapEngine.getInstance().onPause();
+//        super.onPause();
+//    }
 }
