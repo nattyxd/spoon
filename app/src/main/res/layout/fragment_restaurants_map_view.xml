@@ -12,9 +12,14 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true" />
 
+    <com.here.android.mpa.mapping.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"/>
+
 
 </android.support.constraint.ConstraintLayout>
-
 
 
 
