@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".RestaurantsMapViewFragment">
 
-    <com.here.android.mpa.mapping.MapView
-        android:id="@+id/restaurants_MapView"
+    <FrameLayout
+        android:id="@+id/simpleFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:visibility="visible"
-        app:layout_constraintVertical_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true" />
 
 
 </android.support.constraint.ConstraintLayout>
