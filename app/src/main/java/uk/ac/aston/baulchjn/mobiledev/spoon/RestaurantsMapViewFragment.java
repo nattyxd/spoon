@@ -134,6 +134,10 @@ public class RestaurantsMapViewFragment extends Fragment {
         } else if(passiveGPS != null){
             bestLocation = passiveGPS;
         } else {
+            // location unavailable, default to Aston University
+            bestLocation = new Location("");
+            bestLocation.setLatitude(52.486208);
+            bestLocation.setLongitude(-1.888499);
             Toast.makeText(getContext(), "We don't have any location data for the user!", Toast.LENGTH_LONG).show();
         }
 

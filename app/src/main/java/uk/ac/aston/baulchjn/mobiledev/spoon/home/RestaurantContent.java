@@ -1,9 +1,15 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.here.android.mpa.common.GeoCoordinate;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,11 +29,13 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.MainActivity;
 import uk.ac.aston.baulchjn.mobiledev.spoon.RestaurantsFragment;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class RestaurantContent {
     // Get Data from JSON File
-    public static final String URL_JSON = "https://places.cit.api.here.com/places/v1/discover/search?at=52.4870897%2C-1.8902916&q=american+restaurant&Accept-Language=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8&app_id=auI3sSIwYT1YkAkKkm9f&app_code=UblO-Dyzdg-QCADIYvRWEw#";
     private JsonArrayRequest ArrayRequest;
     private RequestQueue requestQueue;
     public static List<RestaurantItem> restaurantItems = new ArrayList<>();
@@ -36,7 +45,38 @@ public class RestaurantContent {
      * Json call for real data
      */
 
-    public static void jsonRequest(Context context, final RestaurantRecyclerAdapter adapter, final Callable<Void> onComplete) {
+    public static void jsonRequest(Activity activity, Context context, final RestaurantRecyclerAdapter adapter, final Callable<Void> onComplete) {
+        if(ActivityCompat.checkSelfPermission(context, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(context, "We need your location, or the map will not work! :(", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        LocationManager manager = ((MainActivity)activity).getLocationManager();
+        Location locationGPS = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location coarseGPS = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Location passiveGPS = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+        // Get the best location
+        Location bestLocation = null;
+
+        if(locationGPS != null){
+            bestLocation = locationGPS;
+        } else if(coarseGPS != null){
+            bestLocation = coarseGPS;
+        } else if(passiveGPS != null){
+            bestLocation = passiveGPS;
+        } else {
+            // location unavailable, default to Aston University
+            bestLocation = new Location("");
+            bestLocation.setLatitude(52.486208);
+            bestLocation.setLongitude(-1.888499);
+        }
+
+        final String latitude_val = Double.toString(bestLocation.getLatitude());
+        final String longitude_val = Double.toString(bestLocation.getLongitude());
+        //final String URL_JSON = "https://places.cit.api.here.com/places/v1/discover/search?at=52.4870897%2C-1.8902916&q=american+restaurant&Accept-Language=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8&app_id=auI3sSIwYT1YkAkKkm9f&app_code=UblO-Dyzdg-QCADIYvRWEw#";
+        String URL_JSON = "https://places.cit.api.here.com/places/v1/discover/search?at=" + latitude_val + "%2C" + longitude_val + "&q=restaurant&Accept-Language=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8&app_id=auI3sSIwYT1YkAkKkm9f&app_code=UblO-Dyzdg-QCADIYvRWEw#";
+
         RequestQueue requestQueue = (RequestQueue) Volley.newRequestQueue(context);
         JsonObjectRequest arrayRequest = new JsonObjectRequest(Request.Method.GET, URL_JSON, null,
                 new Response.Listener<JSONObject>() {
@@ -62,17 +102,23 @@ public class RestaurantContent {
 
                                 restaurantItem.setVicinity(jsonArray.getJSONObject(i).getString("vicinity"));
 
-                                JSONArray tags = jsonArray.getJSONObject(i).getJSONArray("tags");
-                                for(int j = 0; j < tags.length(); j++){
-                                    switch(j) {
-                                        case 0: restaurantItem.setTag1(tags.getJSONObject(j).getString("title"));
-                                            break;
-                                        case 1: restaurantItem.setTag2(tags.getJSONObject(j).getString("title"));
-                                            break;
-                                        case 2: restaurantItem.setTag3(tags.getJSONObject(j).getString("title"));
-                                            break;
+                                JSONArray tags = jsonArray.getJSONObject(i).optJSONArray("tags");
+                                if (tags != null) {
+                                    for (int j = 0; j < tags.length(); j++) {
+                                        switch (j) {
+                                            case 0:
+                                                restaurantItem.setTag1(tags.getJSONObject(j).getString("title"));
+                                                break;
+                                            case 1:
+                                                restaurantItem.setTag2(tags.getJSONObject(j).getString("title"));
+                                                break;
+                                            case 2:
+                                                restaurantItem.setTag3(tags.getJSONObject(j).getString("title"));
+                                                break;
+                                        }
                                     }
                                 }
+
 //                                restaurantItem.setRestaurantType(jsonArray.getJSONObject(i).getString("types"));
 //                                restaurantItem.setImageURL(jsonArray.getJSONObject(i).getString("image_url"));
 //                                restaurantItem.setStarRating(jsonArray.getJSONObject(i).getString("rating"));

@@ -134,7 +134,7 @@ public class RestaurantsFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        RestaurantContent.jsonRequest(getActivity().getApplicationContext(), mAdapter, onJSONTaskCompleted);
+        RestaurantContent.jsonRequest(getActivity(), getActivity().getApplicationContext(), mAdapter, onJSONTaskCompleted);
 
     }
 
