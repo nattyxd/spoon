@@ -107,8 +107,10 @@ public class RestaurantsMapViewFragment extends Fragment {
     private void centreMapOnFirstRestaurant(){
         RestaurantItem firstRestaurant = RestaurantContent.restaurantItems.get(0);
 
-//        GeoCoordinate coord = new GeoCoordinate(firstRestaurant.getVicinity());
-//        map.setCenter();
+        double latitude = Double.parseDouble(firstRestaurant.getLatitude());
+        double longitude = Double.parseDouble(firstRestaurant.getLongitude());
+        GeoCoordinate coord = new GeoCoordinate(latitude, longitude);
+        map.setCenter(coord, Map.Animation.NONE);
     }
 
     private void centreMapOnUserLocation(){
