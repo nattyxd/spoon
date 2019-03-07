@@ -2,6 +2,7 @@ package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.PointF;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -27,6 +28,7 @@ import com.here.android.mpa.common.MapEngine;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.mapping.Map;
 import com.here.android.mpa.mapping.MapFragment;
+import com.here.android.mpa.mapping.MapGesture;
 import com.here.android.mpa.mapping.MapMarker;
 import com.here.android.mpa.mapping.MapView;
 import com.here.android.mpa.mapping.SupportMapFragment;
@@ -47,6 +49,37 @@ public class RestaurantsMapViewFragment extends Fragment {
     private MapView mapView = null;
 
     private static View view;
+
+    private MapGesture.OnGestureListener tapGestureListener = new MapGesture.OnGestureListener.OnGestureListenerAdapter()
+    {
+        @Override
+        public boolean onTapEvent(PointF p) {
+            GeoCoordinate c = map.pixelToGeo(p);
+            // c is your geoccordinate on the map, where you clicked on the screen
+            // [...]
+            Log.i("spoonlogcat: ", c.toString());
+
+            RestaurantItem closestTap = null;
+            double nearestDistance = Double.MAX_VALUE;
+
+            for(int i = 0; i < RestaurantContent.restaurantItems.size(); i++){
+                GeoCoordinate restaurantLocation = new GeoCoordinate(Double.parseDouble(RestaurantContent.restaurantItems.get(i).getLatitude()), Double.parseDouble(RestaurantContent.restaurantItems.get(i).getLongitude()));
+
+                double theDistance = c.distanceTo(restaurantLocation);
+                if(theDistance < nearestDistance){
+                    closestTap = RestaurantContent.restaurantItems.get(i);
+                    nearestDistance = theDistance;
+                }
+            }
+
+            // generate a heuristic based on whether or not the tap was close enough
+            final double HEURISTIC_TAP = 50; // increase this to increase the range of false taps allowed
+            Log.i("spoonlogcat: ", "The nearest Restaurant is... " + closestTap.getName() + ", and the distance to here was: " + nearestDistance);
+
+
+            return true;
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +112,8 @@ public class RestaurantsMapViewFragment extends Fragment {
                         // retrieve a reference of the map from the map fragment
                         map = mapFragment.getMap();
 
+                        mapFragment.getMapGesture().addOnGestureListener(tapGestureListener, 10, true);
+
                         restaurantsWereRefreshed();
                     } else {
                         Log.e("spoonlogcat:", "ERROR: Cannot initialize Map Fragment: " + error.getStackTrace());
@@ -95,8 +130,6 @@ public class RestaurantsMapViewFragment extends Fragment {
 
     // Update the map when we get new fresh data
     public void restaurantsWereRefreshed(){
-        List<RestaurantItem> restaurants = RestaurantContent.restaurantItems;
-
         centreMapOnUserLocation();
 
         ClusterLayer cl = new ClusterLayer();
