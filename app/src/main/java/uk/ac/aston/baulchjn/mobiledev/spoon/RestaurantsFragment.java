@@ -47,7 +47,7 @@ public class RestaurantsFragment extends Fragment {
             Log.i("spoonlogcat:", "Woo the oncomplete fired");
 
             formattedHeader.setText(getResources().getString(R.string.en_restaurantFragment_wefoundXRestaunts, String.valueOf(RestaurantContent.restaurantItems.size())));
-            additionalInfoHeadline.setText("POGGERS");
+            additionalInfoHeadline.setText("Use the buttons below to centre on your location, search in a new location, sort, and filter.");
             return null;
         }
     };

@@ -27,6 +27,7 @@ import com.here.android.mpa.common.MapEngine;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.mapping.Map;
 import com.here.android.mpa.mapping.MapFragment;
+import com.here.android.mpa.mapping.MapMarker;
 import com.here.android.mpa.mapping.MapView;
 import com.here.android.mpa.mapping.SupportMapFragment;
 
@@ -99,6 +100,18 @@ public class RestaurantsMapViewFragment extends Fragment {
         centreMapOnUserLocation();
 
         ClusterLayer cl = new ClusterLayer();
+
+        // add the restaurants to the cluster
+        for(int i = 0; i < RestaurantContent.restaurantItems.size(); i++){
+            final MapMarker mapMarker = new MapMarker();
+            final double latitude = Double.parseDouble(RestaurantContent.restaurantItems.get(i).getLatitude());
+            final double longitude = Double.parseDouble(RestaurantContent.restaurantItems.get(i).getLongitude());
+
+            final GeoCoordinate geoCoordinate = new GeoCoordinate(latitude, longitude);
+
+            mapMarker.setCoordinate(geoCoordinate);
+            cl.addMarker(mapMarker);
+        }
         map.addClusterLayer(cl);
 
 
