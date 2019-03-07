@@ -24,6 +24,8 @@ public class RestaurantItem implements Serializable {
     private String hereID;
     private String name;
     private String desc; // Not populated
+    private String latitude;
+    private String longitude;
     private String vicinity;
     private String restaurantType; // Not populated
     private String telephoneNo; // Not populated
@@ -124,4 +126,14 @@ public class RestaurantItem implements Serializable {
     public void setVisited(boolean visited) {
         this.visited = visited;
     }
+
+    public String getLatitude() { return latitude; }
+
+    public void setLatitude(String latitude) { this.latitude = latitude; }
+
+    public String getLongitude() { return longitude; }
+
+    public void setLongitude(String longitude) { this.longitude = longitude; }
+
+
 }

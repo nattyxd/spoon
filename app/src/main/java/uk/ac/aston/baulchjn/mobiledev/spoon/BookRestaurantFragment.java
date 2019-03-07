@@ -205,13 +205,13 @@ public class BookRestaurantFragment extends Fragment {
 ////                restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurantItem);
 ////            }
 ////        }) .start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                RestaurantItem restaurantItem = restaurantDatabase.daoAccess().fetchOneRestaurantbyName("Restaurant Name");
-                System.out.println("the restaurant you asked for is..." + restaurantItem);
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                RestaurantItem restaurantItem = restaurantDatabase.daoAccess().fetchOneRestaurantbyName("Restaurant Name");
+//                System.out.println("the restaurant you asked for is..." + restaurantItem);
+//            }
+//        }).start();
         Button bookBtn = view.findViewById(R.id.createBookingBtn);
 
 

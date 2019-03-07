@@ -20,6 +20,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String restaurantsTable = "Restaurants";
     private static final String restaurantHereID = "HereID";
     private static final String restaurantDesc = "Desc";
+    private static final String restaurantLatitude = "Latitude";
+    private static final String restaurantLongitude = "Longitude";
     private static final String restaurantVicinity = "Vicinity";
     private static final String restaurantType = "Type";
     private static final String restaurantTelephoneNo = "TelephoneNo";
@@ -49,6 +51,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqlBuilder.append("CREATE TABLE " + restaurantsTable + " (");
         sqlBuilder.append(restaurantHereID + " TEXT PRIMARY KEY, ");
         sqlBuilder.append(restaurantDesc + " TEXT, ");
+        sqlBuilder.append(restaurantLatitude + "STRING, ");
+        sqlBuilder.append(restaurantLongitude + "STRING, ");
         sqlBuilder.append(restaurantVicinity + " TEXT, ");
         sqlBuilder.append(restaurantType + " TEXT, ");
         sqlBuilder.append(restaurantTelephoneNo + " TEXT, ");
@@ -84,6 +88,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(restaurantHereID, item.getHereID());
         contentValues.put(restaurantDesc, item.getDesc());
+        contentValues.put(restaurantLatitude, item.getLatitude());
+        contentValues.put(restaurantLongitude, item.getLongitude());
         contentValues.put(restaurantVicinity, item.getVicinity());
         contentValues.put(restaurantType, item.getRestaurantType());
         contentValues.put(restaurantTelephoneNo, item.getTelephoneNo());
@@ -126,6 +132,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             RestaurantItem item = new RestaurantItem();
             item.setHereID(cursor.getString(cursor.getColumnIndex(restaurantHereID)));
             item.setDesc(cursor.getString(cursor.getColumnIndex(restaurantDesc)));
+            item.setLatitude(cursor.getString(cursor.getColumnIndex(restaurantLatitude)));
+            item.setLongitude(cursor.getString(cursor.getColumnIndex(restaurantLongitude)));
             item.setVicinity(cursor.getString(cursor.getColumnIndex(restaurantVicinity)));
             item.setRestaurantType(cursor.getString(cursor.getColumnIndex(restaurantType)));
             item.setTelephoneNo(cursor.getString(cursor.getColumnIndex(restaurantTelephoneNo)));

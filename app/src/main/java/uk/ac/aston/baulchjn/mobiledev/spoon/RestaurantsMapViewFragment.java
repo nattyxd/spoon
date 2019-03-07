@@ -78,7 +78,7 @@ public class RestaurantsMapViewFragment extends Fragment {
                         // retrieve a reference of the map from the map fragment
                         map = mapFragment.getMap();
 
-                        centreMapOnUserLocation();
+                        restaurantsWereRefreshed();
                     } else {
                         Log.e("spoonlogcat:", "ERROR: Cannot initialize Map Fragment: " + error.getStackTrace());
                     }
@@ -102,6 +102,13 @@ public class RestaurantsMapViewFragment extends Fragment {
         map.addClusterLayer(cl);
 
 
+    }
+
+    private void centreMapOnFirstRestaurant(){
+        RestaurantItem firstRestaurant = RestaurantContent.restaurantItems.get(0);
+
+//        GeoCoordinate coord = new GeoCoordinate(firstRestaurant.getVicinity());
+//        map.setCenter();
     }
 
     private void centreMapOnUserLocation(){

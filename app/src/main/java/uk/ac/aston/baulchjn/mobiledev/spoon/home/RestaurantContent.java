@@ -55,6 +55,11 @@ public class RestaurantContent {
                                 restaurantItem.setHereID(jsonArray.getJSONObject(i).getString("id"));
                                 restaurantItem.setName(jsonArray.getJSONObject(i).getString("title"));
                                 restaurantItem.setDesc(jsonArray.getJSONObject(i).getString("title"));
+
+                                // set the latitude and longitude
+                                restaurantItem.setLatitude(jsonArray.getJSONObject(i).getJSONArray("position").getString(0));
+                                restaurantItem.setLongitude(jsonArray.getJSONObject(i).getJSONArray("position").getString(1));
+
                                 restaurantItem.setVicinity(jsonArray.getJSONObject(i).getString("vicinity"));
 
                                 JSONArray tags = jsonArray.getJSONObject(i).getJSONArray("tags");
