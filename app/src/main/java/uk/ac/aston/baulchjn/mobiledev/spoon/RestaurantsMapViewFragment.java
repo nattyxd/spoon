@@ -50,12 +50,43 @@ public class RestaurantsMapViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = inflater.inflate(R.layout.fragment_restaurants_map_view, container, false);
 
-        mapView = view.findViewById(R.id.mapView);
-        map = new Map();
-        mapView.setMap(map);
-        centreMapOnUserLocation();
+        final SupportMapFragment mapFragment = new SupportMapFragment();
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.simpleFrameLayout, mapFragment).commit();
+
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.fragment_restaurants_map_view, container, false);
+
+            ApplicationContext appCtx = new ApplicationContext(getContext());
+
+            boolean success = com.here.android.mpa.common.MapSettings.setIsolatedDiskCacheRootPath(
+                    getContext().getExternalFilesDir(null) + File.separator + ".here-maps",
+                    "android.intent.action.MAIN"); /* ATTENTION! Do not forget to update {YOUR_INTENT_NAME} */
+
+            mapFragment.init(appCtx, new OnEngineInitListener() {
+                @Override
+                public void onEngineInitializationCompleted(OnEngineInitListener.Error error) {
+                    if (error == OnEngineInitListener.Error.NONE) {
+
+                        // retrieve a reference of the map from the map fragment
+                        map = mapFragment.getMap();
+
+                        centreMapOnUserLocation();
+                    } else {
+                        Log.e("spoonlogcat:", "ERROR: Cannot initialize Map Fragment: " + error.getStackTrace());
+                    }
+                }
+            });
+        } catch (InflateException e) {
+            /* map is already there, just return view as it is */
+        }
 
 
         return view;
