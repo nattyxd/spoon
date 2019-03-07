@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,9 @@ public class RestaurantsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ViewPager viewPager;
 
+    private TextView formattedHeader;
+    private TextView additionalInfoHeadline;
+
     private RestaurantsRecyclerViewFragment restaurantsRecyclerViewFragment;
     private RestaurantsMapViewFragment restaurantMapViewFragment;
 
@@ -38,8 +44,10 @@ public class RestaurantsFragment extends Fragment {
     private Callable<Void> onJSONTaskCompleted = new Callable<Void>() {
         @Override
         public Void call() {
-            // TextView formattedNumResultsTextView = view.findViewById()
             Log.i("spoonlogcat:", "Woo the oncomplete fired");
+
+            formattedHeader.setText(getResources().getString(R.string.en_restaurantFragment_wefoundXRestaunts, String.valueOf(RestaurantContent.restaurantItems.size())));
+            additionalInfoHeadline.setText("POGGERS");
             return null;
         }
     };
@@ -63,6 +71,10 @@ public class RestaurantsFragment extends Fragment {
 
         TabLayout tabs = (TabLayout) view.findViewById(R.id.restaurant_TabLayout);
         tabs.setupWithViewPager(viewPager);
+
+
+        formattedHeader = view.findViewById(R.id.formattedRestaurantHeader);
+        additionalInfoHeadline = view.findViewById(R.id.en_RestaurantFragment_AdditionalInfo);
 
 ////        recyclerView = view.findViewById(R.id.restaurants_rv);
 ////        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
