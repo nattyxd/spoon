@@ -1,8 +1,13 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,9 +17,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +30,20 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantRecyclerAdapter;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 public class RestaurantsFragment extends Fragment {
     private List<RestaurantItem> rv_list;
     private View view;
     private RecyclerView recyclerView;
+    private RestaurantRecyclerAdapter adapter;
     private ViewPager viewPager;
 
     private TextView formattedHeader;
     private TextView additionalInfoHeadline;
+
+    private ImageButton centreMapOnUserButton;
+    public static Location bestUserLocation;
 
     private RestaurantsRecyclerViewFragment restaurantsRecyclerViewFragment;
     private RestaurantsMapViewFragment restaurantMapViewFragment;
@@ -69,12 +80,15 @@ public class RestaurantsFragment extends Fragment {
         viewPager = view.findViewById(R.id.restaurant_ViewPager);
         setupViewPager(viewPager);
 
+        setupLocationListeners();
+
         TabLayout tabs = (TabLayout) view.findViewById(R.id.restaurant_TabLayout);
         tabs.setupWithViewPager(viewPager);
 
-
         formattedHeader = view.findViewById(R.id.formattedRestaurantHeader);
         additionalInfoHeadline = view.findViewById(R.id.en_RestaurantFragment_AdditionalInfo);
+
+        addButtonHandlers();
 
 ////        recyclerView = view.findViewById(R.id.restaurants_rv);
 ////        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -126,7 +140,7 @@ public class RestaurantsFragment extends Fragment {
         recyclerView = restaurantsRecyclerViewFragment.getRecyclerView();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(RestaurantContent.restaurantItems, new RestaurantClickListener() {
+        adapter = new RestaurantRecyclerAdapter(RestaurantContent.restaurantItems, new RestaurantClickListener() {
             @Override
             public void onItemClick(RestaurantItem item) {
                 Bundle bundle = new Bundle();
@@ -144,11 +158,77 @@ public class RestaurantsFragment extends Fragment {
             }
         });
 
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        RestaurantContent.jsonRequest(getActivity(), getActivity().getApplicationContext(), mAdapter, onJSONTaskCompleted);
+        gerHereAPIRestaurants(bestUserLocation, onJSONTaskCompleted);
 
     }
 
+    private void setupLocationListeners(){
+        bestUserLocation = null;
+
+        if(ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(getContext(), "We need your location, or the map will not work! :(", Toast.LENGTH_SHORT).show();
+            bestUserLocation = new Location("");
+            bestUserLocation.setLatitude(52.486208);
+            bestUserLocation.setLongitude(-1.888499);
+        }
+
+        LocationManager manager = ((MainActivity)getActivity()).getLocationManager();
+        manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 10, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                bestUserLocation = location;
+                restaurantMapViewFragment.userLocationChanged(location);
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        });
+
+        Location locationGPS = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location coarseGPS = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Location passiveGPS = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+        if(locationGPS != null){
+            bestUserLocation = locationGPS;
+        } else if(coarseGPS != null){
+            bestUserLocation = coarseGPS;
+        } else if(passiveGPS != null){
+            bestUserLocation = passiveGPS;
+        } else {
+            // location still unavailable?, default to Aston University
+            Log.w("spoonlogcat: ", "Location missing!");
+            bestUserLocation = new Location("");
+            bestUserLocation.setLatitude(52.486208);
+            bestUserLocation.setLongitude(-1.888499);
+        }
+    }
+
+    private void gerHereAPIRestaurants(Location location, Callable onTaskComplete){
+        RestaurantContent.jsonRequest(getActivity(), getActivity().getApplicationContext(), adapter, location, onTaskComplete);
+    }
+
+    private void addButtonHandlers(){
+        centreMapOnUserButton = view.findViewById(R.id.centreMapOnUserButton);
+        centreMapOnUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
 }

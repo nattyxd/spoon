@@ -36,7 +36,7 @@
 
 
     <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton"
+        android:id="@+id/centreMapOnUserButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -60,7 +60,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/refresh"
         android:tint="#5b9618"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton"
+        app:layout_constraintStart_toEndOf="@+id/centreMapOnUserButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <ImageButton

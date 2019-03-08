@@ -46,10 +46,10 @@ public class RestaurantsMapViewFragment extends Fragment {
     private Map map = null;
     private MapView mapView = null;
 
+    private Location userLocation;
+
     private ClusterLayer restaurantCluster = null;
     private ClusterLayer userPositionCluster = null;
-
-    private Location bestLocation = null;
 
     private Toast instanceToast;
 
@@ -136,6 +136,7 @@ public class RestaurantsMapViewFragment extends Fragment {
                         mapFragment.getMapGesture().addOnGestureListener(tapGestureListener, 10, true);
 
                         restaurantsWereRefreshed();
+                        userLocationChanged(userLocation);
                     } else {
                         Log.e("spoonlogcat:", "ERROR: Cannot initialize Map Fragment: " + error.getStackTrace());
                     }
@@ -149,9 +150,42 @@ public class RestaurantsMapViewFragment extends Fragment {
         return view;
     }
 
+    public void userLocationChanged(Location location){
+        userLocation = RestaurantsFragment.bestUserLocation;
+        centreMapOnUserLocation();
+
+        try{
+            // add the user's geolocation to the map
+            if(userPositionCluster != null){
+                map.removeClusterLayer(userPositionCluster);
+            }
+            userPositionCluster = new ClusterLayer();
+            final MapMarker userMapMarker = new MapMarker();
+            final GeoCoordinate userPosition = new GeoCoordinate(userLocation.getLatitude(), userLocation.getLongitude());
+            userMapMarker.setCoordinate(userPosition);
+
+            Image image = new Image();
+            try{
+                image.setImageResource(R.drawable.user_geolocation_raster);
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+
+            map.addClusterLayer(userPositionCluster);
+
+            userMapMarker.setIcon(image);
+
+            userMapMarker.setTitle("You are here");
+            userPositionCluster.addMarker(userMapMarker);
+        } catch (Exception e){
+            e.printStackTrace();
+            // this isn't a huge error, just means we got a new location before we were ready for it
+        }
+    }
+
     // Update the map when we get new fresh data
     public void restaurantsWereRefreshed(){
-        centreMapOnUserLocation();
+//        centreMapOnUserLocation();
 
         // remove existing restaurants on refresh
         if(restaurantCluster != null){
@@ -171,30 +205,6 @@ public class RestaurantsMapViewFragment extends Fragment {
             restaurantCluster.addMarker(mapMarker);
         }
         map.addClusterLayer(restaurantCluster);
-
-        // add the user's geolocation to the map
-        if(userPositionCluster != null){
-            map.removeClusterLayer(userPositionCluster);
-        }
-        userPositionCluster = new ClusterLayer();
-        final MapMarker userMapMarker = new MapMarker();
-        final GeoCoordinate userPosition = new GeoCoordinate(bestLocation.getLatitude(), bestLocation.getLongitude());
-        userMapMarker.setCoordinate(userPosition);
-
-        // create the "You are here" image and add it as the marker to show user geolocation
-
-        Image image = new Image();
-        try{
-            image.setImageResource(R.drawable.user_geolocation_raster);
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-        userMapMarker.setIcon(image);
-
-        userMapMarker.setTitle("You are here");
-        userPositionCluster.addMarker(userMapMarker);
-
-        map.addClusterLayer(userPositionCluster);
     }
 
     private void centreMapOnFirstRestaurant(){
@@ -207,35 +217,7 @@ public class RestaurantsMapViewFragment extends Fragment {
     }
 
     private void centreMapOnUserLocation(){
-        if(ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(getContext(), "We need your location, or the map will not work! :(", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        LocationManager manager = ((MainActivity)getActivity()).getLocationManager();
-        Location locationGPS = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Location coarseGPS = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Location passiveGPS = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-
-        // Get the best location
-        bestLocation = null;
-
-        if(locationGPS != null){
-            bestLocation = locationGPS;
-        } else if(coarseGPS != null){
-            bestLocation = coarseGPS;
-        } else if(passiveGPS != null){
-            bestLocation = passiveGPS;
-        } else {
-            // location unavailable, default to Aston University
-            bestLocation = new Location("");
-            bestLocation.setLatitude(52.486208);
-            bestLocation.setLongitude(-1.888499);
-            Toast.makeText(getContext(), "We don't have any location data for the user!", Toast.LENGTH_LONG).show();
-        }
-
-        GeoCoordinate coord = new GeoCoordinate(bestLocation.getLatitude(), bestLocation.getLongitude());
-
+        GeoCoordinate coord = new GeoCoordinate(userLocation.getLatitude(), userLocation.getLongitude());
         map.setCenter(coord, Map.Animation.NONE);
     }
 

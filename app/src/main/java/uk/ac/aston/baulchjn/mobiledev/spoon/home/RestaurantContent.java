@@ -45,35 +45,10 @@ public class RestaurantContent {
      * Json call for real data
      */
 
-    public static void jsonRequest(Activity activity, Context context, final RestaurantRecyclerAdapter adapter, final Callable<Void> onComplete) {
-        if(ActivityCompat.checkSelfPermission(context, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(context, "We need your location, or the map will not work! :(", Toast.LENGTH_SHORT).show();
-            return;
-        }
+    public static void jsonRequest(Activity activity, Context context, final RestaurantRecyclerAdapter adapter, Location location, final Callable<Void> onComplete) {
+        final String latitude_val = String.valueOf(location.getLatitude());
+        final String longitude_val = String.valueOf(location.getLongitude());
 
-        LocationManager manager = ((MainActivity)activity).getLocationManager();
-        Location locationGPS = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Location coarseGPS = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Location passiveGPS = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-
-        // Get the best location
-        Location bestLocation = null;
-
-        if(locationGPS != null){
-            bestLocation = locationGPS;
-        } else if(coarseGPS != null){
-            bestLocation = coarseGPS;
-        } else if(passiveGPS != null){
-            bestLocation = passiveGPS;
-        } else {
-            // location unavailable, default to Aston University
-            bestLocation = new Location("");
-            bestLocation.setLatitude(52.486208);
-            bestLocation.setLongitude(-1.888499);
-        }
-
-        final String latitude_val = Double.toString(bestLocation.getLatitude());
-        final String longitude_val = Double.toString(bestLocation.getLongitude());
         //final String URL_JSON = "https://places.cit.api.here.com/places/v1/discover/search?at=52.4870897%2C-1.8902916&q=american+restaurant&Accept-Language=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8&app_id=auI3sSIwYT1YkAkKkm9f&app_code=UblO-Dyzdg-QCADIYvRWEw#";
         String URL_JSON = "https://places.cit.api.here.com/places/v1/discover/search?at=" + latitude_val + "%2C" + longitude_val + "&q=restaurant&Accept-Language=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8&app_id=auI3sSIwYT1YkAkKkm9f&app_code=UblO-Dyzdg-QCADIYvRWEw#";
 
