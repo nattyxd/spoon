@@ -1,11 +1,9 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon;
 
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,24 +15,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import com.here.android.mpa.cluster.ClusterLayer;
 import com.here.android.mpa.common.ApplicationContext;
+import com.here.android.mpa.common.GeoBoundingBox;
 import com.here.android.mpa.common.GeoCoordinate;
-import com.here.android.mpa.common.MapEngine;
+import com.here.android.mpa.common.Image;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.mapping.Map;
-import com.here.android.mpa.mapping.MapFragment;
 import com.here.android.mpa.mapping.MapGesture;
 import com.here.android.mpa.mapping.MapMarker;
 import com.here.android.mpa.mapping.MapView;
 import com.here.android.mpa.mapping.SupportMapFragment;
-import com.here.android.mpa.mapping.customization.CustomizableVariables;
+import com.nokia.maps.restrouting.BoundingBox;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
@@ -48,6 +45,13 @@ public class RestaurantsMapViewFragment extends Fragment {
     // map embedded in the map fragment
     private Map map = null;
     private MapView mapView = null;
+
+    private ClusterLayer restaurantCluster = null;
+    private ClusterLayer userPositionCluster = null;
+
+    private Location bestLocation = null;
+
+    private Toast instanceToast;
 
     private static View view;
 
@@ -87,6 +91,15 @@ public class RestaurantsMapViewFragment extends Fragment {
             }
 
             return true;
+        }
+
+        @Override
+        public void onPanEnd(){
+            shouldDisplayOffScreenLocationToast();
+        }
+
+        public void onMultiFingerManipulationEnd(){
+            shouldDisplayOffScreenLocationToast();
         }
     };
 
@@ -140,7 +153,11 @@ public class RestaurantsMapViewFragment extends Fragment {
     public void restaurantsWereRefreshed(){
         centreMapOnUserLocation();
 
-        ClusterLayer cl = new ClusterLayer();
+        // remove existing restaurants on refresh
+        if(restaurantCluster != null){
+            map.removeClusterLayer(restaurantCluster);
+        }
+        restaurantCluster = new ClusterLayer();
 
         // add the restaurants to the cluster
         for(int i = 0; i < RestaurantContent.restaurantItems.size(); i++){
@@ -151,11 +168,33 @@ public class RestaurantsMapViewFragment extends Fragment {
             final GeoCoordinate geoCoordinate = new GeoCoordinate(latitude, longitude);
 
             mapMarker.setCoordinate(geoCoordinate);
-            cl.addMarker(mapMarker);
+            restaurantCluster.addMarker(mapMarker);
         }
-        map.addClusterLayer(cl);
+        map.addClusterLayer(restaurantCluster);
 
+        // add the user's geolocation to the map
+        if(userPositionCluster != null){
+            map.removeClusterLayer(userPositionCluster);
+        }
+        userPositionCluster = new ClusterLayer();
+        final MapMarker userMapMarker = new MapMarker();
+        final GeoCoordinate userPosition = new GeoCoordinate(bestLocation.getLatitude(), bestLocation.getLongitude());
+        userMapMarker.setCoordinate(userPosition);
 
+        // create the "You are here" image and add it as the marker to show user geolocation
+
+        Image image = new Image();
+        try{
+            image.setImageResource(R.drawable.user_geolocation_raster);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        userMapMarker.setIcon(image);
+
+        userMapMarker.setTitle("You are here");
+        userPositionCluster.addMarker(userMapMarker);
+
+        map.addClusterLayer(userPositionCluster);
     }
 
     private void centreMapOnFirstRestaurant(){
@@ -179,7 +218,7 @@ public class RestaurantsMapViewFragment extends Fragment {
         Location passiveGPS = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
         // Get the best location
-        Location bestLocation = null;
+        bestLocation = null;
 
         if(locationGPS != null){
             bestLocation = locationGPS;
@@ -198,6 +237,40 @@ public class RestaurantsMapViewFragment extends Fragment {
         GeoCoordinate coord = new GeoCoordinate(bestLocation.getLatitude(), bestLocation.getLongitude());
 
         map.setCenter(coord, Map.Animation.NONE);
+    }
+
+    // Displays a toast if there are off screen locations
+    private void shouldDisplayOffScreenLocationToast(){
+        GeoBoundingBox box = map.getBoundingBox();
+
+        List<RestaurantItem> restaurants = RestaurantContent.restaurantItems;
+
+        int outOfZoomRestaurantCount = 0;
+
+        for(int i = 0; i < restaurants.size(); i++){
+            RestaurantItem currentRestaurant = restaurants.get(i);
+            GeoCoordinate restaurantCoord = new GeoCoordinate(Double.parseDouble(currentRestaurant.getLatitude()), Double.parseDouble(currentRestaurant.getLongitude()));
+            if(!box.contains(restaurantCoord)){
+                outOfZoomRestaurantCount++;
+            }
+        }
+
+        if(outOfZoomRestaurantCount > 0){
+            String text = "";
+            if(outOfZoomRestaurantCount > 1){
+                text = getString(R.string.en_restaurantsMapFragment_xRestaurantsOutsideMap_Plural, outOfZoomRestaurantCount);
+            } else {
+                text = getString(R.string.en_restaurantsMapFragment_xRestaurantsOutsideMap_Singular);
+            }
+            
+            if(instanceToast != null && instanceToast.getView().getWindowVisibility() == View.VISIBLE){
+                instanceToast.setText(text);
+                instanceToast.show();
+            } else {
+                instanceToast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+                instanceToast.show();
+            }
+        }
     }
 
     public RestaurantsMapViewFragment(){

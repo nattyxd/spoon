@@ -33,6 +33,10 @@
     <string name="en_restaurantFragment_newSearchArea">New Search Area</string>
     <string name="en_restaurantFragment_editSearchArea">Edit Search Area</string>
 
+    <string name="en_restaurantsMapFragment_xRestaurantsOutsideMap_Singular">A restaurant is off the screen right now. Zoom out to see it.</string>
+    <string name="en_restaurantsMapFragment_xRestaurantsOutsideMap_Plural">%1d restaurants are off the screen right now. Zoom out to see them.</string>
+
+
 
     <!-- Restaurant Booking Strings -->
     <string name="en_bookrestaurant_title">Book a Restaurant</string>

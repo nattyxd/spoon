@@ -24,6 +24,7 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 public class RestaurantDetailedFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_ID = "id";
     private static final String ARG_NAME = "name";
     private static final String ARG_VICINITY = "vicinity";
     private static final String ARG_TAG1 = "tag1";

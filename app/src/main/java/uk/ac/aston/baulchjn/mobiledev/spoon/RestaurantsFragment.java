@@ -130,6 +130,7 @@ public class RestaurantsFragment extends Fragment {
             @Override
             public void onItemClick(RestaurantItem item) {
                 Bundle bundle = new Bundle();
+                bundle.putString("id", item.getHereID());
                 bundle.putString("name", item.getName());
                 bundle.putString("vicinity", item.getVicinity());
                 bundle.putString("tag1", item.getTag1());
