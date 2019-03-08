@@ -32,6 +32,7 @@ import com.here.android.mpa.mapping.MapGesture;
 import com.here.android.mpa.mapping.MapMarker;
 import com.here.android.mpa.mapping.MapView;
 import com.here.android.mpa.mapping.SupportMapFragment;
+import com.here.android.mpa.mapping.customization.CustomizableVariables;
 
 import java.io.File;
 import java.util.List;
@@ -54,10 +55,17 @@ public class RestaurantsMapViewFragment extends Fragment {
     {
         @Override
         public boolean onTapEvent(PointF p) {
+            final double MINIMUM_ZOOM_TO_GUESS = 13; // We won't guess where the user tapped more zoomed out than this level
+            final double HEURISTIC_TAP = 50; // increase this to increase the range of false taps allowed
+
+            // only respond to tap events if the user is zoomed beyond a certain point.
+            double zoomAmount = map.getZoomLevel();
+
+            if(zoomAmount < MINIMUM_ZOOM_TO_GUESS){
+                return false; // it's not worth guessing
+            }
+
             GeoCoordinate c = map.pixelToGeo(p);
-            // c is your geoccordinate on the map, where you clicked on the screen
-            // [...]
-            Log.i("spoonlogcat: ", c.toString());
 
             RestaurantItem closestTap = null;
             double nearestDistance = Double.MAX_VALUE;
@@ -73,9 +81,10 @@ public class RestaurantsMapViewFragment extends Fragment {
             }
 
             // generate a heuristic based on whether or not the tap was close enough
-            final double HEURISTIC_TAP = 50; // increase this to increase the range of false taps allowed
-            Log.i("spoonlogcat: ", "The nearest Restaurant is... " + closestTap.getName() + ", and the distance to here was: " + nearestDistance);
-
+            if(nearestDistance < HEURISTIC_TAP){
+                // we are confident enough to say the user tapped the restaurant.
+                Log.i("spoonlogcat: ", closestTap.getName() + ", distance: " + nearestDistance);
+            }
 
             return true;
         }
@@ -111,7 +120,6 @@ public class RestaurantsMapViewFragment extends Fragment {
 
                         // retrieve a reference of the map from the map fragment
                         map = mapFragment.getMap();
-
                         mapFragment.getMapGesture().addOnGestureListener(tapGestureListener, 10, true);
 
                         restaurantsWereRefreshed();
