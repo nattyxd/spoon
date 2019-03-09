@@ -32,7 +32,6 @@ public class deprecated_HomeFragment extends Fragment {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //
 //        rv_list = new ArrayList<>();
-//        // TODO: Add the home_item_upcomingreservation object to the list here.
 //        rv_list.add(new RestaurantItem("Marketing Information", R.drawable.ic_event_white_24dp));
 //        rv_list.add(new RestaurantItem("Find Restaurants Quickly", R.drawable.ic_event_white_24dp));
 //        rv_list.add(new RestaurantItem("My Restaurant Visits", R.drawable.ic_restaurant_white_24dp));

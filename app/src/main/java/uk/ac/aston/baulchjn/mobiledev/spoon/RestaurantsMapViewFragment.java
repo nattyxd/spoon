@@ -289,6 +289,14 @@ public class RestaurantsMapViewFragment extends Fragment {
         });
     }
 
+    public Location getCenterOfMap(){
+        GeoCoordinate c = map.getCenter();
+        Location l = new Location("");
+        l.setLatitude(c.getLatitude());
+        l.setLongitude(c.getLongitude());
+        return l;
+    }
+
 //    private OnEngineInitListener engineInitHandler = new OnEngineInitListener() {
 //        @Override
 //        public void onEngineInitializationCompleted(Error error) {

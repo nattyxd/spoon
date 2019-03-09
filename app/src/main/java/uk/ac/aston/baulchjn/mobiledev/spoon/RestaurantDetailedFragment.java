@@ -22,7 +22,6 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
  *
  */
 public class RestaurantDetailedFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_ID = "id";
     private static final String ARG_NAME = "name";
@@ -32,7 +31,6 @@ public class RestaurantDetailedFragment extends Fragment {
     private static final String ARG_TAG3 = "tag3";
     private static final String ARG_RESTAURANT = "restaurant";
 
-    // TODO: Rename and change types of parameters
     private String name;
     private String vicinity;
     private String tag1;

@@ -37,11 +37,9 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
  *
  */
 public class BookRestaurantFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_RESTAURANT = "restaurant";
 
-    // TODO: Rename and change types of parameters
     private String name;
     private String vicinity;
     private ArrayList<String> tags;
@@ -52,7 +50,6 @@ public class BookRestaurantFragment extends Fragment {
     private EditText dateEditor;
     private EditText numAttendeesEditor;
 
-    // TODO BROKEN
     private final String DATABASE_NAME = "RESTAURANT_DB";
     //    private final String DATABASE_NAME = getContext().getResources().getString(R.string.restaurant_db_name);
     private BookingDatabase bookingDatabase;
@@ -142,7 +139,6 @@ public class BookRestaurantFragment extends Fragment {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // TODO Auto-generated method stub
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -162,7 +158,6 @@ public class BookRestaurantFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(getContext(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();

@@ -52,11 +52,8 @@ public class BookingsFragment extends Fragment {
                 bundle.putString("time", item.getTimeOfBooking());
                 bundle.putInt("numAttendees", item.getNumPeopleAttending());
 
-                // TODO: put the other things associated with the booking in here later
                 bundle.putSerializable("booking", item);
 
-
-                // TODO: launch the RestaurantDetailedFragment with the correct restaurant
                 FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
             }
         });

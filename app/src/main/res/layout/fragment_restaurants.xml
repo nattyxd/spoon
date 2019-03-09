@@ -26,22 +26,23 @@
     <TextView
         android:id="@+id/en_RestaurantFragment_AdditionalInfo"
         android:layout_width="wrap_content"
-        android:layout_height="15dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="By default, restaurants are from your current GPS location."
+        android:padding="8dp"
+        android:text="By default, restaurants are from your current GPS location. Use the buttons below to customise the search."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
 
     <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton2"
+        android:id="@+id/refreshRestaurantsButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded_corner_4dp"
         android:padding="4dp"
@@ -52,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton3"
+        android:id="@+id/stringSearchRestaurantsButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -62,11 +63,11 @@
         android:scaleType="centerCrop"
         android:src="@drawable/search"
         android:tint="#77b3d4"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton2"
+        app:layout_constraintStart_toEndOf="@+id/refreshRestaurantsButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton4"
+        android:id="@+id/filterRestaurantsButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -76,11 +77,11 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_filter_list_black_24dp"
         android:tint="#000"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton3"
+        app:layout_constraintStart_toEndOf="@+id/stringSearchRestaurantsButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton5"
+        android:id="@+id/sortRestaurantsButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -90,11 +91,11 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_sort_by_alpha_black_24dp"
         android:tint="#000"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton4"
+        app:layout_constraintStart_toEndOf="@+id/filterRestaurantsButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton6"
+        android:id="@+id/clearRestaurantCriteriaButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -104,7 +105,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_undo_black_24dp"
         android:tint="#f75a4c"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton5"
+        app:layout_constraintStart_toEndOf="@+id/sortRestaurantsButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <android.support.design.widget.TabLayout
@@ -114,7 +115,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantNewSearchAreaButton5">
+        app:layout_constraintTop_toBottomOf="@+id/sortRestaurantsButton">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"

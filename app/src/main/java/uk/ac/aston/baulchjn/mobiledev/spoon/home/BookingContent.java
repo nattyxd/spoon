@@ -65,7 +65,6 @@ public class BookingContent {
                     //bookingItems = bookingDatabase.daoAccess().fetchAllBookings();
                     //bookingItems = dbHelper.getAllBookingsAsList();
                     System.out.println("bookingItems has: " + bookingItems.size() + " items inside of it.");
-                    // TODO: Synchronisation issue here, we notify before query complete
                     bookingRecyclerAdapter.bookingList = dbHelper.getAllBookingsAsList();
                     //bookingRecyclerAdapter.notifyDataSetChanged();
                 } catch(SQLiteConstraintException e){

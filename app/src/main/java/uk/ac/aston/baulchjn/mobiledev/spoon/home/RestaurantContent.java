@@ -64,6 +64,8 @@ public class RestaurantContent {
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 RestaurantItem restaurantItem = new RestaurantItem();
+                                restaurantItems.clear(); // clear restaurants on refresh of restaurants
+                                // TODO: Readd visited restaurants
                                 restaurantItems.add(restaurantItem);
 //                                restaurantItem.setName("Test");
 //                                restaurantItem.setDesc("Test");

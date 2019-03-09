@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -59,7 +60,6 @@ public class RestaurantsFragment extends Fragment {
             Log.i("spoonlogcat:", "Woo the oncomplete fired");
 
             formattedHeader.setText(getResources().getString(R.string.en_restaurantFragment_wefoundXRestaunts, String.valueOf(RestaurantContent.restaurantItems.size())));
-            additionalInfoHeadline.setText("Use the buttons below to centre on your location, search in a new location, sort, and filter.");
             return null;
         }
     };
@@ -88,7 +88,9 @@ public class RestaurantsFragment extends Fragment {
 
         formattedHeader = view.findViewById(R.id.formattedRestaurantHeader);
         additionalInfoHeadline = view.findViewById(R.id.en_RestaurantFragment_AdditionalInfo);
-        
+
+        setupButtons();
+
         return view;
     }
 
@@ -198,4 +200,18 @@ public class RestaurantsFragment extends Fragment {
         RestaurantContent.jsonRequest(getActivity(), getActivity().getApplicationContext(), adapter, location, onTaskComplete);
     }
 
+    private void setupButtons(){
+        ImageButton refreshButton = view.findViewById(R.id.refreshRestaurantsButton);
+        ImageButton searchButton = view.findViewById(R.id.stringSearchRestaurantsButton);
+        ImageButton filterButton = view.findViewById(R.id.filterRestaurantsButton);
+        ImageButton sortButton = view.findViewById(R.id.sortRestaurantsButton);
+        ImageButton resetButton = view.findViewById(R.id.clearRestaurantCriteriaButton);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getHereAPIRestaurants(restaurantMapViewFragment.getCenterOfMap(), onJSONTaskCompleted);
+            }
+        });
+    }
 }
