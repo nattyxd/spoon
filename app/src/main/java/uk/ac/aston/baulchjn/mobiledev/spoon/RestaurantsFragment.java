@@ -176,28 +176,34 @@ public class RestaurantsFragment extends Fragment {
         }
 
         LocationManager manager = ((MainActivity)getActivity()).getLocationManager();
-        manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 10, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                bestUserLocation = location;
-                restaurantMapViewFragment.userLocationChanged(location);
-            }
 
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
+        try{
+            manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 10, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    bestUserLocation = location;
+                    restaurantMapViewFragment.userLocationChanged(location);
+                }
 
-            }
+                @Override
+                public void onStatusChanged(String s, int i, Bundle bundle) {
 
-            @Override
-            public void onProviderEnabled(String s) {
+                }
 
-            }
+                @Override
+                public void onProviderEnabled(String s) {
 
-            @Override
-            public void onProviderDisabled(String s) {
+                }
 
-            }
-        });
+                @Override
+                public void onProviderDisabled(String s) {
+
+                }
+            });
+        } catch (Exception e){
+            e.printStackTrace();
+            // this exception will fire if the user hasn't given permission for GPS.
+        }
 
         Location locationGPS = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         Location coarseGPS = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
