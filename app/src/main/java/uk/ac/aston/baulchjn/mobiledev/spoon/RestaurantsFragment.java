@@ -88,36 +88,7 @@ public class RestaurantsFragment extends Fragment {
 
         formattedHeader = view.findViewById(R.id.formattedRestaurantHeader);
         additionalInfoHeadline = view.findViewById(R.id.en_RestaurantFragment_AdditionalInfo);
-
-////        recyclerView = view.findViewById(R.id.restaurants_rv);
-////        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        Log.i("spoonlogcat: ", "The Fragment is equal to..." + restaurantsRecyclerViewFragment);
-////        recyclerView = restaurantsRecyclerViewFragment.getRecyclerView();
-////        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//
-//        RestaurantRecyclerAdapter mAdapter = new RestaurantRecyclerAdapter(RestaurantContent.restaurantItems, new RestaurantClickListener() {
-//            @Override
-//            public void onItemClick(RestaurantItem item) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("name", item.getName());
-//                bundle.putString("vicinity", item.getVicinity());
-//                bundle.putString("tag1", item.getTag1());
-//                bundle.putString("tag2", item.getTag2());
-//                bundle.putString("tag3", item.getTag3());
-//                bundle.putSerializable("restaurant", item);
-//
-//
-//                // launch the RestaurantDetailedFragment with the correct restaurant
-//                FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
-//            }
-//        });
-//
-////        recyclerView.setAdapter(mAdapter);
-////        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//
-//        RestaurantContent.jsonRequest(getActivity().getApplicationContext(), mAdapter, onJSONTaskCompleted);
-
-        //rv_list = RestaurantContent.restaurantItems;
+        
         return view;
     }
 
