@@ -53,6 +53,11 @@ public class RestaurantContent {
         String URL_JSON = "https://places.cit.api.here.com/places/v1/discover/search?at=" + latitude_val + "%2C" + longitude_val + "&q=restaurant&Accept-Language=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8&app_id=auI3sSIwYT1YkAkKkm9f&app_code=UblO-Dyzdg-QCADIYvRWEw#";
 
         RequestQueue requestQueue = (RequestQueue) Volley.newRequestQueue(context);
+
+        restaurantItems.clear(); // clear restaurants on refresh of restaurants
+        // TODO: Readd visited restaurants if the user has this selected
+
+
         JsonObjectRequest arrayRequest = new JsonObjectRequest(Request.Method.GET, URL_JSON, null,
                 new Response.Listener<JSONObject>() {
                     // Takes the response from the JSON request
@@ -64,8 +69,6 @@ public class RestaurantContent {
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 RestaurantItem restaurantItem = new RestaurantItem();
-                                restaurantItems.clear(); // clear restaurants on refresh of restaurants
-                                // TODO: Readd visited restaurants
                                 restaurantItems.add(restaurantItem);
 //                                restaurantItem.setName("Test");
 //                                restaurantItem.setDesc("Test");
