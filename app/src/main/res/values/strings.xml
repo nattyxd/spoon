@@ -29,7 +29,7 @@
     <string name="en_home_recentrestaurant_restaurant_title">You visited %1$s.</string>
 
     <!-- Restaurant Fragment Strings -->
-    <string name="en_restaurantFragment_wefoundXRestaunts">We found %1$s restaurants in your given search area.</string>
+    <string name="en_restaurantFragment_wefoundXRestaunts">%1$s matching restaurants:</string>
     <string name="en_restaurantFragment_newSearchArea">New Search Area</string>
     <string name="en_restaurantFragment_editSearchArea">Edit Search Area</string>
 

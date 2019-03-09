@@ -134,9 +134,13 @@ public class RestaurantsMapViewFragment extends Fragment {
                         // retrieve a reference of the map from the map fragment
                         map = mapFragment.getMap();
                         mapFragment.getMapGesture().addOnGestureListener(tapGestureListener, 10, true);
+//                        mapFragment.getView().setPadding(0, 60, 0 , 0);
+
 
                         restaurantsWereRefreshed();
-                        userLocationChanged(userLocation);
+                        userLocationChanged();
+
+                        setupButtons(); // enable interactivity only when the map is done
                     } else {
                         Log.e("spoonlogcat:", "ERROR: Cannot initialize Map Fragment: " + error.getStackTrace());
                     }
@@ -150,7 +154,8 @@ public class RestaurantsMapViewFragment extends Fragment {
         return view;
     }
 
-    public void userLocationChanged(Location location){
+    public void userLocationChanged(){
+        Log.i("spoonlogcat: ", "New user location received!");
         userLocation = RestaurantsFragment.bestUserLocation;
         centreMapOnUserLocation();
 
@@ -219,6 +224,7 @@ public class RestaurantsMapViewFragment extends Fragment {
     private void centreMapOnUserLocation(){
         GeoCoordinate coord = new GeoCoordinate(userLocation.getLatitude(), userLocation.getLongitude());
         map.setCenter(coord, Map.Animation.NONE);
+        map.setZoomLevel(15);
     }
 
     // Displays a toast if there are off screen locations
@@ -244,19 +250,34 @@ public class RestaurantsMapViewFragment extends Fragment {
             } else {
                 text = getString(R.string.en_restaurantsMapFragment_xRestaurantsOutsideMap_Singular);
             }
-            
-            if(instanceToast != null && instanceToast.getView().getWindowVisibility() == View.VISIBLE){
-                instanceToast.setText(text);
-                instanceToast.show();
-            } else {
-                instanceToast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-                instanceToast.show();
+
+            try{
+                if(instanceToast != null && instanceToast.getView().getWindowVisibility() == View.VISIBLE){
+                    instanceToast.setText(text);
+                    instanceToast.show();
+                } else {
+                    instanceToast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+                    instanceToast.show();
+                }
+            } catch (Exception ex){
+                ex.printStackTrace();
+                Log.e("spoonlogcat: " , "Toast got shown from wrong thread.");
             }
         }
     }
 
     public RestaurantsMapViewFragment(){
         // Required empty constructor
+    }
+
+    private void setupButtons(){
+        view.findViewById(R.id.centreMapOnUserButton);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                centreMapOnUserLocation();
+            }
+        });
     }
 
 //    private OnEngineInitListener engineInitHandler = new OnEngineInitListener() {

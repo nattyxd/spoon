@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -88,8 +89,6 @@ public class RestaurantsFragment extends Fragment {
         formattedHeader = view.findViewById(R.id.formattedRestaurantHeader);
         additionalInfoHeadline = view.findViewById(R.id.en_RestaurantFragment_AdditionalInfo);
 
-        addButtonHandlers();
-
 ////        recyclerView = view.findViewById(R.id.restaurants_rv);
 ////        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        Log.i("spoonlogcat: ", "The Fragment is equal to..." + restaurantsRecyclerViewFragment);
@@ -122,7 +121,7 @@ public class RestaurantsFragment extends Fragment {
         return view;
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(final ViewPager viewPager){
         restaurantsRecyclerViewFragment = new RestaurantsRecyclerViewFragment();
         restaurantMapViewFragment = new RestaurantsMapViewFragment();
 
@@ -161,7 +160,7 @@ public class RestaurantsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        gerHereAPIRestaurants(bestUserLocation, onJSONTaskCompleted);
+        getHereAPIRestaurants(bestUserLocation, onJSONTaskCompleted);
 
     }
 
@@ -178,11 +177,11 @@ public class RestaurantsFragment extends Fragment {
         LocationManager manager = ((MainActivity)getActivity()).getLocationManager();
 
         try{
-            manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 10, new LocationListener() {
+            manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
                     bestUserLocation = location;
-                    restaurantMapViewFragment.userLocationChanged(location);
+                    restaurantMapViewFragment.userLocationChanged();
                 }
 
                 @Override
@@ -224,17 +223,8 @@ public class RestaurantsFragment extends Fragment {
         }
     }
 
-    private void gerHereAPIRestaurants(Location location, Callable onTaskComplete){
+    private void getHereAPIRestaurants(Location location, Callable onTaskComplete){
         RestaurantContent.jsonRequest(getActivity(), getActivity().getApplicationContext(), adapter, location, onTaskComplete);
     }
 
-    private void addButtonHandlers(){
-        centreMapOnUserButton = view.findViewById(R.id.centreMapOnUserButton);
-        centreMapOnUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
 }
