@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.here.android.mpa.cluster.ClusterLayer;
@@ -45,6 +46,7 @@ public class RestaurantsMapViewFragment extends Fragment {
     // map embedded in the map fragment
     private Map map = null;
     private MapView mapView = null;
+    private boolean initialCenter = true;
 
     private Location userLocation;
 
@@ -223,7 +225,13 @@ public class RestaurantsMapViewFragment extends Fragment {
 
     private void centreMapOnUserLocation(){
         GeoCoordinate coord = new GeoCoordinate(userLocation.getLatitude(), userLocation.getLongitude());
-        map.setCenter(coord, Map.Animation.NONE);
+
+        if(initialCenter){
+            map.setCenter(coord, Map.Animation.NONE);
+            initialCenter = false;
+        } else {
+            map.setCenter(coord, Map.Animation.BOW);
+        }
         map.setZoomLevel(15);
     }
 
@@ -271,10 +279,11 @@ public class RestaurantsMapViewFragment extends Fragment {
     }
 
     private void setupButtons(){
-        view.findViewById(R.id.centreMapOnUserButton);
-        view.setOnClickListener(new View.OnClickListener() {
+        ImageButton gpsButton = view.findViewById(R.id.centreMapOnUserButton);
+        gpsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(), "Centering", Toast.LENGTH_SHORT).show();
                 centreMapOnUserLocation();
             }
         });

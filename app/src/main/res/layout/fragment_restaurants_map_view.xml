@@ -15,6 +15,7 @@
 
     <ImageButton
         android:id="@+id/centreMapOnUserButton"
+        android:clickable="true"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -26,76 +27,6 @@
         android:tint="#4285f4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" /><!-- set 30dp padding from all the sides of the view-->
-
-    <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/refresh"
-        android:tint="#5b9618"
-        app:layout_constraintStart_toEndOf="@+id/centreMapOnUserButton"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
-
-    <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton3"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/search"
-        android:tint="#77b3d4"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton2"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
-
-    <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton4"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_filter_list_black_24dp"
-        android:tint="#000"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton3"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
-
-    <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton5"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_sort_by_alpha_black_24dp"
-        android:tint="#000"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton4"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
-
-    <ImageButton
-        android:id="@+id/restaurantNewSearchAreaButton6"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_undo_black_24dp"
-        android:tint="#f75a4c"
-        app:layout_constraintStart_toEndOf="@+id/restaurantNewSearchAreaButton5"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
     <com.here.android.mpa.mapping.MapView
         android:id="@+id/mapView"
