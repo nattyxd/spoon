@@ -36,6 +36,12 @@
     <string name="en_restaurantsMapFragment_xRestaurantsOutsideMap_Singular">A restaurant is off the screen right now. Zoom out to see it.</string>
     <string name="en_restaurantsMapFragment_xRestaurantsOutsideMap_Plural">%1d restaurants are off the screen right now. Zoom out to see them.</string>
 
+    <string-array name="en_restaurants_SortOptions">
+        <item>Alphabetical (Ascending)</item>
+        <item>Alphabetical (Descending)</item>
+        <item>Distance (Ascending)</item>
+        <item>Distance (Descending)</item>
+    </string-array>
 
 
     <!-- Restaurant Booking Strings -->

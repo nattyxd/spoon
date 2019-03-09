@@ -47,6 +47,7 @@ public class RestaurantsMapViewFragment extends Fragment {
     private Map map = null;
     private MapView mapView = null;
     private boolean initialCenter = true;
+    private boolean initialLocation = true;
 
     private Location userLocation;
 
@@ -159,7 +160,11 @@ public class RestaurantsMapViewFragment extends Fragment {
     public void userLocationChanged(){
         Log.i("spoonlogcat: ", "New user location received!");
         userLocation = RestaurantsFragment.bestUserLocation;
-        centreMapOnUserLocation();
+
+        if(initialLocation){
+            centreMapOnUserLocation();
+            initialLocation = false; // only center once
+        }
 
         try{
             // add the user's geolocation to the map

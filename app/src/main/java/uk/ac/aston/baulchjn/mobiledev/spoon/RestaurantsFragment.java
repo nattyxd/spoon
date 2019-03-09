@@ -1,6 +1,8 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,13 +26,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByDescendingAlphabet;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantRecyclerAdapter;
+
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByAscendingAlphabet;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -212,6 +218,33 @@ public class RestaurantsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getHereAPIRestaurants(restaurantMapViewFragment.getCenterOfMap(), onJSONTaskCompleted);
+            }
+        });
+
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                dialogBuilder.setTitle("Sort");
+                dialogBuilder.setItems(R.array.en_restaurants_SortOptions, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                // alphabetical ascending
+                                Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByAscendingAlphabet());
+                                break;
+                            case 1:
+                                Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByDescendingAlphabet());
+                            default:
+                                break;
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+                dialogBuilder.create().show();
+
             }
         });
     }
