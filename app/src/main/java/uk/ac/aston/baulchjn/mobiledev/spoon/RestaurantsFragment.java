@@ -30,7 +30,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByAscendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByDescendingAlphabet;
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByDescendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
@@ -235,7 +237,14 @@ public class RestaurantsFragment extends Fragment {
                                 Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByAscendingAlphabet());
                                 break;
                             case 1:
+                                // alphabetical descending
                                 Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByDescendingAlphabet());
+                            case 2:
+                                // distance ascending
+                                Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByAscendingDistance());
+                            case 3:
+                                // distance descending
+                                Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByDescendingDistance());
                             default:
                                 break;
                         }
