@@ -161,6 +161,10 @@ public class RestaurantsMapViewFragment extends Fragment {
         Log.i("spoonlogcat: ", "New user location received!");
         userLocation = RestaurantsFragment.bestUserLocation;
 
+        if(map == null){
+            return; // wait for new locations
+        }
+
         if(initialLocation){
             centreMapOnUserLocation();
             initialLocation = false; // only center once

@@ -238,14 +238,18 @@ public class RestaurantsFragment extends Fragment {
                                 break;
                             case 1:
                                 // alphabetical descending
-                                Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByDescendingAlphabet());
+                                Collections.sort(RestaurantContent.restaurantItems, Collections.reverseOrder(new SortRestaurantByAscendingAlphabet()));
+                                break;
                             case 2:
                                 // distance ascending
                                 Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByAscendingDistance());
+                                break;
                             case 3:
                                 // distance descending
                                 Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByDescendingDistance());
+                                break;
                             default:
+                                Collections.sort(RestaurantContent.restaurantItems, new SortRestaurantByAscendingAlphabet());
                                 break;
                         }
                         adapter.notifyDataSetChanged();
