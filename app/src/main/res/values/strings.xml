@@ -81,11 +81,15 @@
     <string name="en_restaurantDetails_SetNotVisited">Set as not Visited</string>
 
 
-
     <!-- Restaurant Booking Strings -->
     <string name="en_bookrestaurant_title">Book a Restaurant</string>
     <string name="en_bookrestaurant_youarebooking">You are booking: "%1$s"</string>
     <string name="en_bookrestaurants_wrongrestaurant">Wrong restaurant? Go to "Restaurants" to select a new one.</string>
+
+    <!-- Restaurant Booking Details Strings -->
+    <string name="en_bookingDetails_EditBooking">Edit Booking</string>
+    <string name="en_bookingDetails_ShareBooking">Share Booking</string>
+    <string name="en_bookingDetails_DeleteBooking">Delete Booking</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

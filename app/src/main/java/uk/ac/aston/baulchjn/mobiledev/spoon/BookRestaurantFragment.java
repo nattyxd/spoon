@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
@@ -241,6 +242,9 @@ public class BookRestaurantFragment extends Fragment {
                         booking.setTimeOfBooking(timeEditor.getText().toString());
                         booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
                         final long result = dbHelper.addBooking(booking);
+                        booking.setBookingID((int) (long) result); // should be safe as bookings won't exceed 2 billion..
+                        BookingContent.bookingItems.add(booking);
+                        BookingsFragment.mAdapter.notifyDataSetChanged(); // TODO: Not working??
 
                         Snackbar snackbar = Snackbar
                                 .make(view, "Booking Created Successfully!", Snackbar.LENGTH_LONG)
@@ -248,8 +252,8 @@ public class BookRestaurantFragment extends Fragment {
                                     @Override
                                     public void onClick(View view) {
                                         Bundle bundle = new Bundle();
-                                        bundle.putSerializable("bookingID", result);
-                                        FragmentStateContainer.getInstance().switchFragmentState(1, bundle);
+                                        bundle.putSerializable("booking", booking);
+                                        FragmentStateContainer.getInstance().switchFragmentState(6, bundle);
 
                                     }
                                 });

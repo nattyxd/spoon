@@ -23,6 +23,7 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingRecyclerAdapter;
 public class BookingsFragment extends Fragment {
     private List<BookingItem> rv_list;
     private RecyclerView recyclerView;
+    public static BookingRecyclerAdapter mAdapter;
 
     public BookingsFragment() {
         // Required empty public constructor
@@ -44,7 +45,7 @@ public class BookingsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.bookings_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        BookingRecyclerAdapter mAdapter = new BookingRecyclerAdapter(BookingContent.bookingItems, new BookingClickListener() {
+        mAdapter = new BookingRecyclerAdapter(BookingContent.bookingItems, new BookingClickListener() {
             @Override
             public void onItemClick(BookingItem item) {
                 Bundle bundle = new Bundle();
@@ -54,7 +55,7 @@ public class BookingsFragment extends Fragment {
 
                 bundle.putSerializable("booking", item);
 
-                FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
+                FragmentStateContainer.getInstance().switchFragmentState(6, bundle);
             }
         });
 
