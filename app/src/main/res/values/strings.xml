@@ -73,6 +73,14 @@
         <item>Seafood</item>
     </string-array>
 
+    <!-- Restaurant Detailed -->
+    <string name="en_restaurantDetails_OpenInMaps">Open Restaurant in Google Maps</string>
+    <string name="en_restaurantDetails_BookRestaurant">Book Restaurant</string>
+    <string name="en_restaurantDetails_AddMeal">Add Meal</string>
+    <string name="en_restaurantDetails_SetVisited">Set as Visited</string>
+    <string name="en_restaurantDetails_SetNotVisited">Set as not Visited</string>
+
+
 
     <!-- Restaurant Booking Strings -->
     <string name="en_bookrestaurant_title">Book a Restaurant</string>

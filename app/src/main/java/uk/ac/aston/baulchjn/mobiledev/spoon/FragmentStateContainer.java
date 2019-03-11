@@ -21,6 +21,8 @@ public class FragmentStateContainer {
     final Fragment mealsFragment = new MealsFragment();
     final Fragment restaurantDetailedFragment = new RestaurantDetailedFragment();
     final Fragment bookRestaurantFragment = new BookRestaurantFragment();
+    final Fragment bookingDetailsFragment = new BookingDetailsFragment();
+
     FragmentManager fm = null;
     private static Activity activity = null;
     Fragment active = homeFragment;
@@ -31,6 +33,7 @@ public class FragmentStateContainer {
     }
 
     public void initialise() {
+        fm.beginTransaction().add(R.id.main_container, bookingDetailsFragment, "7").hide(bookingDetailsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, bookRestaurantFragment, "6").hide(bookRestaurantFragment).commit();
         fm.beginTransaction().add(R.id.main_container, restaurantDetailedFragment, "5").hide(restaurantDetailedFragment).commit();
         fm.beginTransaction().add(R.id.main_container, mealsFragment, "4").hide(mealsFragment).commit();
@@ -44,6 +47,7 @@ public class FragmentStateContainer {
         fragments.add(mealsFragment);
         fragments.add(restaurantDetailedFragment);
         fragments.add(bookRestaurantFragment);
+        fragments.add(bookingDetailsFragment);
     }
 
     public void switchFragmentState(int index, Bundle bundle) {

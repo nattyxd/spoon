@@ -13,7 +13,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.here.android.mpa.common.GeoCoordinate;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
@@ -33,6 +36,8 @@ public class RestaurantDetailedFragment extends Fragment {
 
     private String name;
     private String vicinity;
+    private String latitude;
+    private String longitude;
     private String tag1;
     private String tag2;
     private String tag3;
@@ -51,12 +56,42 @@ public class RestaurantDetailedFragment extends Fragment {
 
         Bundle bundle = FragmentStateContainer.getInstance().activeBundle;
         if (bundle != null) {
-            nameView.setText(bundle.getString("name"));
-            vicinityView.setText(bundle.getString("vicinity"));
+            restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
+            if(restaurant.getTag1() != null){
+                tag1 = restaurant.getTag1();
+            }
+            if(restaurant.getTag2() != null){
+                tag2 = restaurant.getTag2();
+            }
+            if(restaurant.getTag3() != null){
+                tag3 = restaurant.getTag3();
+            }
+
+            // Set title
+            nameView.setText(restaurant.getName());
+
+            longitude = restaurant.getLongitude();
+            latitude = restaurant.getLatitude();
+
+            GeoCoordinate userCoord = new GeoCoordinate(RestaurantsFragment.bestUserLocation.getLatitude(), RestaurantsFragment.bestUserLocation.getLongitude());
+            GeoCoordinate restaurantCoord = new GeoCoordinate(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
+            double distance = userCoord.distanceTo(restaurantCoord);
+
+            String viscinityText = restaurant.getVicinity();
+            viscinityText = viscinityText.replace("<br/>", ", ");
+            viscinityText = viscinityText + " (" + Math.round(distance) + "m away)";
+            vicinityView.setText(viscinityText);
 
             // Logic to set tags
-            tagsView.setText("This needs updating.. but for now just have the first tag: " + bundle.getString("tag1"));
-            restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
+            if(tag3 != null){
+                tagsView.setText("Known for: " + restaurant.getTag1() + ", " + restaurant.getTag2() + ", " + restaurant.getTag3());
+            } else if(tag2 != null){
+                tagsView.setText("Known for: " + restaurant.getTag1() + ", " + restaurant.getTag2());
+            } else if(tag1 != null){
+                tagsView.setText("Known for: " + restaurant.getTag1());
+            } else {
+                tagsView.setText("This restaurant has no tags");
+            }
         }
     }
 
@@ -87,6 +122,17 @@ public class RestaurantDetailedFragment extends Fragment {
         tagsView.setText("Replace this with tag1,tag2,tag3, etc");
 //
         Button bookBtn = view.findViewById(R.id.book_btn);
+        Button openInMapsBtn = view.findViewById(R.id.open_in_maps_btn);
+
+        openInMapsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", Double.parseDouble(latitude), Double.parseDouble(longitude));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setPackage("com.google.android.apps.maps");
+                getContext().startActivity(intent);
+            }
+        });
 
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +142,8 @@ public class RestaurantDetailedFragment extends Fragment {
                 FragmentStateContainer.getInstance().switchFragmentState(5, bundle);
             }
         });
+
+
 
         return view;
     }

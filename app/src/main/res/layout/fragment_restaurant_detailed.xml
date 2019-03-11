@@ -9,22 +9,49 @@
     <TextView
         android:id="@+id/restaurant_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Restaurant Name"
+        android:textSize="32dp" />
 
     <TextView
         android:id="@+id/restaurant_vicinity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Viscinity"
+        android:textSize="22dp" />
 
     <TextView
         android:id="@+id/restaurant_tags"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Tags"
+        android:textSize="22dp" />
+
+    <Button
+        android:id="@+id/open_in_maps_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/en_restaurantDetails_OpenInMaps" />
 
     <Button
         android:id="@+id/book_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Book Restaurant" />
+        android:text="@string/en_restaurantDetails_BookRestaurant" />
+
+    <Button
+        android:id="@+id/add_meal_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/en_restaurantDetails_AddMeal" />
+
+    <Button
+        android:id="@+id/toggle_visited_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/en_restaurantDetails_SetVisited" />
 
 </LinearLayout>

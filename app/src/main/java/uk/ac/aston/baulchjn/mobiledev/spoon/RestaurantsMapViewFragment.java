@@ -91,6 +91,9 @@ public class RestaurantsMapViewFragment extends Fragment {
             if(nearestDistance < HEURISTIC_TAP){
                 // we are confident enough to say the user tapped the restaurant.
                 Log.i("spoonlogcat: ", closestTap.getName() + ", distance: " + nearestDistance);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("restaurant", closestTap);
+                FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
             }
 
             return true;

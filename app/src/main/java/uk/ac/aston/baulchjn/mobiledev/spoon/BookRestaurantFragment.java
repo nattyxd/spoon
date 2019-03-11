@@ -13,11 +13,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,12 +27,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 /**
@@ -45,6 +51,11 @@ public class BookRestaurantFragment extends Fragment {
     private ArrayList<String> tags;
     private RestaurantItem restaurant;
 
+    // Text views
+    private TextView dateTextView;
+    private TextView timeTextView;
+    private TextView numPeopleTextView;
+
     // Fragment Controls
     private EditText timeEditor;
     private EditText dateEditor;
@@ -55,6 +66,8 @@ public class BookRestaurantFragment extends Fragment {
     private BookingDatabase bookingDatabase;
     private RestaurantDatabase restaurantDatabase;
     private DatabaseHelper dbHelper;
+
+    private Thread makeBookingThread;
 
     private View view;
 
@@ -68,7 +81,7 @@ public class BookRestaurantFragment extends Fragment {
 
         Bundle bundle = FragmentStateContainer.getInstance().activeBundle;
         if (bundle != null) {
-            restaurant = (RestaurantItem) bundle.getSerializable(ARG_RESTAURANT);
+            restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
             Log.i("spoonlogcat", "Wooooo! We're gonna book a restaurant...." + restaurant.toString());
 
             TextView youAreBooking = view.findViewById(R.id.youAreBooking);
@@ -85,43 +98,6 @@ public class BookRestaurantFragment extends Fragment {
         }
 
         dbHelper = new DatabaseHelper(getContext());
-
-        // DB Migrations
-        final Migration FROM_1_TO_2 = new Migration(1, 2) {
-            @Override
-            public void migrate(final SupportSQLiteDatabase database) {
-                //
-            }
-        };
-
-        final Migration MIGRATION_2_1 = new Migration(2, 1) {
-            @Override
-            public void migrate(final SupportSQLiteDatabase database) {
-                //
-            }
-        };
-
-        final Migration MIGRATION_1_2 = new Migration(1, 2) {
-            @Override
-            public void migrate(SupportSQLiteDatabase database) {
-                //
-            }
-        };
-
-
-        restaurantDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
-                RestaurantDatabase.class, DATABASE_NAME)
-//                .addMigrations(MIGRATION_1_2)
-//                .addMigrations(MIGRATION_2_1)
-                .fallbackToDestructiveMigration()
-                .build();
-
-        bookingDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
-                BookingDatabase.class, DATABASE_NAME)
-//                .addMigrations(MIGRATION_1_2)
-//                .addMigrations(MIGRATION_2_1)
-                .fallbackToDestructiveMigration()
-                .build();
     }
 
     @Override
@@ -131,6 +107,10 @@ public class BookRestaurantFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_book_restaurant, container, false);
 
         final Calendar myCalendar = Calendar.getInstance();
+
+        dateTextView = view.findViewById(R.id.dateTextView);
+        timeTextView = view.findViewById(R.id.timeTextView);
+        numPeopleTextView = view.findViewById(R.id.numPeopleTextView);
 
         numAttendeesEditor = view.findViewById(R.id.bookRestaurantNumAttendeesEditor);
 
@@ -215,38 +195,67 @@ public class BookRestaurantFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Take a big breath. We're going to make a booking..
-                new Thread(new Runnable() {
+                if(makeBookingThread != null && makeBookingThread.isAlive()){
+                    // prevent spam clicks
+                    return;
+                }
+
+                makeBookingThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Looper.prepare();
+
+                        // Hide the keyboard so the snackbar gets shown
+                        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
                         // Form validation
                         if (dateEditor.getText().toString() == null || dateEditor.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please ensure you select a date.", Toast.LENGTH_LONG).show();
+                            dateTextView.setTextColor(getResources().getColor(R.color.red));
                             return;
+                        } else {
+                            dateTextView.setTextColor(getResources().getColor(R.color.textViewDefault));
                         }
 
                         if (timeEditor.getText().toString() == null || timeEditor.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please ensure you select a time.", Toast.LENGTH_LONG).show();
+                            timeTextView.setTextColor(getResources().getColor(R.color.red));
                             return;
+                        } else {
+                            timeTextView.setTextColor((getResources().getColor(R.color.textViewDefault)));
                         }
 
                         if (numAttendeesEditor.getText().toString() == null || numAttendeesEditor.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please ensure you select a number of attendees.", Toast.LENGTH_LONG).show();
-                            System.out.println("Exit thread gracefully");
-
+                            numPeopleTextView.setTextColor(getResources().getColor(R.color.red));
                             return;
+                        } else {
+                            numPeopleTextView.setTextColor((getResources().getColor(R.color.textViewDefault)));
                         }
 
                         System.out.println(numAttendeesEditor.getText().toString() == null || numAttendeesEditor.getText().toString().isEmpty());
                         System.out.println("The number of attendees is equal to: ");
                         System.out.println(numAttendeesEditor.getText().toString());
 
-                        BookingItem booking = new BookingItem();
+                        final BookingItem booking = new BookingItem();
                         booking.setRestaurantID(restaurant.getHereID());
                         booking.setDateOfBooking(dateEditor.getText().toString());
                         booking.setTimeOfBooking(timeEditor.getText().toString());
                         booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
-                        long result = dbHelper.addBooking(booking);
+                        final long result = dbHelper.addBooking(booking);
+
+                        Snackbar snackbar = Snackbar
+                                .make(view, "Booking Created Successfully!", Snackbar.LENGTH_LONG)
+                                .setAction("View Booking Now", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("bookingID", result);
+                                        FragmentStateContainer.getInstance().switchFragmentState(1, bundle);
+
+                                    }
+                                });
+
+                        snackbar.show();
+
                         Log.i("spoonlogcat", "L is: " + result);
 
                         try {
@@ -265,7 +274,9 @@ public class BookRestaurantFragment extends Fragment {
                             // the restaurant already exists
                         }*/
                     }
-                }).start();
+                });
+
+                makeBookingThread.start();
             }
         });
 
