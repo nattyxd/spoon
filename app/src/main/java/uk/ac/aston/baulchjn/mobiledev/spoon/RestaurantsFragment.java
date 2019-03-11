@@ -222,7 +222,7 @@ public class RestaurantsFragment extends Fragment {
     }
 
     private void setupButtons(){
-        ImageButton refreshButton = view.findViewById(R.id.refreshRestaurantsButton);
+        final ImageButton refreshButton = view.findViewById(R.id.refreshRestaurantsButton);
         ImageButton searchButton = view.findViewById(R.id.stringSearchRestaurantsButton);
         ImageButton filterButton = view.findViewById(R.id.filterRestaurantsButton);
         ImageButton sortButton = view.findViewById(R.id.sortRestaurantsButton);
@@ -315,6 +315,20 @@ public class RestaurantsFragment extends Fragment {
                 });
 
                 dialogBuilder.create().show();
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNonVisitedRestaurants = true;
+                showVisitedRestaurants = true;
+                categoriesToExclude.clear();
+                int categoriesLength = getResources().getStringArray(R.array.en_restaurant_category_options).length;
+                for(int i = 0; i < categoriesLength; i++){
+                    selectedCategoriesIndex[i] = true;
+                }
+                RestaurantContent.filterOutRestaurants(getContext(), adapter, onJSONTaskCompleted);
             }
         });
     }
