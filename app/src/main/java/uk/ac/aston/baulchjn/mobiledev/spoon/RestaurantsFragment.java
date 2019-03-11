@@ -19,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -232,6 +234,23 @@ public class RestaurantsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getHereAPIRestaurants(restaurantMapViewFragment.getCenterOfMap(), onJSONTaskCompleted);
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.search_restaurant_dialog, null);
+
+                final EditText editText = (EditText) dialogView.findViewById(R.id.restaurant_name);
+                Button button1 = (Button) dialogView.findViewById(R.id.buttonUseLocation);
+                Button button2 = (Button) dialogView.findViewById(R.id.buttonUseMap);
+                Button button3 = (Button) dialogView.findViewById(R.id.buttonCancel);
+
+                dialogBuilder.setView(dialogView);
+                dialogBuilder.show();
             }
         });
 
