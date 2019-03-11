@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -18,7 +17,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -27,11 +25,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByAscendingDistance;
-import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByDescendingAlphabet;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByDescendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
@@ -52,8 +51,13 @@ public class RestaurantsFragment extends Fragment {
     private TextView formattedHeader;
     private TextView additionalInfoHeadline;
 
-    private ImageButton centreMapOnUserButton;
+    private boolean[] selectedCategoriesIndex;
+    public static HashMap<String, Boolean> categoriesToExclude; // stores which categories the user does NOT want to see (all on by default)
+
     public static Location bestUserLocation;
+
+    public static boolean showVisitedRestaurants = true;
+    public static boolean showNonVisitedRestaurants = true;
 
     private RestaurantsRecyclerViewFragment restaurantsRecyclerViewFragment;
     private RestaurantsMapViewFragment restaurantMapViewFragment;
@@ -79,6 +83,7 @@ public class RestaurantsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         rv_list = new ArrayList<>();
+        categoriesToExclude = new HashMap<>();
 
 
     }
@@ -99,6 +104,13 @@ public class RestaurantsFragment extends Fragment {
         additionalInfoHeadline = view.findViewById(R.id.en_RestaurantFragment_AdditionalInfo);
 
         setupButtons();
+
+
+        int categoriesLength = getResources().getStringArray(R.array.en_restaurant_category_options).length;
+        selectedCategoriesIndex = new boolean[categoriesLength];
+        for(int i = 0; i < categoriesLength; i++){
+            selectedCategoriesIndex[i] = true;
+        }
 
         return view;
     }
@@ -258,6 +270,51 @@ public class RestaurantsFragment extends Fragment {
 
                 dialogBuilder.create().show();
 
+            }
+        });
+
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String[] categoriesArray = getResources().getStringArray(R.array.en_restaurant_category_options);
+
+
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                dialogBuilder.setTitle("Filter Restaurants");
+                dialogBuilder.setMultiChoiceItems(categoriesArray, selectedCategoriesIndex, new DialogInterface.OnMultiChoiceClickListener() {
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        selectedCategoriesIndex[which] = isChecked; // persist check status across constructions
+
+                        // Exceptions for indexes 0 and 1, which are whether or not to include Visited/Non visited respectively
+                        if(which == 0){
+                            showVisitedRestaurants = isChecked;
+                            return;
+                        }
+                        if(which == 1){
+                            showNonVisitedRestaurants = isChecked;
+                            return;
+                        }
+
+                        // Continue with normal cases
+                        if(isChecked == false){
+                            // exclude it in results
+                            categoriesToExclude.put(categoriesArray[which], true);
+                        } else {
+                            // include it in results
+                            categoriesToExclude.remove(categoriesArray[which]);
+                        }
+                    }
+                });
+
+                dialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        Toast.makeText(getContext(), "Filtering Results", Toast.LENGTH_SHORT).show();
+                        RestaurantContent.filterOutRestaurants(getContext(), adapter, onJSONTaskCompleted);
+                    }
+                });
+
+                dialogBuilder.create().show();
             }
         });
     }

@@ -43,6 +43,29 @@
         <item>Distance (Descending)</item>
     </string-array>
 
+    <string-array name="en_restaurant_category_options">
+        <item>Visited Restaurants</item>
+        <item>Non-Visited Restaurants</item>
+        <item>American</item>
+        <item>Asian</item>
+        <item>Austrian</item>
+        <item>British</item>
+        <item>Brunch</item>
+        <item>Caribbean</item>
+        <item>Chicken</item>
+        <item>Chinese</item>
+        <item>French</item>
+        <item>Grill</item>
+        <item>Hot Dogs</item>
+        <item>Indian</item>
+        <item>Italian</item>
+        <item>Lebanese</item>
+        <item>Middle Eastern</item>
+        <item>Natural/Healthy</item>
+        <item>Sandwich</item>
+        <item>Seafood</item>
+    </string-array>
+
 
     <!-- Restaurant Booking Strings -->
     <string name="en_bookrestaurant_title">Book a Restaurant</string>
