@@ -1,6 +1,8 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.DatabaseHelper;
 import uk.ac.aston.baulchjn.mobiledev.spoon.R;
 
 
@@ -23,6 +26,7 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
     private BookingItem mRecentlyDeletedItem;
     private int mRecentlyDeletedItemPosition;
     private View view;
+    private DatabaseHelper dbHelper;
 
     public BookingRecyclerAdapter(List<BookingItem> list, BookingClickListener listener) {
         this.bookingList = list;
@@ -37,6 +41,8 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         context = recyclerView.getContext();
+
+        dbHelper = new DatabaseHelper(context); // TODO: Make singleton.
     }
 
     @NonNull
@@ -67,7 +73,7 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
     }
 
     private void showUndoSnackbar() {
-        Snackbar snackbar = Snackbar.make(view, "temp text",
+        Snackbar snackbar = Snackbar.make(view, "Booking Deleted",
                 Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
@@ -75,6 +81,24 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
                 BookingRecyclerAdapter.this.undoDelete();
             }
         });
+
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar snackbar, int event){
+                // safe to remove the booking from the db
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        dbHelper.deleteBooking(mRecentlyDeletedItem);
+
+//                        final long result = dbHelper.addBooking(booking);
+                    }
+                }).start();
+            }
+        });
+
+
         snackbar.show();
     }
 
