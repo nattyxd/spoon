@@ -23,7 +23,7 @@
         android:textSize="22dp" />
 
     <TextView
-        android:id="@+id/restaurant_tags"
+        android:id="@+id/bookingDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -43,13 +43,13 @@
         android:text="@string/en_restaurantDetails_BookRestaurant" />
 
     <Button
-        android:id="@+id/add_meal_button"
+        android:id="@+id/shareBookingBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/en_restaurantDetails_AddMeal" />
 
     <Button
-        android:id="@+id/toggle_visited_btn"
+        android:id="@+id/deleteBookingBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/en_restaurantDetails_SetVisited" />

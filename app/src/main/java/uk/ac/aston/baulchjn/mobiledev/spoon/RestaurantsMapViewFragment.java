@@ -161,7 +161,7 @@ public class RestaurantsMapViewFragment extends Fragment {
     }
 
     public void userLocationChanged(){
-        Log.i("spoonlogcat: ", "New user location received!");
+//        Log.i("spoonlogcat: ", "New user location received!");
         userLocation = RestaurantsFragment.bestUserLocation;
 
         if(map == null){

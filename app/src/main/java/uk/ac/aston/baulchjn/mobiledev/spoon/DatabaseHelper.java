@@ -19,6 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String restaurantsTable = "Restaurants";
     private static final String restaurantHereID = "HereID";
+    private static final String restaurantName = "Name";
     private static final String restaurantDesc = "Desc";
     private static final String restaurantLatitude = "Latitude";
     private static final String restaurantLongitude = "Longitude";
@@ -50,9 +51,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("CREATE TABLE " + restaurantsTable + " (");
         sqlBuilder.append(restaurantHereID + " TEXT PRIMARY KEY, ");
+        sqlBuilder.append(restaurantName + " TEXT, ");
         sqlBuilder.append(restaurantDesc + " TEXT, ");
-        sqlBuilder.append(restaurantLatitude + "STRING, ");
-        sqlBuilder.append(restaurantLongitude + "STRING, ");
+        sqlBuilder.append(restaurantLatitude + " TEXT, ");
+        sqlBuilder.append(restaurantLongitude + " TEXT, ");
         sqlBuilder.append(restaurantVicinity + " TEXT, ");
         sqlBuilder.append(restaurantType + " TEXT, ");
         sqlBuilder.append(restaurantTelephoneNo + " TEXT, ");
@@ -87,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(restaurantHereID, item.getHereID());
+        contentValues.put(restaurantName, item.getName());
         contentValues.put(restaurantDesc, item.getDesc());
         contentValues.put(restaurantLatitude, item.getLatitude());
         contentValues.put(restaurantLongitude, item.getLongitude());
@@ -100,8 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(restaurantTag3, item.getTag3());
         contentValues.put(restaurantVisited, item.isVisited());
 
-        long result = db.insert(restaurantsTable, null, contentValues);
-        db.close();
+        long result = db.insertOrThrow(restaurantsTable, null, contentValues);
         return result;
     }
 
@@ -115,14 +117,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(bookingTimeOfBooking, item.getTimeOfBooking());
 
         long result = db.insert(bookingsTable, null, contentValues);
-        db.close();
         return result;
     }
 
     public void deleteBooking(BookingItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(bookingsTable, bookingID + "=?", new String[]{ String.valueOf(item.getBookingID()) });
-        db.close();
+    }
+
+    public RestaurantItem getRestaurantByHereID(String requestedHereID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + restaurantsTable + " WHERE " + restaurantHereID + "='" + requestedHereID + "'", null);
+        RestaurantItem item = new RestaurantItem();
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            item = new RestaurantItem();
+            item.setHereID(cursor.getString(cursor.getColumnIndex(restaurantHereID)));
+            item.setName(cursor.getString(cursor.getColumnIndex(restaurantName)));
+            item.setDesc(cursor.getString(cursor.getColumnIndex(restaurantDesc)));
+            item.setLatitude(cursor.getString(cursor.getColumnIndex(restaurantLatitude)));
+            item.setLongitude(cursor.getString(cursor.getColumnIndex(restaurantLongitude)));
+            item.setVicinity(cursor.getString(cursor.getColumnIndex(restaurantVicinity)));
+            item.setRestaurantType(cursor.getString(cursor.getColumnIndex(restaurantType)));
+            item.setTelephoneNo(cursor.getString(cursor.getColumnIndex(restaurantTelephoneNo)));
+            item.setStarRating(Integer.toString(cursor.getInt(cursor.getColumnIndex(restaurantStarRating))));
+            item.setImageURL(cursor.getString(cursor.getColumnIndex(restaurantImageURL)));
+            item.setTag1(cursor.getString(cursor.getColumnIndex(restaurantTag1)));
+            item.setTag2(cursor.getString(cursor.getColumnIndex(restaurantTag2)));
+            item.setTag3(cursor.getString(cursor.getColumnIndex(restaurantTag3)));
+            item.setVisited(cursor.getInt(cursor.getColumnIndex(restaurantVisited)) > 0);
+        }
+        return item;
     }
 
     public List<RestaurantItem> getAllRestaurantsAsList() {
@@ -131,6 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             RestaurantItem item = new RestaurantItem();
             item.setHereID(cursor.getString(cursor.getColumnIndex(restaurantHereID)));
+            item.setName(cursor.getString(cursor.getColumnIndex(restaurantName)));
             item.setDesc(cursor.getString(cursor.getColumnIndex(restaurantDesc)));
             item.setLatitude(cursor.getString(cursor.getColumnIndex(restaurantLatitude)));
             item.setLongitude(cursor.getString(cursor.getColumnIndex(restaurantLongitude)));
@@ -145,7 +171,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             item.setVisited(cursor.getInt(cursor.getColumnIndex(restaurantVisited)) > 0);
             items.add(item);
         }
-
         return items;
     }
 
@@ -161,7 +186,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             item.setTimeOfBooking(cursor.getString(cursor.getColumnIndex(bookingTimeOfBooking)));
             items.add(item);
         }
-
         return items;
     }
 

@@ -82,7 +82,13 @@ public class BookRestaurantFragment extends Fragment {
 
         Bundle bundle = FragmentStateContainer.getInstance().activeBundle;
         if (bundle != null) {
+            // TODO: Restaurant null check maybe necessary here if we support creation of booking through non here restaurant means
             restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
+
+            if(restaurant == null){
+                return;
+            }
+
             Log.i("spoonlogcat", "Wooooo! We're gonna book a restaurant...." + restaurant.toString());
 
             TextView youAreBooking = view.findViewById(R.id.youAreBooking);
@@ -236,6 +242,15 @@ public class BookRestaurantFragment extends Fragment {
                         System.out.println("The number of attendees is equal to: ");
                         System.out.println(numAttendeesEditor.getText().toString());
 
+
+                        try {
+                            long result = dbHelper.addRestaurant(restaurant);
+                            Log.i("spoonlogcat: ", "Created new restaurant entry with ID " + result);
+                        }
+                        catch (SQLiteConstraintException ex) {
+                            ex.printStackTrace();
+                        }
+
                         final BookingItem booking = new BookingItem();
                         booking.setRestaurantID(restaurant.getHereID());
                         booking.setDateOfBooking(dateEditor.getText().toString());
@@ -261,13 +276,6 @@ public class BookRestaurantFragment extends Fragment {
                         snackbar.show();
 
                         Log.i("spoonlogcat", "L is: " + result);
-
-                        try {
-                            dbHelper.addRestaurant(restaurant);
-                        }
-                        catch (SQLiteConstraintException ex) {
-                            ex.printStackTrace();
-                        }
 
                         /*long l = bookingDatabase.daoAccess().insertSingleBookingItem(booking);
                         Log.i("spoonlogcat", "L is: " + l);

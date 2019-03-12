@@ -1,21 +1,17 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.here.android.mpa.common.GeoCoordinate;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
@@ -52,11 +48,16 @@ public class RestaurantDetailedFragment extends Fragment {
         super.onResume();
         TextView nameView = this.getView().findViewById(R.id.restaurant_name);
         TextView vicinityView = this.getView().findViewById(R.id.restaurant_vicinity);
-        TextView tagsView = this.getView().findViewById(R.id.restaurant_tags);
+        TextView tagsView = this.getView().findViewById(R.id.bookingDate);
 
         Bundle bundle = FragmentStateContainer.getInstance().activeBundle;
         if (bundle != null) {
             restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
+
+            if(restaurant == null){
+                return;
+            }
+
             if(restaurant.getTag1() != null){
                 tag1 = restaurant.getTag1();
             }
@@ -115,7 +116,7 @@ public class RestaurantDetailedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant_detailed, container, false);
 //        TextView nameView = view.findViewById(R.id.restaurant_name);
 //        TextView vicinityView = view.findViewById(R.id.restaurant_vicinity);
-        TextView tagsView = view.findViewById(R.id.restaurant_tags);
+        TextView tagsView = view.findViewById(R.id.bookingDate);
 //
 //        nameView.setText(name);
 //        vicinityView.setText(vicinity);

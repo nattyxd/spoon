@@ -172,6 +172,10 @@ public class RestaurantsFragment extends Fragment {
 
         LocationManager manager = ((MainActivity)getActivity()).getLocationManager();
 
+        Location locationGPS = null;
+        Location coarseGPS = null;
+        Location passiveGPS = null;
+
         try{
             manager.requestLocationUpdates(manager.GPS_PROVIDER, 1000, 0, new LocationListener() {
                 @Override
@@ -195,14 +199,16 @@ public class RestaurantsFragment extends Fragment {
 
                 }
             });
+
+            locationGPS = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            coarseGPS = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            passiveGPS = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
         } catch (Exception e){
             e.printStackTrace();
             // this exception will fire if the user hasn't given permission for GPS.
         }
 
-        Location locationGPS = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Location coarseGPS = manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Location passiveGPS = manager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
         if(locationGPS != null){
             bestUserLocation = locationGPS;
