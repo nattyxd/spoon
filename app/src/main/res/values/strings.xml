@@ -28,6 +28,9 @@
     <string name="en_home_recentrestaurant_title">My Most Recent Visit</string>
     <string name="en_home_recentrestaurant_restaurant_title">You visited %1$s.</string>
 
+    <!-- Booking Strings -->
+    <string name="en_bookingFragment_NoBookings">You don\'t have any bookings! To make one, select a Restaurant and choose "Book Restaurant"</string>
+
     <!-- Restaurant Fragment Strings -->
     <string name="en_restaurantFragment_wefoundXRestaunts">%1$s matching restaurants:</string>
     <string name="en_restaurantFragment_newSearchArea">New Search Area</string>

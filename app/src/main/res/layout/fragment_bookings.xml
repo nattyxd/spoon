@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="BookingsFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bookings_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="RestaurantsFragment"
-        android:id="@+id/bookings_rv">
-    </android.support.v7.widget.RecyclerView>
+        android:background="@drawable/burger2"
+        android:backgroundTint="@color/veryLightGrey"
+        android:clipToPadding="false"
+        android:paddingTop="15dp" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|left"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/en_bookingFragment_NoBookings"
+        android:textColor="@color/textViewDefault" />
+</android.support.design.widget.CoordinatorLayout>

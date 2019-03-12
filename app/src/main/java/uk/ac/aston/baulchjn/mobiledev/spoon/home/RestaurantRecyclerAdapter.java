@@ -1,6 +1,5 @@
 package uk.ac.aston.baulchjn.mobiledev.spoon.home;
 
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,7 +32,7 @@ public class RestaurantRecyclerAdapter extends RecyclerView.Adapter<RestaurantRe
     @NonNull
     @Override
     public RestaurantRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item, parent, false);
 
         return new ViewHolder(view);
     }
