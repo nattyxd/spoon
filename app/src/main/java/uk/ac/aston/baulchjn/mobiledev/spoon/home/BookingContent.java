@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingContent {
-    public static List<BookingItem> bookingItems = new ArrayList<>();
+    public static List<BookingItem> bookingItems;
     private static BookingDatabase bookingDatabase;
     private static Context context;
     private static BookingRecyclerAdapter bookingRecyclerAdapter;
@@ -65,7 +65,8 @@ public class BookingContent {
                     //bookingItems = bookingDatabase.daoAccess().fetchAllBookings();
                     //bookingItems = dbHelper.getAllBookingsAsList();
                     System.out.println("bookingItems has: " + bookingItems.size() + " items inside of it.");
-                    bookingRecyclerAdapter.bookingList = dbHelper.getAllBookingsAsList();
+                    bookingRecyclerAdapter.bookingList.clear();
+                    bookingRecyclerAdapter.bookingList.addAll(dbHelper.getAllBookingsAsList());
                     //bookingRecyclerAdapter.notifyDataSetChanged();
                 } catch(SQLiteConstraintException e){
                     // the restaurant already exists

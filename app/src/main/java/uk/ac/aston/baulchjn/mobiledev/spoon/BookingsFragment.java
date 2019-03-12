@@ -45,6 +45,7 @@ public class BookingsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.bookings_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        BookingContent.bookingItems = new ArrayList<>();
         mAdapter = new BookingRecyclerAdapter(BookingContent.bookingItems, new BookingClickListener() {
             @Override
             public void onItemClick(BookingItem item) {
