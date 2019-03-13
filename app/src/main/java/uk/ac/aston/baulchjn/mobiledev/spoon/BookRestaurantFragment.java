@@ -259,6 +259,8 @@ public class BookRestaurantFragment extends Fragment {
                         final long result = dbHelper.addBooking(booking);
                         booking.setBookingID((int) (long) result); // should be safe as bookings won't exceed 2 billion..
                         BookingContent.bookingItems.add(booking);
+                        BookingsFragment.noBookingsText.setVisibility(View.GONE);
+                        BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
                         BookingsFragment.mAdapter.notifyDataSetChanged(); // TODO: Not working??
 
                         Snackbar snackbar = Snackbar
