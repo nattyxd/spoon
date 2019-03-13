@@ -73,10 +73,6 @@ public class BookingsFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         BookingContent.populateBookings(getContext(), mAdapter);
-        if(BookingContent.bookingItems.size() > 0){
-            noBookingsText.setVisibility(View.GONE);
-            noBookingsArrow.setVisibility(View.GONE);
-        }
 //        BookingContent.jsonRequest(getActivity().getApplicationContext(), mAdapter); // prob need to replace with like BookingContent.getContent
         //rv_list = RestaurantContent.restaurantItems;
         return view;

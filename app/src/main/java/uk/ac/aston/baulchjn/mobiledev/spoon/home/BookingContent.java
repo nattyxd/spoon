@@ -8,9 +8,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.BookingDatabase;
+import uk.ac.aston.baulchjn.mobiledev.spoon.BookingsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.DatabaseHelper;
 
 import android.os.Looper;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -68,6 +70,10 @@ public class BookingContent {
                     bookingRecyclerAdapter.bookingList.clear();
                     bookingRecyclerAdapter.bookingList.addAll(dbHelper.getAllBookingsAsList());
                     bookingRecyclerAdapter.notifyDataSetChanged();
+                    if(BookingContent.bookingItems.size() > 0){
+                        BookingsFragment.noBookingsText.setVisibility(View.GONE);
+                        BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
+                    }
                 } catch(SQLiteConstraintException e){
                     // the restaurant already exists
                 }
