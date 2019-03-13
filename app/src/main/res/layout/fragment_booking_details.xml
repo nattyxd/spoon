@@ -72,6 +72,14 @@
         app:layout_constraintTop_toBottomOf="@+id/bookingTime" />
 
     <Button
+        android:id="@+id/viewRestaurantBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/en_bookingDetails_ViewRestaurant"
+        app:layout_constraintBottom_toTopOf="@+id/editBookingBtn" />
+
+    <Button
         android:id="@+id/editBookingBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

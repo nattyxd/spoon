@@ -93,6 +93,7 @@
     <string name="en_bookingDetails_numAttendees_singleAttendee">%1d attendee</string>
     <string name="en_bookingDetails_numAttendees_multipleAttendees">%1d attendees</string>
 
+    <string name="en_bookingDetails_ViewRestaurant">View Extra Restaurant Details</string>
     <string name="en_bookingDetails_EditBooking">Edit Booking</string>
     <string name="en_bookingDetails_ShareBooking">Share Booking</string>
     <string name="en_bookingDetails_DeleteBooking">Delete Booking</string>

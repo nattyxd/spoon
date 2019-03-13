@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     // map fragment embedded in this activity
     private SupportMapFragment mapFragment = null;
 
+    public static BottomNavigationView navigation;
+
     private LocationManager locationManager;
 
     private static final int PERMISSION_REQUEST_CODE = 12345;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(navigation);
 

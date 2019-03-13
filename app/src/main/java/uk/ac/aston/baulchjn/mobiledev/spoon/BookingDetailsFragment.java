@@ -4,6 +4,7 @@ package uk.ac.aston.baulchjn.mobiledev.spoon;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,8 @@ public class BookingDetailsFragment extends Fragment {
     private TextView bookingDate;
     private TextView bookingTime;
     private TextView bookingAttendees;
-    
+
+    private Button viewRestaurantBtn;
     private Button editBtn;
     private Button shareBtn;
     private Button deleteBtn;
@@ -102,6 +104,7 @@ public class BookingDetailsFragment extends Fragment {
     }
 
     private void setupButtonListeners(){
+        viewRestaurantBtn = view.findViewById(R.id.viewRestaurantBtn);
         editBtn = view.findViewById(R.id.editBookingBtn);
         shareBtn = view.findViewById(R.id.shareBookingBtn);
         deleteBtn = view.findViewById(R.id.setVisitedBtn);
@@ -110,6 +113,16 @@ public class BookingDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        viewRestaurantBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("restaurant", restaurant);
+                MainActivity.navigation.getMenu().findItem(R.id.navigation_restaurants).setChecked(true);
+                FragmentStateContainer.getInstance().switchFragmentState(4, bundle);
             }
         });
 

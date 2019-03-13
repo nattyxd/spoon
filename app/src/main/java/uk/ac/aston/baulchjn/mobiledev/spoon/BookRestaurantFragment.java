@@ -268,6 +268,7 @@ public class BookRestaurantFragment extends Fragment {
                                     public void onClick(View view) {
                                         Bundle bundle = new Bundle();
                                         bundle.putSerializable("booking", booking);
+                                        MainActivity.navigation.getMenu().findItem(R.id.navigation_bookings).setChecked(true);
                                         FragmentStateContainer.getInstance().switchFragmentState(6, bundle);
 
                                     }

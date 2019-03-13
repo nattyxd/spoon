@@ -85,13 +85,21 @@ public class RestaurantDetailedFragment extends Fragment {
                 setVisitedBtn.setText(R.string.en_restaurantDetails_SetVisited);
             }
 
-            GeoCoordinate userCoord = new GeoCoordinate(RestaurantsFragment.bestUserLocation.getLatitude(), RestaurantsFragment.bestUserLocation.getLongitude());
-            GeoCoordinate restaurantCoord = new GeoCoordinate(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
-            double distance = userCoord.distanceTo(restaurantCoord);
+            Double distance = null;
+            try{
+                GeoCoordinate userCoord = new GeoCoordinate(RestaurantsFragment.bestUserLocation.getLatitude(), RestaurantsFragment.bestUserLocation.getLongitude());
+                GeoCoordinate restaurantCoord = new GeoCoordinate(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
+                distance = userCoord.distanceTo(restaurantCoord);
+            } catch(Exception e){
+                // caught if the map hasn't initialised yet
+            }
 
             String viscinityText = restaurant.getVicinity();
             viscinityText = viscinityText.replace("<br/>", ", ");
-            viscinityText = viscinityText + " (" + Math.round(distance) + "m away)";
+
+            if(distance != null){
+                viscinityText = viscinityText + " (" + Math.round(distance) + "m away)";
+            }
             vicinityView.setText(viscinityText);
 
             // Logic to set tags
@@ -161,7 +169,6 @@ public class RestaurantDetailedFragment extends Fragment {
                     dbHelper.setRestaurantAsNotVisited(restaurant);
                     restaurant.setVisited(false);
                     setVisitedBtn.setText(R.string.en_restaurantDetails_SetVisited);
-                    RestaurantsFragment.adapter.notifyDataSetChanged();
                 } else {
                     // the restaurant might not actually exist in the db yet, so we need to try and make it
                     try{
@@ -172,9 +179,14 @@ public class RestaurantDetailedFragment extends Fragment {
                     dbHelper.setRestaurantAsVisited(restaurant);
                     restaurant.setVisited(true);
                     setVisitedBtn.setText(R.string.en_restaurantDetails_SetNotVisited);
-                    RestaurantsFragment.adapter.notifyDataSetChanged();
                 }
-                restaurant.setVisited(!restaurant.isVisited());
+
+                try{
+                    RestaurantsFragment.adapter.notifyDataSetChanged();
+                } catch(NullPointerException e){
+                    // TODO: This is caused by program flow where the user sets a restaurant as visited without visiting Restaurants first, migrate things to singletons to solve this
+                    Log.i("spoonlogcat: ", "NullPointer in notifyDataSetChanged");
+                }
             }
         });
 
