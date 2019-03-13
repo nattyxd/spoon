@@ -112,7 +112,10 @@ public class BookingDetailsFragment extends Fragment {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("booking", booking);
+                bundle.putSerializable("restaurant", restaurant);
+                FragmentStateContainer.getInstance().switchFragmentState(7, bundle);
             }
         });
 

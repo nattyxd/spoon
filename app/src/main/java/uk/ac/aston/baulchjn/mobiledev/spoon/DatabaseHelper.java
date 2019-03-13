@@ -120,6 +120,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public int updateBooking(BookingItem booking){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(bookingDateOfBooking, booking.getDateOfBooking());
+        values.put(bookingTimeOfBooking, booking.getTimeOfBooking());
+        values.put(bookingNumPeopleAttending, booking.getNumPeopleAttending());
+
+        return db.update(bookingsTable, values,bookingID + "=?", new String[]{ String.valueOf(booking.getBookingID()) });
+    }
+
     public void deleteBooking(BookingItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(bookingsTable, bookingID + "=?", new String[]{ String.valueOf(item.getBookingID()) });

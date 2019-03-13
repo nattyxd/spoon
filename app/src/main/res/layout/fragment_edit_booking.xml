@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/BookRestaurantFragment"
-    tools:context=".BookRestaurantFragment">
+    android:id="@+id/EditBookingFragment"
+    tools:context=".EditBookingFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -21,11 +21,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/createBookingBtn"
+        android:id="@+id/editBookingBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Create Booking"
+        android:text="Edit Booking"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/youAreEditing" />
 
@@ -36,6 +36,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text='You are booking: "Boston Tea Party"'
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,12 +49,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/en_bookrestaurants_wrongrestaurant"
+        android:text="@string/en_editBooking_wrongRestaurant"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/youAreEditing"
-        tools:text="@string/en_bookrestaurants_wrongrestaurant" />
+        tools:text="@string/en_editBooking_wrongRestaurant" />
 
     <EditText
         android:id="@+id/bookRestaurantDateEditText"

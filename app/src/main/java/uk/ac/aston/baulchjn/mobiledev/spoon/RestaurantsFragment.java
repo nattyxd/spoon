@@ -72,9 +72,13 @@ public class RestaurantsFragment extends Fragment {
         @Override
         public Void call() {
             Log.i("spoonlogcat:", "Woo the oncomplete fired");
-
+            if(RestaurantContent.restaurantItems.size() > 0){
+                RestaurantsRecyclerViewFragment.noRestaurantsText.setVisibility(View.GONE);
+            } else {
+                RestaurantsRecyclerViewFragment.noRestaurantsText.setVisibility(View.VISIBLE);
+            }
             formattedHeader.setText(getResources().getString(R.string.en_restaurantFragment_wefoundXRestaunts, String.valueOf(RestaurantContent.restaurantItems.size())));
-            restaurantMapViewFragment.restaurantsWereRefreshed();
+            restaurantMapViewFragment.restaurantsWereRefreshed(); // TODO: This can throw errors if the map isn't initialised yet
             return null;
         }
     };

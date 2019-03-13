@@ -23,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
@@ -33,16 +32,18 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 /**
  *
  */
-public class BookRestaurantFragment extends Fragment {
+public class EditBookingFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_RESTAURANT = "restaurant";
+    private static final String ARG_BOOKING = "booking";
 
-    private String name;
-    private String vicinity;
-    private ArrayList<String> tags;
     private RestaurantItem restaurant;
+    private BookingItem booking;
+
+    private Calendar myCalendar;
 
     // Text views
+    private TextView youAreEditing;
     private TextView dateTextView;
     private TextView timeTextView;
     private TextView numPeopleTextView;
@@ -52,17 +53,13 @@ public class BookRestaurantFragment extends Fragment {
     private EditText dateEditor;
     private EditText numAttendeesEditor;
 
-    private final String DATABASE_NAME = "RESTAURANT_DB";
-    //    private final String DATABASE_NAME = getContext().getResources().getString(R.string.restaurant_db_name);
-    private BookingDatabase bookingDatabase;
-    private RestaurantDatabase restaurantDatabase;
     private DatabaseHelper dbHelper;
 
-    private Thread makeBookingThread;
+    private Thread editBookingThread;
 
     private View view;
 
-    public BookRestaurantFragment() {
+    public EditBookingFragment() {
         // Required empty public constructor
     }
 
@@ -72,17 +69,32 @@ public class BookRestaurantFragment extends Fragment {
 
         Bundle bundle = FragmentStateContainer.getInstance().activeBundle;
         if (bundle != null) {
-            // TODO: Restaurant null check maybe necessary here if we support creation of booking through non here restaurant means
+            // TODO: Restaurant null check maybe necessary here if we support editing of booking through non here restaurant means
             restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
+            booking = (BookingItem) bundle.getSerializable("booking");
 
-            if(restaurant == null){
+            if(restaurant == null || booking == null){
+                // sometimes on app resumes this could be called with a blank bundle.. should probably investigate why but in the meantime catch it with this
                 return;
             }
 
-            Log.i("spoonlogcat", "Wooooo! We're gonna book a restaurant...." + restaurant.toString());
+            youAreEditing = view.findViewById(R.id.youAreEditing);
+            String name = restaurant.getName();
+            String date = booking.getDateOfBooking();
+            String time = booking.getTimeOfBooking();
+            youAreEditing.setText(getString(R.string.en_editBooking_youAreEditing, name, date, time));
 
-            TextView youAreBooking = view.findViewById(R.id.youAreEditing);
-            youAreBooking.setText(getString(R.string.en_bookrestaurant_youarebooking, restaurant.getName()));
+            dateEditor.setText(booking.getDateOfBooking());
+            timeEditor.setText(booking.getTimeOfBooking());
+            numAttendeesEditor.setText(Integer.toString(booking.getNumPeopleAttending()));
+
+            int year = Integer.parseInt("20" + booking.getDateOfBooking().substring(6, 8));
+            int monthOfYear = Integer.parseInt(booking.getDateOfBooking().substring(3, 5));
+            int dayOfMonth = Integer.parseInt(booking.getDateOfBooking().substring(0, 2));
+
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         }
     }
 
@@ -91,7 +103,7 @@ public class BookRestaurantFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             restaurant = (RestaurantItem) getArguments().getSerializable(ARG_RESTAURANT);
-
+            booking = (BookingItem) getArguments().getSerializable(ARG_BOOKING);
         }
 
         dbHelper = new DatabaseHelper(getContext());
@@ -101,9 +113,9 @@ public class BookRestaurantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_book_restaurant, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_booking, container, false);
 
-        final Calendar myCalendar = Calendar.getInstance();
+        myCalendar = Calendar.getInstance();
 
         dateTextView = view.findViewById(R.id.dateTextView);
         timeTextView = view.findViewById(R.id.timeTextView);
@@ -167,37 +179,18 @@ public class BookRestaurantFragment extends Fragment {
             }
         });
 
+        Button editBookingBtn = view.findViewById(R.id.editBookingBtn);
 
-//        new Thread(new Runnable() {
-////            @Override
-////            public void run() {
-////                RestaurantItem restaurantItem = new RestaurantItem();
-////                restaurantItem.setDesc("Description");
-////                restaurantItem.setName("Restaurant Nameeeeee");
-////                restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurantItem);
-////            }
-////        }) .start();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                RestaurantItem restaurantItem = restaurantDatabase.daoAccess().fetchOneRestaurantbyName("Restaurant Name");
-//                System.out.println("the restaurant you asked for is..." + restaurantItem);
-//            }
-//        }).start();
-        Button bookBtn = view.findViewById(R.id.createBookingBtn);
-
-
-
-        bookBtn.setOnClickListener(new View.OnClickListener() {
+        editBookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Take a big breath. We're going to make a booking..
-                if(makeBookingThread != null && makeBookingThread.isAlive()){
-                    // prevent spam clicks
+                // Take a big breath. We're going to edit a booking..
+                if(editBookingThread != null && editBookingThread.isAlive()){
+                    // prevent spam clicks while the worker thread is still working.
                     return;
                 }
 
-                makeBookingThread = new Thread(new Runnable() {
+                editBookingThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Looper.prepare();
@@ -228,11 +221,11 @@ public class BookRestaurantFragment extends Fragment {
                             numPeopleTextView.setTextColor((getResources().getColor(R.color.textViewDefault)));
                         }
 
-                        System.out.println(numAttendeesEditor.getText().toString() == null || numAttendeesEditor.getText().toString().isEmpty());
                         System.out.println("The number of attendees is equal to: ");
                         System.out.println(numAttendeesEditor.getText().toString());
 
 
+                        // This should be technically unnecessary for editing restaurants, possibly remove this later
                         try {
                             long result = dbHelper.addRestaurant(restaurant);
                             Log.i("spoonlogcat: ", "Created new restaurant entry with ID " + result);
@@ -241,20 +234,25 @@ public class BookRestaurantFragment extends Fragment {
                             ex.printStackTrace();
                         }
 
-                        final BookingItem booking = new BookingItem();
-                        booking.setRestaurantID(restaurant.getHereID());
+//                        booking.setRestaurantID(restaurant.getHereID());
                         booking.setDateOfBooking(dateEditor.getText().toString());
                         booking.setTimeOfBooking(timeEditor.getText().toString());
                         booking.setNumPeopleAttending(Integer.parseInt(numAttendeesEditor.getText().toString()));
-                        final long result = dbHelper.addBooking(booking);
-                        booking.setBookingID((int) (long) result); // should be safe as bookings won't exceed 2 billion..
-                        BookingContent.bookingItems.add(booking);
-                        BookingsFragment.noBookingsText.setVisibility(View.GONE);
-                        BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
-                        BookingsFragment.mAdapter.notifyDataSetChanged(); // TODO: Not working??
+                        final int result = dbHelper.updateBooking(booking);
+                        if(result != 1){
+                            Log.e("spoonlogcat: ", "Something went horribly wrong and we updated an incorrect number of rows!");
+                        }
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                youAreEditing.setText(getString(R.string.en_editBooking_youAreEditing, restaurant.getName(), booking.getDateOfBooking(), booking.getTimeOfBooking()));
+                            }
+                        });
+                        BookingsFragment.mAdapter.notifyDataSetChanged(); // ensure adapter reflects changes
 
                         Snackbar snackbar = Snackbar
-                                .make(view, "Booking Created Successfully!", Snackbar.LENGTH_LONG)
+                                .make(view, "Booking Edited Successfully!", Snackbar.LENGTH_LONG)
                                 .setAction("View Booking Now", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -269,19 +267,10 @@ public class BookRestaurantFragment extends Fragment {
                         snackbar.show();
 
                         Log.i("spoonlogcat", "L is: " + result);
-
-                        /*long l = bookingDatabase.daoAccess().insertSingleBookingItem(booking);
-                        Log.i("spoonlogcat", "L is: " + l);
-
-                        try{
-                            restaurantDatabase.daoAccess().insertSingleRestaurantItem(restaurant);
-                        } catch(SQLiteConstraintException e){
-                            // the restaurant already exists
-                        }*/
                     }
                 });
 
-                makeBookingThread.start();
+                editBookingThread.start();
             }
         });
 

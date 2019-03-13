@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+<android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/restaurants_rv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RestaurantsRecyclerViewFragment"
-    >
+    android:background="@drawable/burger2"
+    android:backgroundTint="@color/veryLightGrey"
+    android:clipToPadding="false" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/restaurants_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:context="RestaurantsFragment"></android.support.v7.widget.RecyclerView>
+<TextView
+    android:id="@+id/noRestaurantsText"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom|left"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="@string/en_restaurantFragment_NoRestaurants"
+    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-
-</android.support.constraint.ConstraintLayout>
-
-
-
-
-
+</android.support.design.widget.CoordinatorLayout>

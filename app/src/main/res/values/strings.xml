@@ -31,7 +31,16 @@
     <!-- Booking Strings -->
     <string name="en_bookingFragment_NoBookings">You don\'t have any bookings! To make one, select a Restaurant and choose "Book Restaurant"</string>
 
+    <!-- Edit Booking Strings-->
+    <string name="en_editBooking_title">Edit a Booking</string>
+    <string name="en_editBooking_youAreEditing">You are editing your booking at: "%1$s", on %2$s at %3$s.</string>
+    <string name="en_editBooking_wrongRestaurant">Wrong booking? Go back to Bookings to select a different one.</string>
+
+
     <!-- Restaurant Fragment Strings -->
+    <!-- Booking Strings -->
+    <string name="en_restaurantFragment_NoRestaurants">No restaurants are found! Try changing your filter settings or use the map to find new restaurants, then press the refresh button.</string>
+
     <string name="en_restaurantFragment_wefoundXRestaunts">%1$s matching restaurants:</string>
     <string name="en_restaurantFragment_newSearchArea">New Search Area</string>
     <string name="en_restaurantFragment_editSearchArea">Edit Search Area</string>

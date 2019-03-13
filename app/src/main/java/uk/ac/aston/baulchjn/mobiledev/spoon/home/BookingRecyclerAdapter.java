@@ -86,6 +86,7 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
     private void showUndoSnackbar() {
         Snackbar snackbar = Snackbar.make(view, "Booking Deleted",
                 Snackbar.LENGTH_LONG);
+        dbHelper.deleteBooking(mRecentlyDeletedItem);
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,22 +102,21 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
         snackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event){
-                if(event == 1){
+                if(event == DISMISS_EVENT_ACTION){
                     // user triggered event, DON'T delete the entry
                     BookingsFragment.noBookingsText.setVisibility(View.GONE);
                     BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
-                    return;
-                }
-                // safe to remove the booking from the db
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Looper.prepare();
-                        dbHelper.deleteBooking(mRecentlyDeletedItem);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Looper.prepare();
+                            dbHelper.addBooking(mRecentlyDeletedItem);
 
 //                        final long result = dbHelper.addBooking(booking);
-                    }
-                }).start();
+                        }
+                    }).start();
+                    return;
+                }
             }
         });
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class RestaurantsRecyclerViewFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +19,7 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public static TextView noRestaurantsText;
     private View view;
 
     private OnFragmentInteractionListener mListener;
@@ -58,6 +60,8 @@ public class RestaurantsRecyclerViewFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_restaurants_recycler_view, container, false);
         ( (RestaurantsFragment) getParentFragment() ).recyclerFragmentWasInflated();
+        noRestaurantsText = view.findViewById(R.id.noRestaurantsText);
+
         return view;
     }
 
