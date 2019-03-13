@@ -15,6 +15,7 @@ import com.here.android.mpa.common.GeoCoordinate;
 
 import java.util.List;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.BookingsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.DatabaseHelper;
 import uk.ac.aston.baulchjn.mobiledev.spoon.R;
 import uk.ac.aston.baulchjn.mobiledev.spoon.RestaurantsFragment;
@@ -92,11 +93,18 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
             }
         });
 
+        if(BookingContent.bookingItems.size() == 0){
+            BookingsFragment.noBookingsText.setVisibility(View.VISIBLE);
+            BookingsFragment.noBookingsArrow.setVisibility(View.VISIBLE);
+        }
+
         snackbar.addCallback(new Snackbar.Callback() {
             @Override
             public void onDismissed(Snackbar snackbar, int event){
                 if(event == 1){
                     // user triggered event, DON'T delete the entry
+                    BookingsFragment.noBookingsText.setVisibility(View.GONE);
+                    BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
                     return;
                 }
                 // safe to remove the booking from the db

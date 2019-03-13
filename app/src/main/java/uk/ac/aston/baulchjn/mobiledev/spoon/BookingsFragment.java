@@ -10,6 +10,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class BookingsFragment extends Fragment {
     private List<BookingItem> rv_list;
     private RecyclerView recyclerView;
     public static BookingRecyclerAdapter mAdapter;
+    public static TextView noBookingsText;
+    public static ImageView noBookingsArrow;
 
     public BookingsFragment() {
         // Required empty public constructor
@@ -44,6 +48,8 @@ public class BookingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bookings, container, false);
         recyclerView = view.findViewById(R.id.bookings_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        noBookingsText = view.findViewById(R.id.noBookingInfoText);
+        noBookingsArrow = view.findViewById(R.id.noBookingsArrow);
 
         BookingContent.bookingItems = new ArrayList<>();
         mAdapter = new BookingRecyclerAdapter(BookingContent.bookingItems, new BookingClickListener() {
@@ -67,6 +73,10 @@ public class BookingsFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         BookingContent.populateBookings(getContext(), mAdapter);
+        if(BookingContent.bookingItems.size() > 0){
+            noBookingsText.setVisibility(View.GONE);
+            noBookingsArrow.setVisibility(View.GONE);
+        }
 //        BookingContent.jsonRequest(getActivity().getApplicationContext(), mAdapter); // prob need to replace with like BookingContent.getContent
         //rv_list = RestaurantContent.restaurantItems;
         return view;

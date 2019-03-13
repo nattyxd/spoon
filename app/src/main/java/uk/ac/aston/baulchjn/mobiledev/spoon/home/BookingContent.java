@@ -67,7 +67,7 @@ public class BookingContent {
                     System.out.println("bookingItems has: " + bookingItems.size() + " items inside of it.");
                     bookingRecyclerAdapter.bookingList.clear();
                     bookingRecyclerAdapter.bookingList.addAll(dbHelper.getAllBookingsAsList());
-                    //bookingRecyclerAdapter.notifyDataSetChanged();
+                    bookingRecyclerAdapter.notifyDataSetChanged();
                 } catch(SQLiteConstraintException e){
                     // the restaurant already exists
                 }
