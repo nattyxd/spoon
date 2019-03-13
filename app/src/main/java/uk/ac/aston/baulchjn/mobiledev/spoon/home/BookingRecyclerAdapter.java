@@ -66,7 +66,7 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
         String vicinity = restaurant.getVicinity().replace("<br/>", ", ");
 
         holder.restaurantViscinity.setText(vicinity);
-        holder.date.setText(bookingList.get(position).getDateOfBooking());
+        holder.date.setText(bookingList.get(position).getDateOfBooking() + " - " + bookingList.get(position).getTimeOfBooking() + " - " + bookingList.get(position).getNumPeopleAttending() + " attendee(s)");
         holder.bind(bookingList.get(position), clickListener);
     }
 
@@ -142,8 +142,8 @@ public class BookingRecyclerAdapter extends RecyclerView.Adapter<BookingRecycler
             super(itemView);
 
             restaurantName = this.itemView.findViewById(R.id.restaurantName);
-            date = this.itemView.findViewById(R.id.item_date);
             restaurantViscinity = this.itemView.findViewById(R.id.viscinity);
+            date = this.itemView.findViewById(R.id.item_date);
         }
 
         public void bind(final BookingItem item, final BookingClickListener listener) {
