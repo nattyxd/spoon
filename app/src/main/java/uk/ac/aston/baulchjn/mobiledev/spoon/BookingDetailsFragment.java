@@ -104,7 +104,7 @@ public class BookingDetailsFragment extends Fragment {
     private void setupButtonListeners(){
         editBtn = view.findViewById(R.id.editBookingBtn);
         shareBtn = view.findViewById(R.id.shareBookingBtn);
-        deleteBtn = view.findViewById(R.id.deleteBookingBtn);
+        deleteBtn = view.findViewById(R.id.setVisitedBtn);
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -47,7 +47,7 @@ public class RestaurantsFragment extends Fragment {
     private List<RestaurantItem> rv_list;
     private View view;
     private RecyclerView recyclerView;
-    private RestaurantRecyclerAdapter adapter;
+    public static RestaurantRecyclerAdapter adapter;
     private ViewPager viewPager;
 
     private TextView formattedHeader;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class RestaurantDetailedFragment extends Fragment {
     private static final String ARG_TAG3 = "tag3";
     private static final String ARG_RESTAURANT = "restaurant";
 
+    private DatabaseHelper dbHelper;
+
     private String name;
     private String vicinity;
     private String latitude;
@@ -38,6 +41,8 @@ public class RestaurantDetailedFragment extends Fragment {
     private String tag2;
     private String tag3;
     private RestaurantItem restaurant;
+
+    private Button setVisitedBtn;
 
     public RestaurantDetailedFragment() {
         // Required empty public constructor
@@ -74,6 +79,12 @@ public class RestaurantDetailedFragment extends Fragment {
             longitude = restaurant.getLongitude();
             latitude = restaurant.getLatitude();
 
+            if(restaurant.isVisited()){
+                setVisitedBtn.setText(R.string.en_restaurantDetails_SetNotVisited);
+            } else{
+                setVisitedBtn.setText(R.string.en_restaurantDetails_SetVisited);
+            }
+
             GeoCoordinate userCoord = new GeoCoordinate(RestaurantsFragment.bestUserLocation.getLatitude(), RestaurantsFragment.bestUserLocation.getLongitude());
             GeoCoordinate restaurantCoord = new GeoCoordinate(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
             double distance = userCoord.distanceTo(restaurantCoord);
@@ -99,6 +110,8 @@ public class RestaurantDetailedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHelper = new DatabaseHelper(getContext());
+
         if (getArguments() != null) {
             name = getArguments().getString(ARG_NAME);
             vicinity = getArguments().getString(ARG_VICINITY);
@@ -117,13 +130,10 @@ public class RestaurantDetailedFragment extends Fragment {
 //        TextView nameView = view.findViewById(R.id.restaurant_name);
 //        TextView vicinityView = view.findViewById(R.id.restaurant_vicinity);
         TextView tagsView = view.findViewById(R.id.bookingDate);
-//
-//        nameView.setText(name);
-//        vicinityView.setText(vicinity);
-        tagsView.setText("Replace this with tag1,tag2,tag3, etc");
-//
+
         Button bookBtn = view.findViewById(R.id.book_btn);
         Button openInMapsBtn = view.findViewById(R.id.open_in_maps_btn);
+        setVisitedBtn = view.findViewById(R.id.setVisitedBtn);
 
         openInMapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +154,29 @@ public class RestaurantDetailedFragment extends Fragment {
             }
         });
 
-
+        setVisitedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(restaurant.isVisited()){
+                    dbHelper.setRestaurantAsNotVisited(restaurant);
+                    restaurant.setVisited(false);
+                    setVisitedBtn.setText(R.string.en_restaurantDetails_SetVisited);
+                    RestaurantsFragment.adapter.notifyDataSetChanged();
+                } else {
+                    // the restaurant might not actually exist in the db yet, so we need to try and make it
+                    try{
+                        dbHelper.addRestaurant(restaurant);
+                    } catch (Exception e){
+                        Log.i("spoonlogcat: ", "The restaurant already exists in the db so we didn't add it");
+                    }
+                    dbHelper.setRestaurantAsVisited(restaurant);
+                    restaurant.setVisited(true);
+                    setVisitedBtn.setText(R.string.en_restaurantDetails_SetNotVisited);
+                    RestaurantsFragment.adapter.notifyDataSetChanged();
+                }
+                restaurant.setVisited(!restaurant.isVisited());
+            }
+        });
 
         return view;
     }

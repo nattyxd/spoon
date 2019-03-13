@@ -174,6 +174,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return items;
     }
 
+    public void setRestaurantAsVisited(RestaurantItem restaurant){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(restaurantVisited, 1);
+        db.update(restaurantsTable, values, restaurantHereID + "=?", new String[]{ String.valueOf(restaurant.getHereID()) });
+    }
+
+    public void setRestaurantAsNotVisited(RestaurantItem restaurant){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(restaurantVisited, 0);
+        db.update(restaurantsTable, values, restaurantHereID + "=?", new String[]{ String.valueOf(restaurant.getHereID()) });
+    }
+
     public List<BookingItem> getAllBookingsAsList() {
         Cursor cursor = getAllBookings();
         ArrayList<BookingItem> items = new ArrayList<>();

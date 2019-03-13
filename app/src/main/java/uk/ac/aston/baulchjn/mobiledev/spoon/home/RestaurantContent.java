@@ -27,6 +27,7 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.DatabaseHelper;
 import uk.ac.aston.baulchjn.mobiledev.spoon.RestaurantsFragment;
 
 public class RestaurantContent {
+    private static DatabaseHelper dbHelper;
     // Get Data from JSON File
     private JsonArrayRequest ArrayRequest;
     private RequestQueue requestQueue;
@@ -135,7 +136,7 @@ public class RestaurantContent {
         // TODO: Refactor this into a singleton
         // TODO: This should use an existing visited restuarants adapter that gets updated to maximise efficiency
         // TODO: Fix bug where duplicate restaurants can pop up if the user has already visited it and it's local
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        dbHelper = new DatabaseHelper(context);
         visitedRestaurants.clear();
 
         List<RestaurantItem> allRestaurants = dbHelper.getAllRestaurantsAsList();
@@ -143,7 +144,16 @@ public class RestaurantContent {
 
         for(int i = 0; i < allRestaurants.size(); i++){
             if(allRestaurants.get(i).isVisited() == true){
-                visitedRestaurantsTemp.add(allRestaurants.get(i));
+                // DON'T ADD THE RESTAURANT IF IT ALREADY EXISTS INSIDE THE DATA WE HAVE FROM THE API!
+                boolean dontAdd = false;
+                for(int j = 0; j < restaurantItems.size(); j++){
+                    if(restaurantItems.get(j).getHereID().equals(allRestaurants.get(i).getHereID())){
+                        dontAdd = true;
+                    }
+                }
+                if(dontAdd == false){
+                    visitedRestaurantsTemp.add(allRestaurants.get(i));
+                }
             }
         }
 
@@ -195,7 +205,30 @@ public class RestaurantContent {
                 }
             }
         }
+        
+        // finally, delete restaurants (again) that are visited if we must
+        if(RestaurantsFragment.showNonVisitedRestaurants && RestaurantsFragment.showVisitedRestaurants == false){
+            List<RestaurantItem> IDsToRemove = new ArrayList();
+            // foreach restaurant, if it exists
+            for(int i = 0; i < restaurantItems.size(); i++){
+                RestaurantItem restaurantItem = dbHelper.getRestaurantByHereID(restaurantItems.get(i).getHereID());
+                if(restaurantItem != null){
+                    if(restaurantItem.isVisited()){
+                        IDsToRemove.add(restaurantItem);
+                    }
+                }
+            }
 
+            List<RestaurantItem> thingsToRemove = new ArrayList();
+            for(int i = 0; i < IDsToRemove.size(); i++){
+                for(int j = 0; j < restaurantItems.size(); j++){
+                    if(IDsToRemove.get(i).getHereID().equals(restaurantItems.get(j).getHereID())){
+                        thingsToRemove.add(restaurantItems.get(j));
+                    }
+                }
+            }
+            restaurantItems.removeAll(thingsToRemove);
+            }
 
         adapter.notifyDataSetChanged();
         try{

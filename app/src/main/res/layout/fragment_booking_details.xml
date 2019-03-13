@@ -85,10 +85,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/en_bookingDetails_ShareBooking"
-        app:layout_constraintBottom_toTopOf="@+id/deleteBookingBtn" />
+        app:layout_constraintBottom_toTopOf="@+id/setVisitedBtn" />
 
     <Button
-        android:id="@+id/deleteBookingBtn"
+        android:id="@+id/setVisitedBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
