@@ -18,7 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +32,7 @@ public class RestaurantContent {
     private RequestQueue requestQueue;
     public static List<RestaurantItem> restaurantItems = new ArrayList<>(); // the master list of restaurants to display
     public static List<RestaurantItem> unfilteredRestaurantItems = new ArrayList<>(); // all restaurants (cached), including ones the user doesn't wish to currently see
-    public static List<RestaurantItem> existingRestaurants = new ArrayList<>();
+    public static List<RestaurantItem> visitedRestaurants = new ArrayList<>();
 
     private RecyclerView myrv;
 
@@ -131,14 +130,25 @@ public class RestaurantContent {
     }
 
     // TODO: This entire method is really inefficient and needs a refactor
-    public static void refreshExistingRestaurantsList(Context context){
+    public static void refreshExistingVisitedRestaurantsList(Context context){
         // Add the visited restaurants back to the list of restaurants
         // TODO: Refactor this into a singleton
         // TODO: This should use an existing visited restuarants adapter that gets updated to maximise efficiency
         // TODO: Fix bug where duplicate restaurants can pop up if the user has already visited it and it's local
         DatabaseHelper dbHelper = new DatabaseHelper(context);
-        existingRestaurants.clear();
-        existingRestaurants.addAll(dbHelper.getAllRestaurantsAsList());
+        visitedRestaurants.clear();
+
+        List<RestaurantItem> allRestaurants = dbHelper.getAllRestaurantsAsList();
+        List<RestaurantItem> visitedRestaurantsTemp = new ArrayList<>();
+
+        for(int i = 0; i < allRestaurants.size(); i++){
+            if(allRestaurants.get(i).isVisited() == true){
+                visitedRestaurantsTemp.add(allRestaurants.get(i));
+            }
+        }
+
+        visitedRestaurants.addAll(visitedRestaurantsTemp);
+        visitedRestaurantsTemp.clear();
     }
 
     public static void filterOutRestaurants(Context context, RestaurantRecyclerAdapter adapter, Callable<Void> onComplete){
@@ -149,18 +159,12 @@ public class RestaurantContent {
         // check if we need to eliminate the restaurants the user hasn't visited from the list
         if(RestaurantsFragment.showNonVisitedRestaurants == false){
             restaurantItems.clear();
-
-            for(int i = 0; i < existingRestaurants.size(); i++){
-                if(existingRestaurants.get(i).isVisited() == true){
-                    restaurantItems.add(existingRestaurants.get(i));
-                }
-            }
         }
 
         // check if we need to add visited restaurants to the list
         if(RestaurantsFragment.showVisitedRestaurants){
-            refreshExistingRestaurantsList(context);
-            restaurantItems.addAll(existingRestaurants);
+            refreshExistingVisitedRestaurantsList(context);
+            restaurantItems.addAll(visitedRestaurants);
         }
 
         // check if we need to eliminate any restaurants from the list because of tags
