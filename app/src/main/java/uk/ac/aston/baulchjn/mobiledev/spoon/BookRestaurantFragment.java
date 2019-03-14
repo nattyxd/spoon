@@ -81,7 +81,7 @@ public class BookRestaurantFragment extends Fragment {
 
             Log.i("spoonlogcat", "Wooooo! We're gonna book a restaurant...." + restaurant.toString());
 
-            TextView youAreBooking = view.findViewById(R.id.youAreEditing);
+            TextView youAreBooking = view.findViewById(R.id.subtitle);
             youAreBooking.setText(getString(R.string.en_bookrestaurant_youarebooking, restaurant.getName()));
         }
     }
@@ -111,7 +111,7 @@ public class BookRestaurantFragment extends Fragment {
 
         numAttendeesEditor = view.findViewById(R.id.bookRestaurantNumAttendeesEditor);
 
-        dateEditor = view.findViewById(R.id.bookRestaurantDateEditText);
+        dateEditor = view.findViewById(R.id.mealTitle);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override

@@ -19,6 +19,7 @@ import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
 public class BookingDetailsFragment extends Fragment {
@@ -35,6 +36,7 @@ public class BookingDetailsFragment extends Fragment {
     private TextView bookingTime;
     private TextView bookingAttendees;
 
+    private Button addMealBtn;
     private Button viewRestaurantBtn;
     private Button editBtn;
     private Button shareBtn;
@@ -68,6 +70,25 @@ public class BookingDetailsFragment extends Fragment {
 
             bookingDate.setText(booking.getDateOfBooking() + "");
             bookingTime.setText(booking.getTimeOfBooking() + "");
+
+            // See if a meal exists already and change the listener if so
+            final MealItem tempMeal = dbHelper.getMealsByBookingID(booking.getBookingID());
+
+            if(tempMeal != null){
+                addMealBtn.setText("Go to linked Meal");
+
+                // if it's not null it should go to the meal instead of making them create a new one
+                addMealBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("booking", booking);
+                        bundle.putSerializable("restaurant", restaurant);
+                        bundle.putSerializable("meal", tempMeal);
+                        FragmentStateContainer.getInstance().switchFragmentState(10, bundle);
+                    }
+                });
+            }
 
             if(booking.getNumPeopleAttending() > 1){
                 bookingAttendees.setText(getResources().getString(R.string.en_bookingDetails_numAttendees_multipleAttendees, booking.getNumPeopleAttending()));
@@ -107,10 +128,21 @@ public class BookingDetailsFragment extends Fragment {
     }
 
     private void setupButtonListeners(){
+        addMealBtn = view.findViewById(R.id.addMealBtn);
         viewRestaurantBtn = view.findViewById(R.id.viewRestaurantBtn);
         editBtn = view.findViewById(R.id.editBookingBtn);
         shareBtn = view.findViewById(R.id.shareBookingBtn);
         deleteBtn = view.findViewById(R.id.deleteBookingBtn);
+
+        addMealBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("booking", booking);
+                bundle.putSerializable("restaurant", restaurant);
+                FragmentStateContainer.getInstance().switchFragmentState(8, bundle);
+            }
+        });
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override

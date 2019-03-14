@@ -113,6 +113,7 @@
     <string name="en_bookingDetails_numAttendees_singleAttendee">%1d attendee</string>
     <string name="en_bookingDetails_numAttendees_multipleAttendees">%1d attendees</string>
 
+    <string name="en_bookingDetails_AddMeal">Add a Meal to this Booking</string>
     <string name="en_bookingDetails_ViewRestaurant">View Extra Restaurant Details</string>
     <string name="en_bookingDetails_EditBooking">Edit Booking</string>
     <string name="en_bookingDetails_ShareBooking">Share Booking</string>
@@ -124,5 +125,9 @@
 
     <!-- Meals Fragment -->
     <string name="en_mealsFragment_NoMealsInfoText">You don\'t have any meals yet! You can make one by selecting a booking or a restaurant, then selecting "Add Meal"</string>
+
+    <!-- New Meal Fragment -->
+    <string name="en_newMealsFragment_Title">Create a new Meal</string>
+    <string name="en_newMealsFragment_SubTitle">For your booking at %1$s on %2$s at %3$s</string>
 
 </resources>

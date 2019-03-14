@@ -44,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String mealsTable = "Meals";
     private static final String mealID = "MealID";
     private static final String mealRestaurantID = "RestaurantID"; // restaurant associated with meal
+    private static final String mealTitle = "Title";
     private static final String mealBookingID = "BookingID"; // booking associated with meal
     private static final String mealDescription = "Description";
     private static final String mealStarRating = "StarRating";
@@ -89,6 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqlBuilder.append(mealID + " INTEGER PRIMARY KEY AUTOINCREMENT, ");
         sqlBuilder.append(mealBookingID + " INTEGER, ");
         sqlBuilder.append(mealRestaurantID + " TEXT, ");
+        sqlBuilder.append(mealTitle + " TEXT, ");
         sqlBuilder.append(mealDescription + " TEXT, ");
         sqlBuilder.append(mealStarRating + " TEXT, ");
         sqlBuilder.append(mealImageName + " TEXT)");
@@ -237,6 +239,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(mealBookingID, item.getBookingID());
         contentValues.put(mealRestaurantID, item.getRestaurantHereID());
+        contentValues.put(mealTitle, item.getTitle());
         contentValues.put(mealDescription, item.getDescription());
         contentValues.put(mealImageName, item.getImageName());
         contentValues.put(mealStarRating, item.getStarRating());
@@ -261,6 +264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
             item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
             item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setTitle(cursor.getString(cursor.getColumnIndex(mealTitle)));
             item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
             item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
             item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));
@@ -295,6 +299,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
             item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
             item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setTitle(cursor.getString(cursor.getColumnIndex(mealTitle)));
             item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
             item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
             item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));
@@ -305,18 +310,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public MealItem getMealsByBookingID(int requestedBookingID){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + mealsTable + " WHERE " + mealBookingID + "='" + requestedBookingID + "'", null);
-        MealItem item = new MealItem();
         if(cursor.getCount() > 0) {
+            MealItem item = new MealItem();
             cursor.moveToFirst();
-            item = new MealItem();
             item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
             item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
             item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setTitle(cursor.getString(cursor.getColumnIndex(mealTitle)));
             item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
             item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
             item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));
+            return item;
+        } else{
+            return null;
         }
-        return item;
     }
 
 
@@ -328,6 +335,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
             item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
             item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setTitle(cursor.getString(cursor.getColumnIndex(mealTitle)));
             item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
             item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
             item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));

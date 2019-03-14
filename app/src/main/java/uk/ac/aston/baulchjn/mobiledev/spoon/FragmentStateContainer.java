@@ -23,6 +23,14 @@ public class FragmentStateContainer {
     final Fragment bookRestaurantFragment = new BookRestaurantFragment();
     final Fragment bookingDetailsFragment = new BookingDetailsFragment();
     final Fragment editBookingFragment = new EditBookingFragment();
+    final Fragment newMealFragment = new NewMealFragment();
+//
+//    final Fragment editMealFragment = new EditMealFragment();
+//    final Fragment mealDetailedFragment = new MealDetailedFragment();
+
+
+    final Fragment editMealFragment = new NewMealFragment();
+    final Fragment mealDetailedFragment = new NewMealFragment();
 
     FragmentManager fm = null;
     private static Activity activity = null;
@@ -34,6 +42,9 @@ public class FragmentStateContainer {
     }
 
     public void initialise() {
+        fm.beginTransaction().add(R.id.main_container, mealDetailedFragment, "11").hide(mealDetailedFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, editMealFragment, "10").hide(editMealFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, newMealFragment, "9").hide(newMealFragment).commit();
         fm.beginTransaction().add(R.id.main_container, editBookingFragment, "8").hide(editBookingFragment).commit();
         fm.beginTransaction().add(R.id.main_container, bookingDetailsFragment, "7").hide(bookingDetailsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, bookRestaurantFragment, "6").hide(bookRestaurantFragment).commit();
@@ -43,14 +54,17 @@ public class FragmentStateContainer {
         fm.beginTransaction().add(R.id.main_container, bookingsFragment, "2").hide(bookingsFragment).commit();
         fm.beginTransaction().add(R.id.main_container, homeFragment, "1").commit();
 
-        fragments.add(homeFragment);
-        fragments.add(bookingsFragment);
-        fragments.add(restaurantsFragment);
-        fragments.add(mealsFragment);
-        fragments.add(restaurantDetailedFragment);
-        fragments.add(bookRestaurantFragment);
-        fragments.add(bookingDetailsFragment);
-        fragments.add(editBookingFragment);
+        fragments.add(homeFragment); // 0
+        fragments.add(bookingsFragment); // 1
+        fragments.add(restaurantsFragment); // 2
+        fragments.add(mealsFragment); // 3
+        fragments.add(restaurantDetailedFragment); // 4
+        fragments.add(bookRestaurantFragment); // 5
+        fragments.add(bookingDetailsFragment); // 6
+        fragments.add(editBookingFragment); // 7
+        fragments.add(newMealFragment); // 8
+        fragments.add(editMealFragment); // 9
+        fragments.add(mealDetailedFragment); // 10
     }
 
     public void switchFragmentState(int index, Bundle bundle) {

@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/en_bookrestaurant_title"
+        android:text="@string/en_newMealsFragment_Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,13 +21,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/createBookingBtn"
+        android:id="@+id/createMealBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Create Booking"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subtitle" />
+        android:text="Create Meal"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/subtitle"
@@ -35,25 +34,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text='You are booking: "Boston Tea Party"'
+        android:text="Subtitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="15dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/en_bookrestaurants_wrongrestaurant"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subtitle"
-        tools:text="@string/en_bookrestaurants_wrongrestaurant" />
 
     <EditText
         android:id="@+id/mealTitle"
@@ -63,70 +48,66 @@
         android:layout_marginEnd="8dp"
         android:backgroundTintMode="src_in"
         android:ems="10"
-        android:focusable="false"
-        android:inputType="date"
         android:longClickable="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <EditText
-        android:id="@+id/bookRestaurantTimeEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:focusable="false"
-        android:longClickable="false"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mealTitle" />
-
-    <EditText
-        android:id="@+id/bookRestaurantNumAttendeesEditor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookRestaurantTimeEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/subtitle" />
 
     <TextView
-        android:id="@+id/dateTextView"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Date:"
+        android:text="Title:"
         app:layout_constraintBottom_toBottomOf="@+id/mealTitle"
         app:layout_constraintEnd_toStartOf="@+id/mealTitle"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/timeTextView"
+        android:id="@+id/reviewTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Time:"
-        app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantTimeEditText"
-        app:layout_constraintEnd_toStartOf="@+id/bookRestaurantTimeEditText"
+        android:text="Review:"
+        app:layout_constraintBottom_toBottomOf="@+id/mealDescription"
+        app:layout_constraintEnd_toStartOf="@+id/mealDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bookRestaurantTimeEditText" />
+        app:layout_constraintTop_toTopOf="@+id/mealDescription" />
 
     <TextView
-        android:id="@+id/numPeopleTextView"
+        android:id="@+id/imageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Number of People:"
-        app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantNumAttendeesEditor"
-        app:layout_constraintEnd_toStartOf="@+id/bookRestaurantNumAttendeesEditor"
+        android:text="Image:"
+        app:layout_constraintBottom_toBottomOf="@+id/mealImageView"
+        app:layout_constraintEnd_toStartOf="@+id/mealDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bookRestaurantNumAttendeesEditor" />
+        app:layout_constraintTop_toTopOf="@+id/mealImageView" />
+
+    <EditText
+        android:id="@+id/mealDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="124dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealTitle" />
+
+    <ImageView
+        android:id="@+id/mealImageView"
+        android:layout_width="215dp"
+        android:layout_height="234dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/tap_to_set"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealDescription" />
 
 </android.support.constraint.ConstraintLayout>

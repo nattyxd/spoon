@@ -15,6 +15,7 @@ public class MealItem implements Serializable {
     private Integer mealID;
     private String restaurantHereID;
     private int bookingID;
+    private String title;
     private String description;
     private int starRating;
     private String imageName;
@@ -73,6 +74,22 @@ public class MealItem implements Serializable {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Bitmap getProcessedImage() {
+        return processedImage;
+    }
+
+    public void setProcessedImage(Bitmap processedImage) {
+        this.processedImage = processedImage;
     }
 
     public void parseBitmap(){

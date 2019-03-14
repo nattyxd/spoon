@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             Manifest.permission.INTERNET,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_NETWORK_STATE,
-            Manifest.permission.ACCESS_WIFI_STATE
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.CAMERA,
     };
 
     @Override

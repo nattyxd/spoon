@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
@@ -78,7 +77,7 @@ public class EditBookingFragment extends Fragment {
                 return;
             }
 
-            youAreEditing = view.findViewById(R.id.youAreEditing);
+            youAreEditing = view.findViewById(R.id.subtitle);
             String name = restaurant.getName();
             String date = booking.getDateOfBooking();
             String time = booking.getTimeOfBooking();
@@ -123,7 +122,7 @@ public class EditBookingFragment extends Fragment {
 
         numAttendeesEditor = view.findViewById(R.id.bookRestaurantNumAttendeesEditor);
 
-        dateEditor = view.findViewById(R.id.bookRestaurantDateEditText);
+        dateEditor = view.findViewById(R.id.mealTitle);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
