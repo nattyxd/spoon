@@ -31,6 +31,13 @@
     <!-- Booking Strings -->
     <string name="en_bookingFragment_NoBookings">You don\'t have any bookings! To make one, select a Restaurant and choose "Book Restaurant"</string>
 
+    <string-array name="en_bookings_SortOptions">
+        <item>Alphabetical (Ascending)</item>
+        <item>Alphabetical (Descending)</item>
+        <item>Distance (Ascending)</item>
+        <item>Distance (Descending)</item>
+    </string-array>
+
     <!-- Edit Booking Strings-->
     <string name="en_editBooking_title">Edit a Booking</string>
     <string name="en_editBooking_youAreEditing">You are editing your booking at: "%1$s", on %2$s at %3$s.</string>

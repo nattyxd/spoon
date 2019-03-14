@@ -32,5 +32,19 @@
         android:tint="@color/colorPrimaryDark"
         app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
 
+    <Button
+        android:id="@+id/filterButton"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:text="Filter"
+        app:layout_anchorGravity="right" />
+
+    <Button
+        android:id="@+id/sortButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sort"
+        app:layout_anchorGravity="right" />
+
 
 </android.support.design.widget.CoordinatorLayout>
