@@ -36,6 +36,10 @@
         <item>Alphabetical (Descending)</item>
         <item>Distance (Ascending)</item>
         <item>Distance (Descending)</item>
+        <item>Date (Ascending)</item>
+        <item>Date (Descending)</item>
+        <item>Number of Attendees (Ascending)</item>
+        <item>Number of Attendees (Descending)</item>
     </string-array>
 
     <!-- Edit Booking Strings-->

@@ -22,7 +22,9 @@ import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.BookingsSwipeToDeleteCallback;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingAlphabet;
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDate;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDistance;
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByNumAttendees;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByAscendingAlphabet;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByAscendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByDescendingDistance;
@@ -125,6 +127,22 @@ public class BookingsFragment extends Fragment {
                             case 3:
                                 // distance descending
                                 Collections.sort(BookingContent.bookingItems, Collections.reverseOrder(new SortBookingsByAscendingDistance(getContext(), dbHelper)));
+                                break;
+                            case 4:
+                                // date ascending
+                                Collections.sort(BookingContent.bookingItems, new SortBookingsByAscendingDate());
+                                break;
+                            case 5:
+                                // date descending
+                                Collections.sort(BookingContent.bookingItems, Collections.reverseOrder(new SortBookingsByAscendingDate()));
+                                break;
+                            case 6:
+                                // num attendees ascending
+                                Collections.sort(BookingContent.bookingItems, new SortBookingsByNumAttendees());
+                                break;
+                            case 7:
+                                // num attendees descending
+                                Collections.sort(BookingContent.bookingItems, Collections.reverseOrder(new SortBookingsByNumAttendees()));
                                 break;
                             default:
                                 Collections.sort(BookingContent.bookingItems, new SortBookingsByAscendingAlphabet(dbHelper));
