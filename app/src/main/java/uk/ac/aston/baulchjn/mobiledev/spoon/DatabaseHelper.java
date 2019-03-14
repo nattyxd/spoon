@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -41,6 +42,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String bookingTimeOfBooking = "TimeOfBooking";
 
     private static final String mealsTable = "Meals";
+    private static final String mealID = "MealID";
+    private static final String mealRestaurantID = "RestaurantID"; // restaurant associated with meal
+    private static final String mealBookingID = "BookingID"; // booking associated with meal
+    private static final String mealDescription = "Description";
+    private static final String mealStarRating = "StarRating";
+    private static final String mealImageName = "ImagePath"; // path to image on local storage
 
     public DatabaseHelper(Context context) {
         super(context, DBName, null, 1);
@@ -76,12 +83,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqlBuilder.append(bookingTimeOfBooking + " TEXT)");
         Log.i("spoonlogcat DBHELPER: ", sqlBuilder.toString());
         db.execSQL(sqlBuilder.toString());
+
+        sqlBuilder = new StringBuilder();
+        sqlBuilder.append("CREATE TABLE " + mealsTable + " (");
+        sqlBuilder.append(mealID + " INTEGER PRIMARY KEY AUTOINCREMENT, ");
+        sqlBuilder.append(mealBookingID + " INTEGER, ");
+        sqlBuilder.append(mealRestaurantID + " TEXT, ");
+        sqlBuilder.append(mealDescription + " TEXT, ");
+        sqlBuilder.append(mealStarRating + " TEXT, ");
+        sqlBuilder.append(mealImageName + " TEXT)");
+        Log.i("spoonlogcat DBHELPER: ", sqlBuilder.toString());
+        db.execSQL(sqlBuilder.toString());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + restaurantsTable);
         db.execSQL("DROP TABLE IF EXISTS " + bookingsTable);
+        db.execSQL("DROP TABLE IF EXISTS " + mealsTable);
         onCreate(db);
     }
 
@@ -213,12 +232,104 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return items;
     }
 
+    public long addMeal(MealItem item){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(mealBookingID, item.getBookingID());
+        contentValues.put(mealRestaurantID, item.getRestaurantHereID());
+        contentValues.put(mealDescription, item.getDescription());
+        contentValues.put(mealImageName, item.getImageName());
+        contentValues.put(mealStarRating, item.getStarRating());
+
+        long result = db.insertOrThrow(mealsTable, null, contentValues);
+        return result;
+    }
+
+    public void deleteMeal(MealItem item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(mealsTable, mealsTable + "=?", new String[]{ String.valueOf(item.getMealID()) });
+    }
+
+    public List<MealItem> getMealsByRestaurantID(String requestedHereID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<MealItem> items = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + mealsTable + " WHERE " + mealRestaurantID + "='" + requestedHereID + "'", null);
+        MealItem item = new MealItem();
+        while (cursor.moveToNext()) {
+            cursor.moveToNext();
+            item = new MealItem();
+            item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
+            item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
+            item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
+            item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
+            item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));
+            items.add(item);
+        }
+        return items;
+    }
+
+    public MealItem getMealByMealID(int requestedMealID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + mealsTable + " WHERE " + mealID + "='" + requestedMealID + "'", null);
+        MealItem item = new MealItem();
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            item = new MealItem();
+            item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
+            item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
+            item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
+            item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
+            item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));
+        }
+        return item;
+    }
+
+    public MealItem getMealByBookingID(int requestedBookingID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + mealsTable + " WHERE " + mealBookingID + "='" + requestedBookingID + "'", null);
+        MealItem item = new MealItem();
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            item = new MealItem();
+            item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
+            item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
+            item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
+            item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
+            item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));
+        }
+        return item;
+    }
+
+
+    public List<MealItem> getAllMealsAsList() {
+        Cursor cursor = getAllMeals();
+        ArrayList<MealItem> items = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            MealItem item = new MealItem();
+            item.setRestaurantHereID(cursor.getString(cursor.getColumnIndex(mealRestaurantID)));
+            item.setBookingID(cursor.getInt(cursor.getColumnIndex(mealBookingID)));
+            item.setMealID(cursor.getInt(cursor.getColumnIndex(mealID)));
+            item.setDescription(cursor.getString(cursor.getColumnIndex(mealDescription)));
+            item.setImageName(cursor.getString(cursor.getColumnIndex(mealImageName)));
+            item.setStarRating(cursor.getInt(cursor.getColumnIndex(mealStarRating)));
+            items.add(item);
+        }
+        return items;
+    }
+
     public Cursor getAllRestaurants() {
         return getAll(restaurantsTable);
     }
 
     public Cursor getAllBookings() {
         return getAll(bookingsTable);
+    }
+
+    public Cursor getAllMeals() {
+        return getAll(mealsTable);
     }
 
     private Cursor getAll(String table) {

@@ -161,7 +161,6 @@ public class BookingDetailsFragment extends Fragment {
                                     BookingsFragment.noBookingsText.setVisibility(View.VISIBLE);
                                     BookingsFragment.noBookingsArrow.setVisibility(View.VISIBLE);
                                 }
-                                // TODO, ACTUALLY DELETE FROM THE LIST AND NOTIFY
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
