@@ -269,6 +269,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return items;
     }
 
+    public BookingItem getBookingByBookingID(int requestedBookingID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + bookingsTable + " WHERE " + bookingID + "='" + requestedBookingID + "'", null);
+        BookingItem item = new BookingItem();
+
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+            item.setBookingID(cursor.getInt(cursor.getColumnIndex(bookingID)));
+            item.setRestaurantID(cursor.getString(cursor.getColumnIndex(bookingRestaurantID)));
+            item.setNumPeopleAttending(cursor.getInt(cursor.getColumnIndex(bookingNumPeopleAttending)));
+            item.setDateOfBooking(cursor.getString(cursor.getColumnIndex(bookingDateOfBooking)));
+            item.setTimeOfBooking(cursor.getString(cursor.getColumnIndex(bookingTimeOfBooking)));
+        }
+        return item;
+    }
+
     public MealItem getMealByMealID(int requestedMealID){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + mealsTable + " WHERE " + mealID + "='" + requestedMealID + "'", null);
@@ -286,7 +302,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return item;
     }
 
-    public MealItem getMealByBookingID(int requestedBookingID){
+    public MealItem getMealsByBookingID(int requestedBookingID){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + mealsTable + " WHERE " + mealBookingID + "='" + requestedBookingID + "'", null);
         MealItem item = new MealItem();

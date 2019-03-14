@@ -32,7 +32,7 @@ public class MealContent {
 
                 try{
                     mealRecyclerAdapter.mealList.clear();
-                    mealRecyclerAdapter.mealList.addAll(dbHelper.getAllBookingsAsList());
+                    mealRecyclerAdapter.mealList.addAll(dbHelper.getAllMealsAsList());
                     mealRecyclerAdapter.notifyDataSetChanged();
                     if(MealContent.mealItems.size() > 0){
                         BookingsFragment.noBookingsText.setVisibility(View.GONE);

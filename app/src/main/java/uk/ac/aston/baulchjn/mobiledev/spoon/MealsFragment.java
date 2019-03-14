@@ -20,22 +20,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.aston.baulchjn.mobiledev.spoon.helper.BookingsSwipeToDeleteCallback;
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.MealsSwipeToDeleteCallback;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingAlphabet;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDate;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByNumAttendees;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingClickListener;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingRecyclerAdapter;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealContent;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealItem;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealRecyclerAdapter;
 
 public class MealsFragment extends Fragment {
     private List<BookingItem> rv_list;
     private RecyclerView recyclerView;
     private Button sortButton;
-    private Button filterButton;
 
     public static MealRecyclerAdapter mAdapter;
     public static TextView noMealsText;
@@ -102,43 +101,44 @@ public class MealsFragment extends Fragment {
 
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                 dialogBuilder.setTitle("Sort");
-                dialogBuilder.setItems(R.array.en_meals_SortOptions, new DialogInterface.OnClickListener() {
+                  dialogBuilder.setItems(R.array.en_restaurants_SortOptions, new DialogInterface.OnClickListener() {
+//                dialogBuilder.setItems(R.array.en_meals_SortOptions, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
                                 // alphabetical ascending
-                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
+//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
                                 break;
                             case 1:
                                 // alphabetical descending
-                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingAlphabet(dbHelper)));
+//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingAlphabet(dbHelper)));
                                 break;
                             case 2:
                                 // distance ascending
-                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDistance(getContext(), dbHelper));
+//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDistance(getContext(), dbHelper));
                                 break;
                             case 3:
                                 // distance descending
-                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDistance(getContext(), dbHelper)));
+//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDistance(getContext(), dbHelper)));
                                 break;
                             case 4:
                                 // date ascending
-                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDate());
+//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDate());
                                 break;
                             case 5:
                                 // date descending
-                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDate()));
+//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDate()));
                                 break;
                             case 6:
                                 // num attendees ascending
-                                Collections.sort(MealContent.mealItems, new SortBookingsByNumAttendees());
+//                                Collections.sort(MealContent.mealItems, new SortBookingsByNumAttendees());
                                 break;
                             case 7:
                                 // num attendees descending
-                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByNumAttendees()));
+//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByNumAttendees()));
                                 break;
                             default:
-                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
+//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
                                 break;
                         }
                         mAdapter.notifyDataSetChanged();
