@@ -92,7 +92,6 @@ public class BookingsFragment extends Fragment {
         BookingContent.populateBookings(getContext(), mAdapter);
 
         sortButton = view.findViewById(R.id.sortButton);
-        filterButton = view.findViewById(R.id.filterButton);
 
         dbHelper = new DatabaseHelper(getContext());
 

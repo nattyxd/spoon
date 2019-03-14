@@ -123,6 +123,6 @@
     <string name="en_shareBooking_shareString_Body">I\'m going to be dining at %1$s on %2$s at %3$s, will you join me? See http://spoonapp.com/booking/12345 for booking information</string>
 
     <!-- Meals Fragment -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="en_mealsFragment_NoMealsInfoText">You don\'t have any meals yet! You can make one by selecting a booking or a restaurant, then selecting "Add Meal"</string>
 
 </resources>
