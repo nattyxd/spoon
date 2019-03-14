@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
@@ -109,7 +110,7 @@ public class BookingDetailsFragment extends Fragment {
         viewRestaurantBtn = view.findViewById(R.id.viewRestaurantBtn);
         editBtn = view.findViewById(R.id.editBookingBtn);
         shareBtn = view.findViewById(R.id.shareBookingBtn);
-        deleteBtn = view.findViewById(R.id.setVisitedBtn);
+        deleteBtn = view.findViewById(R.id.deleteBookingBtn);
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +155,12 @@ public class BookingDetailsFragment extends Fragment {
                             case DialogInterface.BUTTON_POSITIVE:
                                 dbHelper.deleteBooking(booking);
                                 FragmentStateContainer.getInstance().switchFragmentState(1, null);
+                                BookingContent.bookingItems.remove(booking);
+                                BookingsFragment.mAdapter.notifyDataSetChanged();
+                                if(BookingContent.bookingItems.size() == 0){
+                                    BookingsFragment.noBookingsText.setVisibility(View.VISIBLE);
+                                    BookingsFragment.noBookingsArrow.setVisibility(View.VISIBLE);
+                                }
                                 // TODO, ACTUALLY DELETE FROM THE LIST AND NOTIFY
                                 break;
 
