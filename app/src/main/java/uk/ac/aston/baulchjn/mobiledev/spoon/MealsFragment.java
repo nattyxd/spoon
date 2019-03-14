@@ -29,6 +29,7 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingRecyclerAdapter;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealContent;
 
 public class MealsFragment extends Fragment {
     private List<BookingItem> rv_list;
@@ -36,7 +37,7 @@ public class MealsFragment extends Fragment {
     private Button sortButton;
     private Button filterButton;
 
-    public static BookingRecyclerAdapter mAdapter;
+    public static MealRecyclerAdapter mAdapter;
     public static TextView noMealsText;
     public static ImageView noMealsArrow1;
     public static ImageView noMealsArrow2;
@@ -52,8 +53,6 @@ public class MealsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         rv_list = new ArrayList<>();
-
-
     }
 
     @Override
@@ -66,17 +65,14 @@ public class MealsFragment extends Fragment {
         noMealsArrow1 = view.findViewById(R.id.noMealsArrow1);
         noMealsArrow2 = view.findViewById(R.id.noMealsArrow2);
 
-        BookingContent.bookingItems = new ArrayList<>();
-        mAdapter = new BookingRecyclerAdapter(BookingContent.bookingItems, new BookingClickListener() {
+        MealContent.mealItems = new ArrayList<>();
+        mAdapter = new MealRecyclerAdapter(MealContent.mealItems, new MealClickListener() {
             @Override
-            public void onItemClick(BookingItem item) {
+            public void onItemClick(MealItem item) {
                 Bundle bundle = new Bundle();
-                bundle.putString("date", item.getDateOfBooking());
-                bundle.putString("time", item.getTimeOfBooking());
-                bundle.putInt("numAttendees", item.getNumPeopleAttending());
+                bundle.putSerializable("meal", item);
 
-                bundle.putSerializable("booking", item);
-
+                // TODO: Change this to meal details fragment
                 FragmentStateContainer.getInstance().switchFragmentState(6, bundle);
             }
         });
@@ -84,10 +80,10 @@ public class MealsFragment extends Fragment {
         mAdapter.setView(view);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new BookingsSwipeToDeleteCallback(mAdapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MealsSwipeToDeleteCallback(mAdapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        BookingContent.populateBookings(getContext(), mAdapter);
+        MealContent.populateMeals(getContext(), mAdapter);
 
         sortButton = view.findViewById(R.id.sortButton);
 
@@ -106,43 +102,43 @@ public class MealsFragment extends Fragment {
 
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                 dialogBuilder.setTitle("Sort");
-                dialogBuilder.setItems(R.array.en_bookings_SortOptions, new DialogInterface.OnClickListener() {
+                dialogBuilder.setItems(R.array.en_meals_SortOptions, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
                                 // alphabetical ascending
-                                Collections.sort(BookingContent.bookingItems, new SortBookingsByAscendingAlphabet(dbHelper));
+                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
                                 break;
                             case 1:
                                 // alphabetical descending
-                                Collections.sort(BookingContent.bookingItems, Collections.reverseOrder(new SortBookingsByAscendingAlphabet(dbHelper)));
+                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingAlphabet(dbHelper)));
                                 break;
                             case 2:
                                 // distance ascending
-                                Collections.sort(BookingContent.bookingItems, new SortBookingsByAscendingDistance(getContext(), dbHelper));
+                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDistance(getContext(), dbHelper));
                                 break;
                             case 3:
                                 // distance descending
-                                Collections.sort(BookingContent.bookingItems, Collections.reverseOrder(new SortBookingsByAscendingDistance(getContext(), dbHelper)));
+                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDistance(getContext(), dbHelper)));
                                 break;
                             case 4:
                                 // date ascending
-                                Collections.sort(BookingContent.bookingItems, new SortBookingsByAscendingDate());
+                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDate());
                                 break;
                             case 5:
                                 // date descending
-                                Collections.sort(BookingContent.bookingItems, Collections.reverseOrder(new SortBookingsByAscendingDate()));
+                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDate()));
                                 break;
                             case 6:
                                 // num attendees ascending
-                                Collections.sort(BookingContent.bookingItems, new SortBookingsByNumAttendees());
+                                Collections.sort(MealContent.mealItems, new SortBookingsByNumAttendees());
                                 break;
                             case 7:
                                 // num attendees descending
-                                Collections.sort(BookingContent.bookingItems, Collections.reverseOrder(new SortBookingsByNumAttendees()));
+                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByNumAttendees()));
                                 break;
                             default:
-                                Collections.sort(BookingContent.bookingItems, new SortBookingsByAscendingAlphabet(dbHelper));
+                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
                                 break;
                         }
                         mAdapter.notifyDataSetChanged();
