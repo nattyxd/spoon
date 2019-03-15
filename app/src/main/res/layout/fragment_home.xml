@@ -76,9 +76,9 @@
             app:layout_constraintTop_toBottomOf="@+id/item_reservation_notification" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/viewReservationButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_margin="0dp"
             android:layout_marginTop="15dp"
             android:backgroundTint="@color/colorPrimary"
@@ -232,21 +232,22 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/burgerConstraint"
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
-        app:layout_constraintTop_toBottomOf="@+id/recommendedRestaurantsConstraint">
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/burgerConstraint"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/recommendedRestaurantsConstraint">
 
-        <ImageView
-            android:id="@+id/burgerImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/anyoneforaburger"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/burgerImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/anyoneforaburger"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
     <!--<android.support.constraint.ConstraintLayout-->
     <!--android:id="@+id/recentRestaurantLinearLayout"-->
