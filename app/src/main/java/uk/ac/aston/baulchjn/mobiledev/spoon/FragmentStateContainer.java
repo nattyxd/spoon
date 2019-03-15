@@ -2,6 +2,7 @@ package uk.ac.aston.baulchjn.mobiledev.spoon;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -68,8 +69,43 @@ public class FragmentStateContainer {
         active = fragments.get(index);
         active.onResume();
 
+        switch(index){
+            case 0:
+                setBarToSort();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+
+        }
+
         Log.i("spoonlogcat", "testing");
 
+    }
+
+    public Fragment getActive(){
+        return active;
+    }
+
+    public int getActiveIndex(){
+        return fragments.indexOf(active);
     }
 
 
@@ -91,5 +127,10 @@ public class FragmentStateContainer {
         }
 
         return instance;
+    }
+
+    private void setBarToSort(){
+        ActionBar bar = getActivity().getActionBar();
+        System.out.print("lol");
     }
 }
