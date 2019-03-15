@@ -274,11 +274,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public BookingItem getBookingByBookingID(int requestedBookingID){
+        BookingItem item = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + bookingsTable + " WHERE " + bookingID + "=" + requestedBookingID + "", null);
-        BookingItem item = new BookingItem();
 
         if(cursor.getCount() > 0){
+            item = new BookingItem();
             cursor.moveToFirst();
             item.setBookingID(cursor.getInt(cursor.getColumnIndex(bookingID)));
             item.setRestaurantID(cursor.getString(cursor.getColumnIndex(bookingRestaurantID)));
