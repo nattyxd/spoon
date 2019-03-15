@@ -123,11 +123,22 @@
     <string name="en_shareBooking_shareString_Intent_Title">Share Booking via</string>
     <string name="en_shareBooking_shareString_Body">I\'m going to be dining at %1$s on %2$s at %3$s, will you join me? See http://spoonapp.com/booking/12345 for booking information</string>
 
-    <!-- Meals Fragment -->
+    <!-- Meals Fragment Strings -->
     <string name="en_mealsFragment_NoMealsInfoText">You don\'t have any meals yet! You can make one by selecting a booking or a restaurant, then selecting "Add Meal"</string>
 
-    <!-- New Meal Fragment -->
+    <!-- New Meal Fragment Strings -->
     <string name="en_newMealsFragment_Title">Create a new Meal</string>
     <string name="en_newMealsFragment_SubTitle">For your booking at %1$s on %2$s at %3$s</string>
+
+    <!-- Meal Detailed Fragment Strings -->
+    <string name="en_mealDetailedFragment_Edit">Edit This Meal</string>
+    <string name="en_mealDetailedFragment_Share">Share This Meal</string>
+    <string name="en_shareMeal_shareString_Intent_Title">Share Meal via</string>
+    <string name="en_shareMeal_shareString_Body_IncludingBooking">Have a look at what I ate at %1$s on %2$s at %3$s! http://spoonapp.com/booking/12345</string>
+    <string name="en_shareMeal_shareString_Body_DeletedBooking">Have a look at what I ate at %1$s! http://spoonapp.com/meal/12345</string>
+
+
+    <string name="en_mealDetailedFragment_Delete">Delete This Meal</string>
+
 
 </resources>

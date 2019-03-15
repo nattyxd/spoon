@@ -24,13 +24,8 @@ public class FragmentStateContainer {
     final Fragment bookingDetailsFragment = new BookingDetailsFragment();
     final Fragment editBookingFragment = new EditBookingFragment();
     final Fragment newMealFragment = new NewMealFragment();
-//
-//    final Fragment editMealFragment = new EditMealFragment();
-//    final Fragment mealDetailedFragment = new MealDetailedFragment();
-
-
-    final Fragment editMealFragment = new NewMealFragment();
-    final Fragment mealDetailedFragment = new NewMealFragment();
+    final Fragment editMealFragment = new EditMealFragment();
+    final Fragment mealDetailedFragment = new MealDetailedFragment();
 
     FragmentManager fm = null;
     private static Activity activity = null;
