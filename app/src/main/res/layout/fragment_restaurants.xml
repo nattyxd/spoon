@@ -45,10 +45,12 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded_corner_4dp"
+        android:backgroundTint="@color/colorPrimary"
         android:padding="4dp"
+        android:paddingLeft="20dp"
         android:scaleType="centerCrop"
         android:src="@drawable/refresh"
-        android:tint="#5b9618"
+        android:tint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/centreMapOnUserButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
@@ -59,10 +61,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded_corner_4dp"
+        android:backgroundTint="@color/colorPrimary"
         android:padding="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/search"
-        android:tint="#77b3d4"
+        android:tint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/refreshRestaurantsButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
@@ -73,10 +76,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded_corner_4dp"
+        android:backgroundTint="@color/colorPrimary"
         android:padding="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_filter_list_black_24dp"
-        android:tint="#000"
+        android:tint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/stringSearchRestaurantsButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
@@ -87,10 +91,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded_corner_4dp"
+        android:backgroundTint="@color/colorPrimary"
         android:padding="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_sort_by_alpha_black_24dp"
-        android:tint="#000"
+        android:tint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/filterRestaurantsButton"
         app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
 
@@ -101,6 +106,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded_corner_4dp"
+        android:backgroundTint="@color/colorPrimary"
         android:padding="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_undo_black_24dp"
