@@ -36,6 +36,7 @@ public class EditMealFragment extends Fragment {
     private ArrayList<String> tags;
     private RestaurantItem restaurant;
     private BookingItem booking;
+    private MealItem meal;
 
     // Text views
     private TextView mealTitleText;
@@ -49,7 +50,7 @@ public class EditMealFragment extends Fragment {
 
     private DatabaseHelper dbHelper;
 
-    private Thread makeMealThread;
+    private Thread editMealThread;
 
     private View view;
 
@@ -66,15 +67,24 @@ public class EditMealFragment extends Fragment {
             // TODO: Restaurant null check maybe necessary here if we support creation of booking through non here restaurant means
             restaurant = (RestaurantItem) bundle.getSerializable("restaurant");
             booking = (BookingItem) bundle.getSerializable("booking");
+            meal = (MealItem) bundle.getSerializable("meal");
 
-            if(restaurant == null || booking == null){
+            if(restaurant == null || meal == null){
                 return;
             }
 
-            Log.i("spoonlogcat", "Wooooo! We're gonna make a new booking" + restaurant.toString());
+            Log.i("spoonlogcat", "Wooooo! We're gonna edit a new meal" + restaurant.toString());
 
             TextView subtitle = view.findViewById(R.id.subtitle);
-            subtitle.setText(getString(R.string.en_newMealsFragment_SubTitle, restaurant.getName(), booking.getDateOfBooking(), booking.getTimeOfBooking()));
+
+            if(booking != null){
+                subtitle.setText(getString(R.string.en_editMealFragment_Subtitle_IncludingBooking, restaurant.getName(), booking.getDateOfBooking(), booking.getTimeOfBooking()));
+            } else {
+                subtitle.setText(getString(R.string.en_editMealFragment_Subtitle_DeletedBooking, restaurant.getName()));
+            }
+
+            mealTitle.setText(meal.getTitle());
+            mealTitle.setText(meal.getDescription());
         }
     }
 
@@ -83,6 +93,8 @@ public class EditMealFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             restaurant = (RestaurantItem) getArguments().getSerializable(ARG_RESTAURANT);
+            meal = (MealItem) getArguments().getSerializable("meal");
+            booking = (BookingItem) getArguments().getSerializable("booking");
 
         }
 
@@ -93,7 +105,7 @@ public class EditMealFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_new_meal, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_meal, container, false);
 
         mealTitle = view.findViewById(R.id.mealTitle);
         mealReview = view.findViewById(R.id.mealDescription);
@@ -119,12 +131,12 @@ public class EditMealFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Take a big breath. We're going to make a meal (not of this)..
-                if(makeMealThread != null && makeMealThread.isAlive()){
+                if(editMealThread != null && editMealThread.isAlive()){
                     // prevent spam clicks
                     return;
                 }
 
-                makeMealThread = new Thread(new Runnable() {
+                editMealThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Looper.prepare();
@@ -148,24 +160,17 @@ public class EditMealFragment extends Fragment {
                             mealReviewText.setTextColor(getResources().getColor(R.color.textViewDefault));
                         }
 
-                        final MealItem meal = new MealItem();
                         meal.setRestaurantHereID(restaurant.getHereID());
-                        meal.setBookingID(booking.getBookingID());
                         meal.setStarRating(-1); // not implemented yet
                         meal.setTitle(mealTitle.getText().toString());
                         meal.setDescription(mealReview.getText().toString());
 //                        meal.setImageName(Integer.parseInt(numAttendeesEditor.getText().toString()));
-                        final long result = dbHelper.addMeal(meal);
-                        meal.setMealID((int) (long) result); // should be safe as meals won't exceed 2 billion..
+                        dbHelper.updateMeal(meal);
 
-                        MealContent.mealItems.add(meal);
-                        MealsFragment.noMealsText.setVisibility(View.GONE);
-                        MealsFragment.noMealsArrow1.setVisibility(View.GONE);
-                        MealsFragment.noMealsArrow2.setVisibility(View.GONE);
                         MealsFragment.mAdapter.notifyDataSetChanged();
 
                         Snackbar snackbar = Snackbar
-                                .make(view, "Meal Created Successfully!", Snackbar.LENGTH_LONG)
+                                .make(view, "Meal Edited Successfully!", Snackbar.LENGTH_LONG)
                                 .setAction("View Meal Now", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -181,7 +186,7 @@ public class EditMealFragment extends Fragment {
                     }
                 });
 
-                makeMealThread.start();
+                editMealThread.start();
             }
         });
 

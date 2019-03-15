@@ -130,6 +130,11 @@
     <string name="en_newMealsFragment_Title">Create a new Meal</string>
     <string name="en_newMealsFragment_SubTitle">For your booking at %1$s on %2$s at %3$s</string>
 
+    <!-- Edit Meal Fragment Strings -->
+    <string name="en_editMealFragment_Title">Edit Meal</string>
+    <string name="en_editMealFragment_Subtitle_IncludingBooking">For your booking at %1$s on %2$s at %3$s.</string>
+    <string name="en_editMealFragment_Subtitle_DeletedBooking">For your deleted booking at %1$s.</string>
+
     <!-- Meal Detailed Fragment Strings -->
     <string name="en_mealDetailedFragment_Edit">Edit This Meal</string>
     <string name="en_mealDetailedFragment_Share">Share This Meal</string>

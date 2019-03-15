@@ -25,11 +25,14 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingAlphab
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDate;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByNumAttendees;
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortMealsByAscendingReviewAlphabet;
+import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortMealsByAscendingTitleAlphabet;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealRecyclerAdapter;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
 
 public class MealsFragment extends Fragment {
     private List<BookingItem> rv_list;
@@ -107,38 +110,22 @@ public class MealsFragment extends Fragment {
                         switch (which){
                             case 0:
                                 // alphabetical ascending
-//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
+                                Collections.sort(MealContent.mealItems, new SortMealsByAscendingTitleAlphabet());
                                 break;
                             case 1:
                                 // alphabetical descending
-//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingAlphabet(dbHelper)));
+                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortMealsByAscendingTitleAlphabet()));
                                 break;
                             case 2:
-                                // distance ascending
-//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDistance(getContext(), dbHelper));
+                                // description alphabetical ascending
+                                Collections.sort(MealContent.mealItems, new SortMealsByAscendingReviewAlphabet());
                                 break;
                             case 3:
-                                // distance descending
-//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDistance(getContext(), dbHelper)));
-                                break;
-                            case 4:
-                                // date ascending
-//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingDate());
-                                break;
-                            case 5:
-                                // date descending
-//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByAscendingDate()));
-                                break;
-                            case 6:
-                                // num attendees ascending
-//                                Collections.sort(MealContent.mealItems, new SortBookingsByNumAttendees());
-                                break;
-                            case 7:
-                                // num attendees descending
-//                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortBookingsByNumAttendees()));
+                                // description alphabetical descending
+                                Collections.sort(MealContent.mealItems, Collections.reverseOrder(new SortMealsByAscendingReviewAlphabet()));
                                 break;
                             default:
-//                                Collections.sort(MealContent.mealItems, new SortBookingsByAscendingAlphabet(dbHelper));
+                                Collections.sort(MealContent.mealItems, new SortMealsByAscendingTitleAlphabet());
                                 break;
                         }
                         mAdapter.notifyDataSetChanged();

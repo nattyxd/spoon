@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/en_newMealsFragment_Title"
+        android:text="@string/en_editMealFragment_Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Create Meal"
+        android:text="Edit Meal"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
