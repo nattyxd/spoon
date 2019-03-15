@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.BookingsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.DatabaseHelper;
+import uk.ac.aston.baulchjn.mobiledev.spoon.MealsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.R;
 
 
@@ -59,14 +61,15 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         holder.mealItem = mealList.get(position);
 
         restaurant = dbHelper.getRestaurantByHereID(holder.mealItem.getRestaurantHereID());
+        List<BookingItem> bookings = dbHelper.getAllBookingsAsList();
         booking = dbHelper.getBookingByBookingID(holder.mealItem.getBookingID());
 
-        holder.restaurantName.setText(restaurant.getName());
+        holder.mealTitle.setText(holder.mealItem.getTitle());
 
         String vicinity = restaurant.getVicinity().replace("<br/>", ", ");
 
-        holder.restaurantViscinity.setText(vicinity);
-        holder.date.setText(booking.getDateOfBooking() + " - " + booking.getTimeOfBooking() + " - " + booking.getNumPeopleAttending() + " attendee(s)");
+        holder.mealSubtitle.setText(holder.mealItem.getDescription());
+        holder.date.setText("Associated with your booking at " + restaurant.getName() + " on " + booking.getDateOfBooking() + " at " + booking.getTimeOfBooking() + ".");
         holder.bind(mealList.get(position), clickListener);
     }
 
@@ -81,6 +84,12 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         mealList.remove(position);
         notifyItemRemoved(position);
         showUndoSnackbar();
+
+        if(MealContent.mealItems.size() == 0){
+            MealsFragment.noMealsText.setVisibility(View.VISIBLE);
+            MealsFragment.noMealsArrow1.setVisibility(View.VISIBLE);
+            MealsFragment.noMealsArrow2.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showUndoSnackbar() {
@@ -104,8 +113,9 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
             public void onDismissed(Snackbar snackbar, int event){
                 if(event == DISMISS_EVENT_ACTION){
                     // user triggered event, DON'T delete the entry
-                    BookingsFragment.noBookingsText.setVisibility(View.GONE);
-                    BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
+                    MealsFragment.noMealsText.setVisibility(View.GONE);
+                    MealsFragment.noMealsArrow1.setVisibility(View.GONE);
+                    MealsFragment.noMealsArrow2.setVisibility(View.GONE);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -134,16 +144,17 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         private RestaurantItem restaurantItem;
         private MealItem mealItem;
         private View mView;
-        private TextView restaurantName;
-        private TextView restaurantViscinity;
+        private TextView mealTitle;
+        private TextView mealSubtitle;
         private TextView date;
         private ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            restaurantName = this.itemView.findViewById(R.id.restaurantName);
-            restaurantViscinity = this.itemView.findViewById(R.id.viscinity);
+
+            mealTitle = this.itemView.findViewById(R.id.restaurantName);
+            mealSubtitle = this.itemView.findViewById(R.id.viscinity);
             date = this.itemView.findViewById(R.id.item_date);
         }
 

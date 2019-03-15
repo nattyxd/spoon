@@ -250,7 +250,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteMeal(MealItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(mealsTable, mealsTable + "=?", new String[]{ String.valueOf(item.getMealID()) });
+        db.delete(mealsTable, mealID + "=?", new String[]{ String.valueOf(item.getMealID()) });
     }
 
     public List<MealItem> getMealsByRestaurantID(String requestedHereID){
@@ -275,7 +275,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public BookingItem getBookingByBookingID(int requestedBookingID){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + bookingsTable + " WHERE " + bookingID + "='" + requestedBookingID + "'", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + bookingsTable + " WHERE " + bookingID + "=" + requestedBookingID + "", null);
         BookingItem item = new BookingItem();
 
         if(cursor.getCount() > 0){

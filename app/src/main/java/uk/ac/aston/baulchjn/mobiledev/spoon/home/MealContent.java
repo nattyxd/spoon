@@ -9,6 +9,7 @@ import java.util.List;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.BookingsFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.DatabaseHelper;
+import uk.ac.aston.baulchjn.mobiledev.spoon.MealsFragment;
 
 public class MealContent {
     public static List<MealItem> mealItems;
@@ -35,8 +36,8 @@ public class MealContent {
                     mealRecyclerAdapter.mealList.addAll(dbHelper.getAllMealsAsList());
                     mealRecyclerAdapter.notifyDataSetChanged();
                     if(MealContent.mealItems.size() > 0){
-                        BookingsFragment.noBookingsText.setVisibility(View.GONE);
-                        BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
+                        MealsFragment.noMealsText.setVisibility(View.GONE);
+                        MealsFragment.noMealsText.setVisibility(View.GONE);
                     }
                 } catch(SQLiteConstraintException e){
                     // the restaurant already exists

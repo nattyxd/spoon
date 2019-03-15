@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.MealItem;
@@ -111,8 +110,8 @@ public class NewMealFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                file = Uri.fromFile(getOutputMediaFile());
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
+//                file = Uri.fromFile(getOutputMediaFile());
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
 
                 startActivityForResult(intent, 100);
             }
@@ -153,12 +152,14 @@ public class NewMealFragment extends Fragment {
 
                         final MealItem meal = new MealItem();
                         meal.setRestaurantHereID(restaurant.getHereID());
+                        meal.setBookingID(booking.getBookingID());
                         meal.setStarRating(-1); // not implemented yet
                         meal.setTitle(mealTitle.getText().toString());
                         meal.setDescription(mealReview.getText().toString());
 //                        meal.setImageName(Integer.parseInt(numAttendeesEditor.getText().toString()));
-                        final long result = dbHelper.addBooking(booking);
-                        booking.setBookingID((int) (long) result); // should be safe as bookings won't exceed 2 billion..
+                        final long result = dbHelper.addMeal(meal);
+                        meal.setMealID((int) (long) result); // should be safe as meals won't exceed 2 billion..
+
                         MealContent.mealItems.add(meal);
                         MealsFragment.noMealsText.setVisibility(View.GONE);
                         MealsFragment.noMealsArrow1.setVisibility(View.GONE);

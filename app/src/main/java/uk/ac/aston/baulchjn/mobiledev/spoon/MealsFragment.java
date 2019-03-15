@@ -72,7 +72,7 @@ public class MealsFragment extends Fragment {
                 bundle.putSerializable("meal", item);
 
                 // TODO: Change this to meal details fragment
-                FragmentStateContainer.getInstance().switchFragmentState(6, bundle);
+                FragmentStateContainer.getInstance().switchFragmentState(10, bundle);
             }
         });
 
