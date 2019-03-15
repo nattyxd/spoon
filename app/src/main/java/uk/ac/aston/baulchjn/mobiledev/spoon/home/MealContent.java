@@ -37,7 +37,8 @@ public class MealContent {
                     mealRecyclerAdapter.notifyDataSetChanged();
                     if(MealContent.mealItems.size() > 0){
                         MealsFragment.noMealsText.setVisibility(View.GONE);
-                        MealsFragment.noMealsText.setVisibility(View.GONE);
+                        MealsFragment.noMealsArrow1.setVisibility(View.GONE);
+                        MealsFragment.noMealsArrow2.setVisibility(View.GONE);
                     }
                 } catch(SQLiteConstraintException e){
                     // the restaurant already exists

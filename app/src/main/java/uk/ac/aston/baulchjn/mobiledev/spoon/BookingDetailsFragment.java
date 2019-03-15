@@ -85,6 +85,7 @@ public class BookingDetailsFragment extends Fragment {
                         bundle.putSerializable("booking", booking);
                         bundle.putSerializable("restaurant", restaurant);
                         bundle.putSerializable("meal", tempMeal);
+                        MainActivity.navigation.getMenu().findItem(R.id.navigation_meals).setChecked(true);
                         FragmentStateContainer.getInstance().switchFragmentState(10, bundle);
                     }
                 });

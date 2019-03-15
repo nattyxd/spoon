@@ -61,7 +61,6 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         holder.mealItem = mealList.get(position);
 
         restaurant = dbHelper.getRestaurantByHereID(holder.mealItem.getRestaurantHereID());
-        List<BookingItem> bookings = dbHelper.getAllBookingsAsList();
         booking = dbHelper.getBookingByBookingID(holder.mealItem.getBookingID());
 
         holder.mealTitle.setText(holder.mealItem.getTitle());
@@ -69,7 +68,11 @@ public class MealRecyclerAdapter extends RecyclerView.Adapter<MealRecyclerAdapte
         String vicinity = restaurant.getVicinity().replace("<br/>", ", ");
 
         holder.mealSubtitle.setText(holder.mealItem.getDescription());
-        holder.date.setText("Associated with your booking at " + restaurant.getName() + " on " + booking.getDateOfBooking() + " at " + booking.getTimeOfBooking() + ".");
+        if(booking != null){
+            holder.date.setText("Associated with your booking at " + restaurant.getName() + " on " + booking.getDateOfBooking() + " at " + booking.getTimeOfBooking() + ".");
+        } else {
+            holder.date.setText("Associated with your deleted booking at " + restaurant.getName());
+        }
         holder.bind(mealList.get(position), clickListener);
     }
 
