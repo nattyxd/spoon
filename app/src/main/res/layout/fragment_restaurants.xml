@@ -23,26 +23,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/en_RestaurantFragment_AdditionalInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="8dp"
-        android:text="By default, restaurants are from your current GPS location. Use the buttons below to customise the search."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
-
     <ImageButton
         android:id="@+id/refreshRestaurantsButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_rounded_corner_4dp"
         android:backgroundTint="@color/colorPrimary"
@@ -51,8 +36,8 @@
         android:scaleType="centerCrop"
         android:src="@drawable/refresh"
         android:tint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/centreMapOnUserButton"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
 
     <ImageButton
         android:id="@+id/stringSearchRestaurantsButton"
@@ -67,7 +52,7 @@
         android:src="@drawable/search"
         android:tint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/refreshRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
 
     <ImageButton
         android:id="@+id/filterRestaurantsButton"
@@ -82,7 +67,7 @@
         android:src="@drawable/ic_filter_list_black_24dp"
         android:tint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/stringSearchRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
 
     <ImageButton
         android:id="@+id/sortRestaurantsButton"
@@ -97,7 +82,7 @@
         android:src="@drawable/ic_sort_by_alpha_black_24dp"
         android:tint="@color/white"
         app:layout_constraintStart_toEndOf="@+id/filterRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
 
     <ImageButton
         android:id="@+id/clearRestaurantCriteriaButton"
@@ -112,7 +97,7 @@
         android:src="@drawable/ic_undo_black_24dp"
         android:tint="#f75a4c"
         app:layout_constraintStart_toEndOf="@+id/sortRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/restaurant_TabLayout"
