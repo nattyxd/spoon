@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,9 +50,13 @@ public class MealDetailedFragment extends Fragment {
         if (bundle != null) {
             meal = (MealItem) bundle.getSerializable("meal");
 
-
-            restaurant = dbHelper.getRestaurantByHereID(meal.getRestaurantHereID());
-            booking = dbHelper.getBookingByBookingID(meal.getBookingID());
+            try{
+                restaurant = dbHelper.getRestaurantByHereID(meal.getRestaurantHereID());
+                booking = dbHelper.getBookingByBookingID(meal.getBookingID());
+            } catch(Exception e){
+                // TODO: REALLY BAD BUG HERE WHEN SHARING MEAL, CRASHES APP
+                Log.e("spoonlogcat: ", "FIX THIS BUG");
+            }
 
 
             if(meal == null || restaurant == null){
@@ -68,6 +73,14 @@ public class MealDetailedFragment extends Fragment {
             } else {
                 mealAuxiliaryView.setText("Associated with your deleted booking at " + restaurant.getName());
             }
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState != null){
+            meal = (MealItem) savedInstanceState.getSerializable("meal");
         }
     }
 
