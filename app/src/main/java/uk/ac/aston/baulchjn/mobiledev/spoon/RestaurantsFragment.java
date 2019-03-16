@@ -200,8 +200,6 @@ public class RestaurantsFragment extends Fragment {
                     searchQuery.setVisibility(View.GONE);
                     searchButton.setVisibility(View.GONE);
 
-                    searchQuery.getText()
-
                     ConstraintSet constraints = new ConstraintSet();
                     constraints.clone(restaurantsConstraintLayout);
                     constraints.connect(R.id.restaurant_TabLayout, ConstraintSet.TOP, R.id.restaurantsToolBar, ConstraintSet.BOTTOM);

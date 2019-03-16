@@ -227,8 +227,8 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/NearMeNow"
-                app:layout_constraintTop_toTopOf="@id/TopRowFindQuickly"></Button>
+                app:layout_constraintStart_toEndOf="@+id/NearMeNow2"
+                app:layout_constraintTop_toTopOf="parent"></Button>
         </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
