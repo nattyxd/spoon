@@ -1,134 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<android.support.design.widget.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appBarLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constrainedWidth="true"
-    app:layout_constrainedHeight="true"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:theme="@style/AppTheme.AppBarOverlay"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/formattedRestaurantHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/en_RestaurantFragment_AdditionalInfo"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Loading Restaurants..."
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/refreshRestaurantsButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:padding="4dp"
-        android:paddingLeft="20dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/refresh"
-        android:tint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
-
-    <ImageButton
-        android:id="@+id/stringSearchRestaurantsButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/search"
-        android:tint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/refreshRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
-
-    <ImageButton
-        android:id="@+id/filterRestaurantsButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_filter_list_black_24dp"
-        android:tint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/stringSearchRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
-
-    <ImageButton
-        android:id="@+id/sortRestaurantsButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_sort_by_alpha_black_24dp"
-        android:tint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/filterRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
-
-    <ImageButton
-        android:id="@+id/clearRestaurantCriteriaButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_rounded_corner_4dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:padding="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_undo_black_24dp"
-        android:tint="#f75a4c"
-        app:layout_constraintStart_toEndOf="@+id/sortRestaurantsButton"
-        app:layout_constraintTop_toBottomOf="@+id/formattedRestaurantHeader" />
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/restaurant_TabLayout"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sortRestaurantsButton">
+        android:layout_height="match_parent"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
+        <!-- Toolbar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/restaurantsToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_collapseMode="parallax"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/restaurant_TabLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="List of Results" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restaurantsToolBar">
 
-        <android.support.design.widget.TabItem
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="List of Results" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Map of Results" />
+        </android.support.design.widget.TabLayout>
+
+        <uk.ac.aston.baulchjn.mobiledev.spoon.helper.NonScrollableViewPager
+            android:id="@+id/restaurant_ViewPager"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Map of Results" />
-    </android.support.design.widget.TabLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
 
-    <uk.ac.aston.baulchjn.mobiledev.spoon.helper.NonScrollableViewPager
-        android:id="@+id/restaurant_ViewPager"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintTop_toBottomOf="@+id/restaurant_TabLayout"
+            app:layout_constraintVertical_bias="1.0" />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintTop_toBottomOf="@+id/restaurant_TabLayout"
-        app:layout_constraintVertical_bias="1.0" />
+    </android.support.constraint.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.AppBarLayout>

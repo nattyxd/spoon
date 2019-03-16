@@ -37,6 +37,8 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingRecyclerAdapter;
 
 public class BookingsFragment extends Fragment {
+    private View view;
+
     private RecyclerView recyclerView;
 
     public static BookingRecyclerAdapter mAdapter;
@@ -57,7 +59,7 @@ public class BookingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bookings, container, false);
+        view = inflater.inflate(R.layout.fragment_bookings, container, false);
         recyclerView = view.findViewById(R.id.bookings_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         noBookingsText = view.findViewById(R.id.noBookingInfoText);
@@ -102,7 +104,16 @@ public class BookingsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         inflater.inflate(R.menu.bookings_menu, menu);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((MainActivity)getActivity()).setSupportActionBar(mToolbar);
     }
 
     @Override
