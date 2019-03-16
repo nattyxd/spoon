@@ -15,7 +15,7 @@ public class FragmentStateContainer {
     private static FragmentStateContainer instance;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     final Fragment homeFragment = new HomeFragment();
-    final Fragment bookingsFragment = new BookingsFragment();
+    final BookingsFragment bookingsFragment = new BookingsFragment();
     final Fragment restaurantsFragment = new RestaurantsFragment();
     final Fragment mealsFragment = new MealsFragment();
     final Fragment restaurantDetailedFragment = new RestaurantDetailedFragment();
@@ -69,9 +69,10 @@ public class FragmentStateContainer {
 
         switch(index){
             case 0:
-                setBarToSort();
+
                 break;
             case 1:
+                bookingsFragment.customiseToolbar();
                 break;
             case 2:
                 break;

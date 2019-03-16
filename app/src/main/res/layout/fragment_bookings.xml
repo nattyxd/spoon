@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Appbar -->
+<android.support.design.widget.AppBarLayout android:id="@+id/appBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary" />
 
     <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/bookings_rv"
@@ -11,6 +30,7 @@
         android:background="@drawable/burger2"
         android:backgroundTint="@color/veryLightGrey"
         android:clipToPadding="false"
+        android:layout_marginTop="?attr/actionBarSize"
         android:paddingTop="15dp" />
 
     <TextView
@@ -41,3 +61,4 @@
 
 
 </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.AppBarLayout>

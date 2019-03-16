@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,14 +26,10 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingAlphab
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDate;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByAscendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortBookingsByNumAttendees;
-import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByAscendingAlphabet;
-import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByAscendingDistance;
-import uk.ac.aston.baulchjn.mobiledev.spoon.helper.SortRestaurantByDescendingDistance;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingClickListener;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingRecyclerAdapter;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantContent;
 
 public class BookingsFragment extends Fragment {
     private List<BookingItem> rv_list;
@@ -99,6 +96,13 @@ public class BookingsFragment extends Fragment {
 //        BookingContent.jsonRequest(getActivity().getApplicationContext(), mAdapter); // prob need to replace with like BookingContent.getContent
         //rv_list = RestaurantContent.restaurantItems;
         return view;
+    }
+
+    public void customiseToolbar(){
+//        ActionBar action = ((MainActivity) getActivity()).getSupportActionBar();
+//        action.setTitle("Bookings");
+//        action.setCustomView(R.menu.top_menu);
+//        action.invalidateOptionsMenu();
     }
 
     private void setupButtons(){
