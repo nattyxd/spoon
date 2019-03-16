@@ -51,7 +51,6 @@ public class RestaurantsFragment extends Fragment {
     private ViewPager viewPager;
 
     private TextView formattedHeader;
-    private TextView additionalInfoHeadline;
 
     private boolean[] selectedCategoriesIndex;
     public static HashMap<String, Boolean> categoriesToExclude; // stores which categories the user does NOT want to see (all on by default)
@@ -107,7 +106,6 @@ public class RestaurantsFragment extends Fragment {
         tabs.setupWithViewPager(viewPager);
 
         formattedHeader = view.findViewById(R.id.formattedRestaurantHeader);
-        additionalInfoHeadline = view.findViewById(R.id.en_RestaurantFragment_AdditionalInfo);
 
         setupButtons();
 

@@ -4,16 +4,21 @@ package uk.ac.aston.baulchjn.mobiledev.spoon;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,10 +37,7 @@ import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingRecyclerAdapter;
 
 public class BookingsFragment extends Fragment {
-    private List<BookingItem> rv_list;
     private RecyclerView recyclerView;
-    private Button sortButton;
-    private Button filterButton;
 
     public static BookingRecyclerAdapter mAdapter;
     public static TextView noBookingsText;
@@ -50,10 +52,6 @@ public class BookingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        rv_list = new ArrayList<>();
-
-
     }
 
     @Override
@@ -88,28 +86,31 @@ public class BookingsFragment extends Fragment {
 
         BookingContent.populateBookings(getContext(), mAdapter);
 
-        sortButton = view.findViewById(R.id.sortButton);
-
         dbHelper = new DatabaseHelper(getContext());
 
-        setupButtons();
-//        BookingContent.jsonRequest(getActivity().getApplicationContext(), mAdapter); // prob need to replace with like BookingContent.getContent
-        //rv_list = RestaurantContent.restaurantItems;
+        Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((MainActivity)getActivity()).setSupportActionBar(mToolbar);
+        ActionBar bar = ((MainActivity)getActivity()).getSupportActionBar();
+
+        bar.setTitle("Bookings");
+        setHasOptionsMenu(true);
+
+
         return view;
     }
 
-    public void customiseToolbar(){
-//        ActionBar action = ((MainActivity) getActivity()).getSupportActionBar();
-//        action.setTitle("Bookings");
-//        action.setCustomView(R.menu.top_menu);
-//        action.invalidateOptionsMenu();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.bookings_menu, menu);
     }
 
-    private void setupButtons(){
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
 
+        switch(item.getItemId()){
+            case R.id.action_sort:
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                 dialogBuilder.setTitle("Sort");
                 dialogBuilder.setItems(R.array.en_bookings_SortOptions, new DialogInterface.OnClickListener() {
@@ -156,8 +157,8 @@ public class BookingsFragment extends Fragment {
                 });
 
                 dialogBuilder.create().show();
+        }
 
-            }
-        });
+        return true;
     }
 }
