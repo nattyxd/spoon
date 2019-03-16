@@ -42,7 +42,7 @@
         android:padding="10dp"
         android:text="@string/en_bookingFragment_NoBookings"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/darkGrey"/>
 
     <ImageView
         android:id="@+id/noBookingsArrow"
