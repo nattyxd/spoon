@@ -1,10 +1,33 @@
+<android.support.design.widget.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:id="@+id/BookRestaurantFragment"
     tools:context=".BookRestaurantFragment">
+
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="spoon"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -18,7 +41,9 @@
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:textColor="@color/darkGrey"
+        />
 
     <Button
         android:id="@+id/createMealBtn"
@@ -41,7 +66,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:textColor="@color/darkGrey"
+        />
 
     <EditText
         android:id="@+id/mealTitle"
@@ -53,7 +80,9 @@
         android:ems="10"
         android:longClickable="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/subtitle"
+        android:textColor="@color/darkGrey"
+        />
 
     <TextView
         android:id="@+id/title"
@@ -65,7 +94,9 @@
         android:text="Title:"
         app:layout_constraintBottom_toBottomOf="@+id/mealTitle"
         app:layout_constraintEnd_toStartOf="@+id/mealTitle"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/darkGrey"
+        />
 
     <TextView
         android:id="@+id/reviewTextView"
@@ -77,7 +108,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/mealDescription"
         app:layout_constraintEnd_toStartOf="@+id/mealDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mealDescription" />
+        app:layout_constraintTop_toTopOf="@+id/mealDescription"
+        android:textColor="@color/darkGrey"
+        />
 
     <TextView
         android:id="@+id/imageText"
@@ -89,7 +122,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/mealImageView"
         app:layout_constraintEnd_toStartOf="@+id/mealDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mealImageView" />
+        app:layout_constraintTop_toTopOf="@+id/mealImageView"
+        android:textColor="@color/darkGrey"
+        />
 
     <EditText
         android:id="@+id/mealDescription"
@@ -100,7 +135,9 @@
         android:ems="10"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mealTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/mealTitle"
+        android:textColor="@color/darkGrey"
+        />
 
     <ImageView
         android:id="@+id/mealImageView"
@@ -111,6 +148,9 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:src="@drawable/tap_to_set"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mealDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/mealDescription"
+        android:textColor="@color/darkGrey"
+        />
 
 </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.AppBarLayout>

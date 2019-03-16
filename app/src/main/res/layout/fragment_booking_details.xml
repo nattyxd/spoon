@@ -1,23 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".RestaurantDetailedFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/restaurant_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Restaurant Name"
-        android:textSize="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- Toolbar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_collapseMode="parallax"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="spoon"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Restaurant Name"
+            android:textColor="@color/darkGrey"
+            android:textSize="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/restaurant_vicinity"
@@ -25,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/darkGrey"
         android:text="Viscinity"
         android:textSize="22dp"
         app:layout_constraintTop_toBottomOf="@+id/restaurant_name" />
@@ -37,6 +61,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:textColor="@color/darkGrey"
         android:text="Date"
         android:textSize="22dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +76,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:textColor="@color/darkGrey"
         android:text="Time"
         android:textSize="22dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,6 +93,7 @@
         android:layout_marginEnd="8dp"
         android:text="Attendees"
         android:textSize="22dp"
+        android:textColor="@color/darkGrey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/clock3"
         app:layout_constraintTop_toBottomOf="@+id/bookingTime" />
@@ -156,3 +183,4 @@
         app:layout_constraintTop_toBottomOf="@+id/clock" />
 
 </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.AppBarLayout>

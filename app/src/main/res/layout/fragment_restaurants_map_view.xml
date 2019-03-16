@@ -15,18 +15,18 @@
 
     <ImageButton
         android:id="@+id/centreMapOnUserButton"
-        android:clickable="true"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_rounded_corner_4dp"
+        android:clickable="true"
         android:padding="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/user_geolocation"
-        android:tint="#4285f4"
+        android:tint="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/en_RestaurantFragment_AdditionalInfo" /><!-- set 30dp padding from all the sides of the view-->
+        app:layout_constraintTop_toTopOf="parent" /><!-- set 30dp padding from all the sides of the view-->
 
     <com.here.android.mpa.mapping.MapView
         android:id="@+id/mapView"

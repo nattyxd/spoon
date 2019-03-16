@@ -1,10 +1,33 @@
+<android.support.design.widget.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/BookRestaurantFragment"
+    android:background="@color/white"
     tools:context=".BookRestaurantFragment">
+
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_collapseMode="parallax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="spoon"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -18,7 +41,9 @@
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:textColor="@color/darkGrey"
+        />
 
     <Button
         android:id="@+id/createBookingBtn"
@@ -29,7 +54,8 @@
         android:text="Create Booking"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/subtitle"
+        />
 
     <TextView
         android:id="@+id/subtitle"
@@ -41,7 +67,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:textColor="@color/darkGrey"
+        />
 
     <TextView
         android:id="@+id/textView3"
@@ -55,6 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subtitle"
+        android:textColor="@color/darkGrey"
         tools:text="@string/en_bookrestaurants_wrongrestaurant" />
 
     <EditText
@@ -69,6 +98,7 @@
         android:inputType="date"
         android:longClickable="false"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/darkGrey"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
@@ -82,6 +112,7 @@
         android:ems="10"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/darkGrey"
         app:layout_constraintTop_toBottomOf="@+id/mealTitle" />
 
     <EditText
@@ -93,6 +124,7 @@
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/darkGrey"
         app:layout_constraintTop_toBottomOf="@+id/bookRestaurantTimeEditText" />
 
     <TextView
@@ -105,6 +137,7 @@
         android:text="Date:"
         app:layout_constraintBottom_toBottomOf="@+id/mealTitle"
         app:layout_constraintEnd_toStartOf="@+id/mealTitle"
+        android:textColor="@color/darkGrey"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -117,6 +150,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantTimeEditText"
         app:layout_constraintEnd_toStartOf="@+id/bookRestaurantTimeEditText"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/darkGrey"
         app:layout_constraintTop_toTopOf="@+id/bookRestaurantTimeEditText" />
 
     <TextView
@@ -129,6 +163,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/bookRestaurantNumAttendeesEditor"
         app:layout_constraintEnd_toStartOf="@+id/bookRestaurantNumAttendeesEditor"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/darkGrey"
         app:layout_constraintTop_toTopOf="@+id/bookRestaurantNumAttendeesEditor" />
 
 </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.AppBarLayout>
