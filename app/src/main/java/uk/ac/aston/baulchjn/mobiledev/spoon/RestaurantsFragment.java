@@ -9,6 +9,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -70,6 +72,12 @@ public class RestaurantsFragment extends Fragment {
     private RestaurantsRecyclerViewFragment restaurantsRecyclerViewFragment;
     private RestaurantsMapViewFragment restaurantMapViewFragment;
 
+    private ConstraintLayout restaurantsConstraintLayout;
+    private TabLayout tabs;
+
+    private EditText searchQuery;
+    private Button searchButton;
+
     public RestaurantsFragment() {
         // Required empty public constructor
     }
@@ -109,7 +117,7 @@ public class RestaurantsFragment extends Fragment {
 
         setupLocationListeners();
 
-        TabLayout tabs = (TabLayout) view.findViewById(R.id.restaurant_TabLayout);
+        tabs = (TabLayout) view.findViewById(R.id.restaurant_TabLayout);
         tabs.setupWithViewPager(viewPager);
 
         int categoriesLength = getResources().getStringArray(R.array.en_restaurant_category_options).length;
@@ -125,6 +133,12 @@ public class RestaurantsFragment extends Fragment {
         mActionBar.setTitle("Loading...");
         setHasOptionsMenu(true);
 
+        restaurantsConstraintLayout = view.findViewById(R.id.restaurantsConstraintLayout);
+
+        searchQuery = view.findViewById(R.id.searchQuery);
+        searchButton = view.findViewById(R.id.searchButton);
+        searchQuery.setVisibility(View.GONE);
+        searchButton.setVisibility(View.GONE);
 
         return view;
     }
@@ -181,17 +195,25 @@ public class RestaurantsFragment extends Fragment {
                 getHereAPIRestaurants(restaurantMapViewFragment.getCenterOfMap(), onJSONTaskCompleted);
                 break;
             case R.id.action_serch:
-                dialogBuilder = new AlertDialog.Builder(getContext());
-                LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.search_restaurant_dialog, null);
+                if(searchQuery.getVisibility() == View.VISIBLE){
+                    // HIDE
+                    searchQuery.setVisibility(View.GONE);
+                    searchButton.setVisibility(View.GONE);
 
-                final EditText editText = (EditText) dialogView.findViewById(R.id.restaurant_name);
-                Button button1 = (Button) dialogView.findViewById(R.id.buttonUseLocation);
-                Button button2 = (Button) dialogView.findViewById(R.id.buttonUseMap);
-                Button button3 = (Button) dialogView.findViewById(R.id.buttonCancel);
+                    searchQuery.getText()
 
-                dialogBuilder.setView(dialogView);
-                dialogBuilder.show();
+                    ConstraintSet constraints = new ConstraintSet();
+                    constraints.clone(restaurantsConstraintLayout);
+                    constraints.connect(R.id.restaurant_TabLayout, ConstraintSet.TOP, R.id.restaurantsToolBar, ConstraintSet.BOTTOM);
+                } else {
+                    // SHOW
+                    searchQuery.setVisibility(View.VISIBLE);
+                    searchButton.setVisibility(View.VISIBLE);
+
+                    ConstraintSet constraints = new ConstraintSet();
+                    constraints.clone(restaurantsConstraintLayout);
+                    constraints.connect(R.id.restaurant_TabLayout, ConstraintSet.TOP, R.id.searchQuery, ConstraintSet.BOTTOM);
+                }
                 break;
             case R.id.action_filter:
                 final String[] categoriesArray = getResources().getStringArray(R.array.en_restaurant_category_options);
