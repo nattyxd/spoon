@@ -89,6 +89,17 @@ public class BookingDetailsFragment extends Fragment {
                         FragmentStateContainer.getInstance().switchFragmentState(10, bundle);
                     }
                 });
+            } else {
+                addMealBtn.setText("Add Meal");
+                addMealBtn.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("booking", booking);
+                        bundle.putSerializable("restaurant", restaurant);
+                        FragmentStateContainer.getInstance().switchFragmentState(8, bundle);
+                    }
+                });
             }
 
             if(booking.getNumPeopleAttending() > 1){
