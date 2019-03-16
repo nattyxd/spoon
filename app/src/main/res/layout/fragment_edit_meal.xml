@@ -73,7 +73,6 @@
     <EditText
         android:id="@+id/mealTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTintMode="src_in"
@@ -81,7 +80,10 @@
         android:longClickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subtitle"
-        android:textColor="@color/darkGrey"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:layout_height="35dp"
+        android:paddingStart="10dp"
         />
 
     <TextView
@@ -129,14 +131,16 @@
     <EditText
         android:id="@+id/mealDescription"
         android:layout_width="wrap_content"
-        android:layout_height="124dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mealTitle"
-        android:textColor="@color/darkGrey"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:layout_height="35dp"
+        android:paddingStart="10dp"
         />
 
     <ImageView
@@ -146,11 +150,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:scaleType="centerCrop"
         android:src="@drawable/tap_to_set"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mealDescription"
         android:textColor="@color/darkGrey"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mealDescription" />
 
 </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.AppBarLayout>
