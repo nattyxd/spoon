@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/burger"
         android:backgroundTint="@color/veryLightGrey"
-        tools:context=".home.deprecated_HomeFragment">
+        tools:context=".home.HomeFragment">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/imageConstraint"
@@ -201,7 +202,7 @@
             app:layout_constraintTop_toBottomOf="@+id/staffChoicesText">
 
             <Button
-                android:id="@+id/NearMeNow"
+                android:id="@+id/NearMeNow2"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -214,7 +215,7 @@
                 app:layout_constraintTop_toTopOf="parent"></Button>
 
             <Button
-                android:id="@+id/StaffPicks"
+                android:id="@+id/StaffPicks2"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -305,4 +306,26 @@
 
 </android.support.constraint.ConstraintLayout>
 
-</ScrollView>
+    </ScrollView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/search"
+                android:tint="@color/white"
+                fab:backgroundTint="@color/colorPrimaryDark"
+                fab:borderWidth="0dp" />
+        </LinearLayout>
+</RelativeLayout>

@@ -25,6 +25,7 @@ import java.util.Locale;
 
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingContent;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.BookingItem;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.HomeFragment;
 import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -252,6 +253,7 @@ public class BookRestaurantFragment extends Fragment {
                         BookingsFragment.noBookingsText.setVisibility(View.GONE);
                         BookingsFragment.noBookingsArrow.setVisibility(View.GONE);
                         BookingsFragment.mAdapter.notifyDataSetChanged(); // TODO: Not working??
+                        HomeFragment.notifyUpcomingReservationModule(getContext());
 
                         Snackbar snackbar = Snackbar
                                 .make(view, "Booking Created Successfully!", Snackbar.LENGTH_LONG)

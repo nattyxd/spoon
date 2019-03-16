@@ -8,15 +8,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.RestaurantItem;
-import uk.ac.aston.baulchjn.mobiledev.spoon.home.deprecated_HomeFragment;
+import uk.ac.aston.baulchjn.mobiledev.spoon.home.HomeFragment;
 
 public class FragmentStateContainer {
     private static FragmentStateContainer instance;
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    final Fragment homeFragment = new deprecated_HomeFragment();
+    final Fragment homeFragment = new HomeFragment();
     final Fragment bookingsFragment = new BookingsFragment();
     final Fragment restaurantsFragment = new RestaurantsFragment();
     final Fragment mealsFragment = new MealsFragment();

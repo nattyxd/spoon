@@ -13,7 +13,8 @@
     </string>
 
     <!-- Home Strings -->
-    <string name="en_home_upcomingreservation_title">You have a reservation!</string>
+    <string name="en_home_upcomingreservation_title">You have an upcoming booking! At %1$s</string>
+
     <string name="en_home_upcomingreservation_notification">Reservation at %1$s at %2$s.</string>
     <string name="en_home_upcomingreservation_viewreservation">View Reservation >></string>
 
